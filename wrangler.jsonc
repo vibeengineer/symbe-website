@@ -1,0 +1,15 @@
+{
+  "name": "astro-storyblok-starter",
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2025-04-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "vars": {
+    "BASE_URL": "https://yourdomain.com",
+    "SITE_NAME": "Astro Storyblok Starter",
+    "SITE_DESCRIPTION": "A heavily optimized description full of well-researched keywords."
+  }
+}
