@@ -1,6 +1,6 @@
 {
 	"extends": "astro/tsconfigs/strict",
-	"include": [".astro/types.d.ts", "**/*", "worker-configuration.d.ts", "env.d.ts"],
+	"include": [".astro/types.d.ts", "**/*", "worker-configuration.d.ts", "env.d.ts", "storyblok/types.d.ts"],
 	"exclude": ["dist"],
 	"compilerOptions": {
 		"jsx": "react-jsx",

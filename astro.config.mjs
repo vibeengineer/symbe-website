@@ -12,11 +12,12 @@ export default defineConfig({
     react(),
     sitemap(),
     storyblok({
-      accessToken: import.meta.env.STORYBLOK_TOKEN,
+      accessToken: "",
       apiOptions: {},
+      livePreview: true,
     }),
   ],
-  site: import.meta.env.BASE_URL,
+  site: "https://domain.com",
   adapter: cloudflare({
     imageService: "cloudflare",
     platformProxy: {
