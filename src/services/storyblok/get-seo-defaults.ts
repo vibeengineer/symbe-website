@@ -8,11 +8,13 @@ export async function getSeoDefaults(): Promise<SEOProps> {
   const seoDefaults: SEOProps = {};
 
   try {
-    const { data } = await sbApi.get("cdn/stories/globals/seoDefaults", {
+    const { data } = await sbApi.get("cdn/stories/globals/seo-defaults", {
       version: import.meta.env.MODE === "development" ? "draft" : "published",
     });
 
-    story = data?.story as SeoDefaultsStoryblok;
+    story = data?.story?.content as SeoDefaultsStoryblok;
+
+    console.log({ story });
     if (!story) {
       throw new Error("No seo defaults found in storyblok");
     }

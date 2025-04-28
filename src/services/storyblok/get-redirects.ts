@@ -1,19 +1,26 @@
-import { useStoryblokApi } from "@storyblok/astro";
+import StoryblokClient from "storyblok-js-client";
+
 import type { RedirectsListStoryblok } from "../../../storyblok/types";
 import type { RedirectConfig } from "astro";
 
-export async function getRedirects(): Promise<Record<string, RedirectConfig>> {
-  const sbApi = useStoryblokApi();
-  let story = null;
+export async function getRedirects(
+  storyblokApiKey: string,
+): Promise<Record<string, RedirectConfig>> {
+  const sbApi = new StoryblokClient({
+    accessToken: storyblokApiKey,
+  });
   try {
-    const { data } = await sbApi.get("cdn/stories/globals/redirects", {
+    const { data } = await sbApi.get("cdn/stories/globals/redirects-list", {
       version: import.meta.env.MODE === "development" ? "draft" : "published",
     });
 
-    story = data?.story as RedirectsListStoryblok;
+    const story = data?.story?.content as RedirectsListStoryblok;
+
+    console.log({ story });
+
     if (!story || !story.redirects || story.redirects.length === 0) {
       console.warn(
-        "Redirects or story not found in Storyblok, returning empty redirects.",
+        "No redirects within story or story not found in Storyblok, returning empty redirects.",
       );
       return {};
     }

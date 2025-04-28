@@ -7,10 +7,13 @@ import sitemap from "@astrojs/sitemap";
 import { storyblok } from "@storyblok/astro";
 import { getRedirects } from "./src/services/storyblok/get-redirects";
 
-console.log(import.meta.env);
-
 // Fetch redirects
-const redirects = await getRedirects();
+import { loadEnv } from "vite";
+
+//@ts-ignore
+const { STORYBLOK_TOKEN, SITE_URL } = loadEnv(process.env, process.cwd(), "");
+
+const redirects = await getRedirects(STORYBLOK_TOKEN);
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,7 +22,7 @@ export default defineConfig({
     react(),
     sitemap(),
     storyblok({
-      accessToken: "Ck0drBMChy3ZcMVf3qqFXgtt",
+      accessToken: STORYBLOK_TOKEN,
       livePreview: true,
       components: {
         // Content type blocks
@@ -31,7 +34,7 @@ export default defineConfig({
       },
     }),
   ],
-  site: "https://domain.com",
+  site: SITE_URL,
   adapter: cloudflare({
     imageService: "cloudflare",
     platformProxy: {
