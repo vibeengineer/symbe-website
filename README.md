@@ -1,4 +1,4 @@
-# The Vibe Engineer Website Starter
+# Symbe Website Starter
 
 This starter kit provides a foundation for building a website using Astro, Storyblok, and deploying to Cloudflare Workers.
 
