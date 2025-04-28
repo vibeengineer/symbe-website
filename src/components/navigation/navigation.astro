@@ -1,0 +1,11 @@
+---
+import type { NavigationStoryblok } from "../../../storyblok/types";
+import { default as NavigationReact } from ".";
+
+type Props = {
+  blok: NavigationStoryblok;
+};
+const { blok } = Astro.props;
+---
+
+<NavigationReact blok={blok} />

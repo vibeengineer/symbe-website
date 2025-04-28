@@ -9,9 +9,10 @@ type Props = {
   title?: string;
   description: string;
   openGraph?: SEOProps["openGraph"];
+  noindex?: boolean;
 };
 
-const { title, description, openGraph } = Astro.props;
+const { title, description, openGraph, noindex } = Astro.props;
 const siteUrl = env.BASE_URL;
 const siteName = title ?? env.SITE_NAME;
 const ogImage = openGraph?.basic?.image ?? `${siteUrl}/og.png`;
@@ -25,6 +26,7 @@ const siteDescription = description ?? env.SITE_DESCRIPTION;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-dm-sans" preload />
     <SEO
+      noindex={noindex}
       title={title ? `${title} | ${siteName}` : siteName}
       description={siteDescription}
       openGraph={openGraph ?? {

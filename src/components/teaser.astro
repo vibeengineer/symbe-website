@@ -1,0 +1,11 @@
+---
+import type { TeaserStoryblok } from "../../storyblok/types";
+
+type Props = {
+  blok: TeaserStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<div>{blok.headline ?? "Teaser"}</div>

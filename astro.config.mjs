@@ -5,16 +5,30 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import { storyblok } from "@storyblok/astro";
+import { getRedirects } from "./src/services/storyblok/get-redirects";
+
 console.log(import.meta.env);
+
+// Fetch redirects
+const redirects = await getRedirects();
+
 // https://astro.build/config
 export default defineConfig({
+  redirects: redirects,
   integrations: [
     react(),
     sitemap(),
     storyblok({
-      accessToken: "",
-      apiOptions: {},
+      accessToken: "Ck0drBMChy3ZcMVf3qqFXgtt",
       livePreview: true,
+      components: {
+        // Content type blocks
+        page: "layouts/page",
+        // Nestable type blocks
+        feature: "components/feature",
+        grid: "components/grid",
+        teaser: "components/teaser",
+      },
     }),
   ],
   site: "https://domain.com",

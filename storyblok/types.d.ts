@@ -8,11 +8,26 @@ export interface FeatureStoryblok {
   [k: string]: unknown;
 }
 
+export interface FooterStoryblok {
+  linkColumns?: LinkColumnStoryblok[];
+  component: "footer";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface GridStoryblok {
   columns?: (
     | FeatureStoryblok
+    | FooterStoryblok
     | GridStoryblok
+    | LinkStoryblok
+    | LinkColumnStoryblok
+    | LinkDropdownStoryblok
+    | NavigationStoryblok
     | PageStoryblok
+    | RedirectStoryblok
+    | RedirectsListStoryblok
+    | SeoDefaultsStoryblok
     | TeaserStoryblok
   )[];
   component: "grid";
@@ -20,9 +35,190 @@ export interface GridStoryblok {
   [k: string]: unknown;
 }
 
+export type MultilinkStoryblok =
+  | {
+      fieldtype: "multilink";
+      id: string;
+      url: string;
+      cached_url: string;
+      target?: "_blank" | "_self";
+      anchor?: string;
+      rel?: string;
+      title?: string;
+      prep?: string;
+      linktype: "story";
+      story?: {
+        name: string;
+        created_at?: string;
+        published_at?: string;
+        id: number;
+        uuid: string;
+        content?: {
+          [k: string]: unknown;
+        };
+        slug: string;
+        full_slug: string;
+        sort_by_date?: null | string;
+        position?: number;
+        tag_list?: string[];
+        is_startpage?: boolean;
+        parent_id?: null | number;
+        meta_data?: null | {
+          [k: string]: unknown;
+        };
+        group_id?: string;
+        first_published_at?: string;
+        release_id?: null | number;
+        lang?: string;
+        path?: null | string;
+        alternates?: unknown[];
+        default_full_slug?: null | string;
+        translated_slugs?: null | unknown[];
+        [k: string]: unknown;
+      };
+      [k: string]: unknown;
+    }
+  | {
+      fieldtype: "multilink";
+      id: string;
+      url: string;
+      cached_url: string;
+      target?: "_blank" | "_self";
+      linktype: "url";
+      rel?: string;
+      title?: string;
+      [k: string]: unknown;
+    }
+  | {
+      fieldtype: "multilink";
+      id: string;
+      url: string;
+      cached_url: string;
+      target?: "_blank" | "_self";
+      email?: string;
+      linktype: "email";
+      [k: string]: unknown;
+    }
+  | {
+      fieldtype: "multilink";
+      id: string;
+      url: string;
+      cached_url: string;
+      target?: "_blank" | "_self";
+      linktype: "asset";
+      [k: string]: unknown;
+    };
+
+export interface LinkStoryblok {
+  linkText?: string;
+  link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
+  linkStyle?: "" | "default" | "button";
+  component: "link";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface LinkColumnStoryblok {
+  links?: LinkStoryblok[];
+  component: "linkColumn";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface LinkDropdownStoryblok {
+  dropdownTitle?: string;
+  links?: LinkStoryblok[];
+  component: "linkDropdown";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface AssetStoryblok {
+  alt: string | null;
+  copyright?: string | null;
+  fieldtype: "asset";
+  id: number;
+  filename: string | null;
+  name: string;
+  title: string | null;
+  focus: string | null;
+  meta_data?: {
+    [k: string]: unknown;
+  };
+  source?: string | null;
+  is_external_url?: boolean;
+  is_private?: boolean;
+  src?: string;
+  updated_at?: string;
+  width?: number | null;
+  height?: number | null;
+  aspect_ratio?: number | null;
+  public_id?: string | null;
+  content_type?: string;
+  [k: string]: unknown;
+}
+
+export interface NavigationStoryblok {
+  logo?: AssetStoryblok;
+  centreLinks?: (LinkDropdownStoryblok | LinkStoryblok)[];
+  rightLinks?: LinkStoryblok[];
+  component: "navigation";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface PageStoryblok {
-  body?: (FeatureStoryblok | GridStoryblok | PageStoryblok | TeaserStoryblok)[];
+  body?: (
+    | FeatureStoryblok
+    | FooterStoryblok
+    | GridStoryblok
+    | LinkStoryblok
+    | LinkColumnStoryblok
+    | LinkDropdownStoryblok
+    | NavigationStoryblok
+    | PageStoryblok
+    | RedirectStoryblok
+    | RedirectsListStoryblok
+    | SeoDefaultsStoryblok
+    | TeaserStoryblok
+  )[];
+  seo?: unknown;
+  title?: string;
+  description?: string;
+  openGraphTitle?: string;
+  openGraphDescription?: string;
+  openGraphImage?: AssetStoryblok;
+  noIndex?: boolean;
   component: "page";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface RedirectStoryblok {
+  path: string;
+  destination: string;
+  status?: "" | "301" | "302" | "303" | "307" | "308" | "300" | "304";
+  component: "redirect";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface RedirectsListStoryblok {
+  redirects?: RedirectStoryblok[];
+  component: "redirectsList";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface SeoDefaultsStoryblok {
+  title: string;
+  description: string;
+  openGraphImage?: AssetStoryblok;
+  openGraphTitle?: string;
+  openGraphDescription?: string;
+  noIndex?: boolean;
+  twitterHandle?: string;
+  component: "seoDefaults";
   _uid: string;
   [k: string]: unknown;
 }

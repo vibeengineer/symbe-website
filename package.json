@@ -11,6 +11,7 @@
 		"format": "biome format --write .",
 		"types": "npx wrangler types",
 		"pull-sb-components": "storyblok pull-components --space 336379 --path ./storyblok/ --file-name definition",
+		"push-sb-components": "storyblok push-components ./storyblok/components.definition.json --space 336379",
 		"generate-sb-types": "storyblok generate-typescript-typedefs --sourceFilePaths ./storyblok/components.definition.json --destinationFilePath ./storyblok/types.d.ts --compilerOptions storyblok/compiler-options.json",
 		"storyblok": "pnpm run pull-sb-components && pnpm run generate-sb-types"
 	},

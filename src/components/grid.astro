@@ -1,0 +1,11 @@
+---
+import type { GridStoryblok } from "../../storyblok/types";
+
+type Props = {
+  blok: GridStoryblok;
+};
+
+const { blok } = Astro.props;
+---
+
+<div>{`${blok.columns?.length ?? 0} Grid columns`}</div>
