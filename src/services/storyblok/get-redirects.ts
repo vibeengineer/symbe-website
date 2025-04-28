@@ -16,8 +16,6 @@ export async function getRedirects(
 
     const story = data?.story?.content as RedirectsListStoryblok;
 
-    console.log({ story });
-
     if (!story || !story.redirects || story.redirects.length === 0) {
       console.warn(
         "No redirects within story or story not found in Storyblok, returning empty redirects.",

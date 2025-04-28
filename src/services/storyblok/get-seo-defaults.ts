@@ -14,7 +14,6 @@ export async function getSeoDefaults(): Promise<SEOProps> {
 
     story = data?.story?.content as SeoDefaultsStoryblok;
 
-    console.log({ story });
     if (!story) {
       throw new Error("No seo defaults found in storyblok");
     }

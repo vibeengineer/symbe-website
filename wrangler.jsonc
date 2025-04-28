@@ -8,8 +8,8 @@
     "directory": "./dist"
   },
   "vars": {
-    "BASE_URL": "https://yourdomain.com",
-    "SITE_NAME": "Astro Storyblok Starter",
-    "SITE_DESCRIPTION": "A heavily optimized description full of well-researched keywords."
+    "BASE_URL": "https://symbe-website.symbe.workers.dev/",
+    "SITE_NAME": "Symbe Website",
+    "SITE_DESCRIPTION": "Build deal-winning business cases in seconds. The Intelligent Business Case Platform for value-based sales professionals."
   }
 }
