@@ -1,5 +1,5 @@
 {
-  "name": "astro-storyblok-starter",
+  "name": "symbe-website",
   "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2025-04-10",
   "compatibility_flags": ["nodejs_compat"],
