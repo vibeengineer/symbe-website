@@ -1,22 +1,24 @@
 ---
 import { SEO } from "astro-seo";
-import type { SEOProps } from "astro-seo";
 import { Font } from "astro:assets";
-const { env } = Astro.locals.runtime;
+const {
+  env: { SITE_NAME, BASE_URL },
+} = Astro.locals.runtime;
 import "../styles/global.css";
+import { getSeoDefaults } from "../services/storyblok/get-seo-defaults";
 
 type Props = {
   title?: string;
-  description: string;
-  openGraph?: SEOProps["openGraph"];
-  noindex?: boolean;
+  description?: string;
+  openGraphTitle?: string;
+  openGraphImage?: string;
+  noIndex?: boolean;
 };
 
-const { title, description, openGraph, noindex } = Astro.props;
-const siteUrl = env.BASE_URL;
-const siteName = title ?? env.SITE_NAME;
-const ogImage = openGraph?.basic?.image ?? `${siteUrl}/og.png`;
-const siteDescription = description ?? env.SITE_DESCRIPTION;
+const seoDefaults = await getSeoDefaults();
+
+const { title, description, openGraphTitle, openGraphImage, noIndex } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -26,14 +28,28 @@ const siteDescription = description ?? env.SITE_DESCRIPTION;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-dm-sans" preload />
     <SEO
-      noindex={noindex}
-      title={title ? `${title} | ${siteName}` : siteName}
-      description={siteDescription}
-      openGraph={openGraph ?? {
+      {...seoDefaults}
+      noindex={noIndex}
+      title={title ? `${title} | ${SITE_NAME}` : SITE_NAME}
+      description={description
+        ? description
+        : seoDefaults.description
+          ? seoDefaults.description
+          : "Set website description within Storyblok"}
+      openGraph={{
         basic: {
-          title: siteName,
+          title: openGraphTitle
+            ? openGraphTitle
+            : seoDefaults.openGraph?.basic.title
+              ? seoDefaults.openGraph?.basic.title
+              : "Title",
           type: "website",
-          image: ogImage,
+          image: openGraphImage
+            ? openGraphImage
+            : seoDefaults.openGraph?.image?.url &&
+                typeof seoDefaults.openGraph?.image?.url === "string"
+              ? seoDefaults.openGraph?.image.url
+              : `${BASE_URL}/og.png`,
         },
       }}
       extend={{
@@ -54,8 +70,8 @@ const siteDescription = description ?? env.SITE_DESCRIPTION;
           { rel: "manifest", href: "/favicon/site.webmanifest" },
         ],
         meta: [
-          { name: "apple-mobile-web-app-title", content: siteName },
-          { property: "og:site_name", content: siteName },
+          { name: "apple-mobile-web-app-title", content: SITE_NAME },
+          { property: "og:site_name", content: SITE_NAME },
           { name: "theme-color", content: "#000000" },
         ],
       }}

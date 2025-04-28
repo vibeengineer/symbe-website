@@ -3,57 +3,23 @@ import type { PageStoryblok } from "../../storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Base from "./base.astro";
-import type { SEOProps } from "astro-seo";
 
 type Props = {
   blok: PageStoryblok;
 };
 
 const { blok } = Astro.props;
-
-// Extract SEO data from the page blok
-const pageTitle = blok.title;
-const pageDescription = blok.description;
-const pageNoIndex = blok.noIndex;
-
-// Construct Open Graph props for Base layout
-let pageOpenGraph: SEOProps["openGraph"] | undefined = undefined;
-// Correctly type the 'basic' object
-const ogBasic: NonNullable<SEOProps["openGraph"]>["basic"] = {
-  title: "",
-  type: "",
-  image: "",
-};
-let hasOgData = false;
-
-if (blok.openGraphTitle) {
-  ogBasic.title = blok.openGraphTitle;
-  hasOgData = true;
-}
-if (blok.openGraphImage?.filename) {
-  ogBasic.image = blok.openGraphImage.filename; // Assuming filename is the full URL or resolved elsewhere
-  hasOgData = true;
-}
-
-if (hasOgData) {
-  ogBasic.type = "website"; // Default type
-  pageOpenGraph = { basic: ogBasic };
-}
-
-// Handle Open Graph description via extend prop if present
-let pageExtend: SEOProps["extend"] | undefined = undefined;
-if (blok.openGraphDescription) {
-  pageExtend = {
-    meta: [{ property: "og:description", content: blok.openGraphDescription }],
-  };
-}
 ---
 
 <Base
-  title={pageTitle}
-  description={pageDescription ?? ""}
-  openGraph={pageOpenGraph}
-  noindex={pageNoIndex}
+  title={blok.title}
+  description={blok.description}
+  openGraphTitle={blok.openGraphTitle}
+  noIndex={blok.noIndex}
+  openGraphImage={blok.openGraphImage?.filename &&
+  typeof blok.openGraphImage?.filename
+    ? blok.openGraphImage
+    : undefined}
 >
   <main {...storyblokEditable(blok as SbBlokData)}>
     {
