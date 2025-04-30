@@ -79,3 +79,11 @@ export function parseLink(link: MultilinkStoryblok) {
 
   throw new Error("Invalid link object state");
 }
+
+export function parseAsset(asset: AssetStoryblok) {
+  if (!asset.filename && !asset.src) throw new Error("No filename found");
+  return {
+    src: asset.filename ?? asset.src,
+    alt: asset.alt,
+  };
+}
