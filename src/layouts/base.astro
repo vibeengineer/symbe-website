@@ -1,5 +1,5 @@
 ---
-import { SEO, type SEOProps } from "astro-seo";
+import { SEO } from "astro-seo";
 import { Font } from "astro:assets";
 const {
   env: { SITE_NAME, BASE_URL },
@@ -19,44 +19,6 @@ const seoDefaults = await getSeoDefaults();
 
 const { title, description, openGraphTitle, openGraphImage, noIndex } =
   Astro.props;
-
-function getOgImage() {
-  if (openGraphImage) return openGraphImage;
-  if (seoDefaults.openGraphImage?.filename)
-    return seoDefaults.openGraphImage.filename;
-  return `${BASE_URL}/og.png`;
-}
-
-function getOgTitle() {
-  if (openGraphTitle) return openGraphTitle;
-  if (seoDefaults.openGraphTitle) return seoDefaults.title;
-  if (title) return title;
-  return seoDefaults.title;
-}
-
-function getNoIndex() {
-  if (typeof noIndex === "boolean") return noIndex;
-  if (typeof seoDefaults.noIndex === "boolean") return seoDefaults.noIndex;
-  return false;
-}
-
-const seoProps: SEOProps = {
-  noindex: getNoIndex(),
-  title: title ? title : seoDefaults.title,
-  description: description ? description : seoDefaults.description,
-  openGraph: {
-    basic: {
-      title: getOgTitle(),
-      image: getOgImage(),
-      type: "website",
-    },
-  },
-  ...(seoDefaults.twitter && {
-    twitter: {
-      creator: seoDefaults.twitter,
-    },
-  }),
-};
 ---
 
 <!doctype html>
@@ -66,7 +28,28 @@ const seoProps: SEOProps = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-dm-sans" preload />
     <SEO
-      {...seoProps}
+      title={title ? title : seoDefaults.title}
+      description={description ? description : seoDefaults.description}
+      noindex={noIndex ?? seoDefaults.noIndex ?? false}
+      openGraph={{
+        basic: {
+          title:
+            openGraphTitle ??
+            seoDefaults.openGraphTitle ??
+            title ??
+            seoDefaults.title,
+          image:
+            openGraphImage ??
+            seoDefaults.openGraphImage?.filename ??
+            `${BASE_URL}/og.png`,
+          type: "website",
+        },
+      }}
+      twitter={seoDefaults.twitter
+        ? {
+            creator: seoDefaults.twitter,
+          }
+        : undefined}
       extend={{
         link: [
           {
