@@ -1,5 +1,5 @@
 ---
-import { SEO } from "astro-seo";
+import { SEO, type SEOProps } from "astro-seo";
 import { Font } from "astro:assets";
 const {
   env: { SITE_NAME, BASE_URL },
@@ -19,6 +19,44 @@ const seoDefaults = await getSeoDefaults();
 
 const { title, description, openGraphTitle, openGraphImage, noIndex } =
   Astro.props;
+
+function getOgImage() {
+  if (openGraphImage) return openGraphImage;
+  if (seoDefaults.openGraphImage?.filename)
+    return seoDefaults.openGraphImage.filename;
+  return `${BASE_URL}/og.png`;
+}
+
+function getOgTitle() {
+  if (openGraphTitle) return openGraphTitle;
+  if (seoDefaults.openGraphTitle) return seoDefaults.title;
+  if (title) return title;
+  return seoDefaults.title;
+}
+
+function getNoIndex() {
+  if (typeof noIndex === "boolean") return noIndex;
+  if (typeof seoDefaults.noIndex === "boolean") return seoDefaults.noIndex;
+  return false;
+}
+
+const seoProps: SEOProps = {
+  noindex: getNoIndex(),
+  title: title ? title : seoDefaults.title,
+  description: description ? description : seoDefaults.description,
+  openGraph: {
+    basic: {
+      title: getOgTitle(),
+      image: getOgImage(),
+      type: "website",
+    },
+  },
+  ...(seoDefaults.twitter && {
+    twitter: {
+      creator: seoDefaults.twitter,
+    },
+  }),
+};
 ---
 
 <!doctype html>
@@ -28,30 +66,7 @@ const { title, description, openGraphTitle, openGraphImage, noIndex } =
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-dm-sans" preload />
     <SEO
-      {...seoDefaults}
-      noindex={noIndex}
-      title={title ? `${title} | ${SITE_NAME}` : SITE_NAME}
-      description={description
-        ? description
-        : seoDefaults.description
-          ? seoDefaults.description
-          : "Set website description within Storyblok"}
-      openGraph={{
-        basic: {
-          title: openGraphTitle
-            ? openGraphTitle
-            : seoDefaults.openGraph?.basic.title
-              ? seoDefaults.openGraph?.basic.title
-              : "Title",
-          type: "website",
-          image: openGraphImage
-            ? openGraphImage
-            : seoDefaults.openGraph?.image?.url &&
-                typeof seoDefaults.openGraph?.image?.url === "string"
-              ? seoDefaults.openGraph?.image.url
-              : `${BASE_URL}/og.png`,
-        },
-      }}
+      {...seoProps}
       extend={{
         link: [
           {
