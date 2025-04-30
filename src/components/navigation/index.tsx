@@ -48,7 +48,7 @@ export default function Navigation({ blok, className }: NavigationProps) {
               </div>
             );
           }
-          return null; // Or handle other potential types if necessary
+          return null;
         })}
       </div>
       <div>

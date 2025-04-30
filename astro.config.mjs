@@ -5,7 +5,7 @@ import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import { storyblok } from "@storyblok/astro";
-import { getRedirects } from "./src/services/storyblok/get-redirects";
+import { getRedirects } from "./src/services/storyblok/redirects";
 
 // Fetch redirects
 import { loadEnv } from "vite";
