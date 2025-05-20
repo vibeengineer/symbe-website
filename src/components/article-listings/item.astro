@@ -1,24 +1,16 @@
 ---
-import type { FiresideChatStoryblok } from "../../../storyblok/types";
+import type { ArticleStoryblok } from "../../../storyblok/types";
 import type { StoryblokStory } from "../../services/storyblok/helpers";
 import { parseAsset } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 
 type Props = {
-  story: Prettify<StoryblokStory<FiresideChatStoryblok>>;
+  story: Prettify<StoryblokStory<ArticleStoryblok>>;
 };
 
 const {
   story: {
-    content: {
-      blurb,
-      dateLastModified,
-      datePublished,
-      embed,
-      thumbnail,
-      title,
-      watchTime,
-    },
+    content: { blurb, thumbnail, title },
   },
 } = Astro.props;
 ---
@@ -27,5 +19,4 @@ const {
   <img src={parseAsset(thumbnail, "src")} alt={parseAsset(thumbnail, "alt")} />
   <h2>{title}</h2>
   <p>{blurb}</p>
-  <p>{watchTime}</p>
 </div>

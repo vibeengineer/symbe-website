@@ -30,6 +30,13 @@ export const storyblokStoryBaseSchema = z.object({
   translated_slugs: z.any(),
 });
 
+export type StoryblokStory<T> = Omit<
+  z.infer<typeof storyblokStoryBaseSchema>,
+  "content"
+> & {
+  content: T;
+};
+
 export const getStoryResponseSchema = z.object({
   data: z.object({
     story: storyblokStoryBaseSchema,
@@ -97,7 +104,7 @@ export async function getStories<T>({
 
   const parsedResponse = getStoriesResponseSchema.parse(response);
 
-  return parsedResponse.data.stories as T[];
+  return parsedResponse.data.stories as StoryblokStory<T>[];
 }
 
 export type ParseLinkInput =

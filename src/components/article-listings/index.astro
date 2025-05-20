@@ -1,0 +1,30 @@
+---
+import type {
+  ArticleListingsStoryblok,
+  ArticleStoryblok,
+} from "../../../storyblok/types";
+import { getStories } from "../../services/storyblok/helpers";
+import type { Prettify } from "../../types";
+import ArticleListing from "./item.astro";
+
+type Props = {
+  blok: Prettify<ArticleListingsStoryblok>;
+};
+
+const articles = await getStories<ArticleStoryblok>({
+  contentType: "article",
+});
+
+const {
+  blok: { title, subtitle },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{subtitle}</p>
+
+  <div>
+    {articles.map((article) => <ArticleListing story={article} />)}
+  </div>
+</div>
