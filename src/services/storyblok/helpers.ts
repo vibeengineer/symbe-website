@@ -5,37 +5,51 @@ import type {
   MultilinkStoryblok,
 } from "../../../storyblok/types";
 
-export const storyblokBaseSchema = z.object({
+export const storyblokStoryBaseSchema = z.object({
+  name: z.string(),
+  created_at: z.string().datetime(),
+  published_at: z.string().datetime().nullable(),
+  id: z.number(),
+  uuid: z.string().uuid(),
+  content: z.any(),
+  slug: z.string(),
+  full_slug: z.string(),
+  sort_by_date: z.any(),
+  position: z.number(),
+  tag_list: z.array(z.any()),
+  is_startpage: z.boolean(),
+  parent_id: z.number(),
+  meta_data: z.any(),
+  group_id: z.string(),
+  first_published_at: z.string().datetime().nullable(),
+  release_id: z.any(),
+  lang: z.string(),
+  path: z.any(),
+  alternates: z.array(z.any()),
+  default_full_slug: z.any(),
+  translated_slugs: z.any(),
+});
+
+export const getStoryResponseSchema = z.object({
   data: z.object({
-    story: z.object({
-      name: z.string(),
-      created_at: z.string().datetime(),
-      published_at: z.string().datetime(),
-      id: z.number(),
-      uuid: z.string().uuid(),
-      content: z.any(),
-      slug: z.string(),
-      full_slug: z.string(),
-      sort_by_date: z.any(),
-      position: z.number(),
-      tag_list: z.array(z.any()),
-      is_startpage: z.boolean(),
-      parent_id: z.number(),
-      meta_data: z.any(),
-      group_id: z.string(),
-      first_published_at: z.string().datetime(),
-      release_id: z.any(),
-      lang: z.string(),
-      path: z.any(),
-      alternates: z.array(z.any()),
-      default_full_slug: z.any(),
-      translated_slugs: z.any(),
-    }),
+    story: storyblokStoryBaseSchema,
     cv: z.number(),
     rels: z.array(z.any()),
     links: z.array(z.any()),
   }),
   headers: z.record(z.string()),
+});
+
+export const getStoriesResponseSchema = z.object({
+  data: z.object({
+    stories: z.array(storyblokStoryBaseSchema),
+    cv: z.number(),
+    rels: z.array(z.any()),
+    links: z.array(z.any()),
+  }),
+  headers: z.record(z.string()),
+  perPage: z.number(),
+  total: z.number(),
 });
 
 export async function getStory<T>({
@@ -47,12 +61,12 @@ export async function getStory<T>({
 }) {
   const storyblok = useStoryblokApi();
 
-  const response = await storyblok.get(`cdn/stories/${slug}`, {
+  const response = await storyblok.getStory(`${slug}`, {
     version: import.meta.env.MODE === "development" ? "draft" : "published",
     ...options,
   });
 
-  const parsedResponse = storyblokBaseSchema.parse(response);
+  const parsedResponse = getStoryResponseSchema.parse(response);
 
   return {
     ...parsedResponse.data.story,
@@ -60,7 +74,32 @@ export async function getStory<T>({
   };
 }
 
-// Define the new type for parseLink input as requested
+export async function getStories<T>({
+  contentType,
+  page,
+  per_page,
+  options,
+}: {
+  contentType?: string;
+  page?: number;
+  per_page?: number;
+  options?: ISbStoriesParams;
+}) {
+  const storyblok = useStoryblokApi();
+
+  const response = await storyblok.getStories({
+    version: import.meta.env.MODE === "development" ? "draft" : "published",
+    page: page ?? 1,
+    per_page: per_page ?? 100,
+    ...(contentType ? { content_type: contentType } : {}),
+    ...options,
+  });
+
+  const parsedResponse = getStoriesResponseSchema.parse(response);
+
+  return parsedResponse.data.stories as T[];
+}
+
 export type ParseLinkInput =
   | MultilinkStoryblok
   | Exclude<
@@ -114,9 +153,10 @@ export function parseLink(
           calculatedHref = calculatedHref.replace(/\/{2,}/g, "/");
         }
       } else {
-        throw new Error(
-          `Invalid story link: 'story' object or 'story.full_slug' is missing or not a string for link ID ${link.id}. Received story: ${JSON.stringify(link.story)}`,
+        console.warn(
+          `Invalid story link: 'story' object or 'story.full_slug' is missing or not a string for link ID ${link.id}. Received story: ${JSON.stringify(link.story)}. Defaulting to '#'.`,
         );
+        calculatedHref = "#";
       }
       break;
 

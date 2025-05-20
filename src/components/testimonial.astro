@@ -1,6 +1,7 @@
 ---
 import type { TestimonialStoryblok } from "../../storyblok/types";
 import type { Prettify } from "../types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import { parseAsset } from "../services/storyblok/helpers";
 
 type Props = {
@@ -12,7 +13,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <p>{quote}</p>
   <p>{author}</p>
   <p>{authorRoleCompany}</p>

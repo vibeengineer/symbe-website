@@ -1,16 +1,15 @@
 ---
-import type { PageStoryblok } from "../../storyblok/types";
+import type { ArticleStoryblok } from "../../storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Base from "./base.astro";
 import type { Prettify } from "../types";
 
 type Props = {
-  blok: Prettify<PageStoryblok>;
+  blok: Prettify<ArticleStoryblok>;
 };
 
 const {
-  blok: { seo, body },
+  blok: { seo },
 } = Astro.props;
 ---
 
@@ -24,11 +23,5 @@ const {
     ? seo[0].openGraphImage.filename
     : undefined}
 >
-  <main {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-    {
-      body?.map((bodyBlok) => {
-        return <StoryblokComponent blok={bodyBlok as SbBlokData} />;
-      })
-    }
-  </main>
+  <main {...storyblokEditable(Astro.props.blok as SbBlokData)}></main>
 </Base>

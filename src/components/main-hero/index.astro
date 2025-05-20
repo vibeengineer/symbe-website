@@ -3,7 +3,7 @@ import type { MainHeroStoryblok } from "../../../storyblok/types";
 import { parseAsset } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 import Link from "../ui/link.astro";
-
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<MainHeroStoryblok>;
 };
@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <h2>{title}</h2>
   <p>{subtitle}</p>
   <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />

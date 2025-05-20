@@ -1,0 +1,28 @@
+---
+import type { FiresideChatStoryblok } from "../../../storyblok/types";
+import { parseAsset } from "../../services/storyblok/helpers";
+import type { Prettify } from "../../types";
+
+type Props = {
+  blok: Prettify<FiresideChatStoryblok>;
+};
+
+const {
+  blok: {
+    blurb,
+    dateLastModified,
+    datePublished,
+    embed,
+    thumbnail,
+    title,
+    watchTime,
+  },
+} = Astro.props;
+---
+
+<div>
+  <img src={parseAsset(thumbnail, "src")} alt={parseAsset(thumbnail, "alt")} />
+  <h2>{title}</h2>
+  <p>{blurb}</p>
+  <p>{watchTime}</p>
+</div>

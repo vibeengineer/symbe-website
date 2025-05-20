@@ -1,0 +1,46 @@
+---
+import type {
+  FiresideChatStoryblok,
+  FiresideListingsStoryblok,
+} from "../../../storyblok/types";
+import {
+  getStories,
+  parseAsset,
+  parseLink,
+} from "../../services/storyblok/helpers";
+import type { Prettify } from "../../types";
+import FiresideChatListing from "./item.astro";
+
+type Props = {
+  blok: Prettify<FiresideListingsStoryblok>;
+};
+
+const firesideChats = await getStories<FiresideChatStoryblok>({
+  contentType: "firesideChat",
+});
+
+const {
+  blok: { title, subtitle, subscribeLinks, subscribeLinksCaption },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{subtitle}</p>
+  <div>
+    {
+      subscribeLinks?.map((link) => (
+        <a
+          href={parseLink(link.link, "href")}
+          target={parseLink(link.link, "target")}
+        >
+          <img
+            src={parseAsset(link.icon, "src")}
+            alt={parseAsset(link.icon, "alt")}
+          />
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+</div>

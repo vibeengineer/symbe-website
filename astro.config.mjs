@@ -27,6 +27,10 @@ export default defineConfig({
       components: {
         // Content type blocks
         page: "layouts/page",
+        article: "layouts/article",
+        customerStory: "layouts/customer-story",
+        firesideChat: "layouts/fireside-chat",
+        // Nestable type blocks
         mainHero: "components/main-hero/index",
         bentoGrid: "components/bento-grid/index",
         stats: "components/stats/index",
@@ -34,6 +38,9 @@ export default defineConfig({
         testimonial: "components/testimonial",
         leftRightImage: "components/left-right-image/index",
         ctaSection: "components/cta-section",
+        firesideChatsListings: "components/fireside-chats-listings/index",
+        articleListings: "components/article-listings/index",
+        customerStoryListings: "components/customer-story-listings/index",
       },
       enableFallbackComponent: true,
     }),

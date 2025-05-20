@@ -8,10 +8,10 @@ type Props = {
 };
 
 const {
-  blok: { link, text, linkStyle },
+  blok: { link, linkText, linkStyle },
 } = Astro.props;
 ---
 
 <a href={parseLink(link, "href")} target={parseLink(link, "target")}>
-  {text}
+  {linkText}
 </a>
