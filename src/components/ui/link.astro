@@ -1,0 +1,16 @@
+---
+import type { LinkStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+
+type Props = {
+  blok: Prettify<LinkStoryblok>;
+};
+
+const {
+  blok: { link, text, linkStyle },
+} = Astro.props;
+---
+
+<a href={link?.url} target={link?.target}>
+  {text}
+</a>

@@ -1,0 +1,30 @@
+---
+import type { MainHeroStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+import Link from "../ui/link.astro";
+
+type Props = {
+  blok: Prettify<MainHeroStoryblok>;
+};
+
+const {
+  blok: { title, subtitle, media, ctas, bannerStars, bannerText, showBanner },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{subtitle}</p>
+  <img src={media.filename} alt={media.alt} />
+  <div>
+    {ctas?.map((cta) => <Link blok={cta} />)}
+  </div>
+  {
+    showBanner && (
+      <div>
+        <p>{bannerText}</p>
+        <img src={bannerStars} alt="Banner Stars" />
+      </div>
+    )
+  }
+</div>
