@@ -99,21 +99,21 @@ To learn more about the folder structure of an Astro project, refer to [our guid
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                                           |
-| :------------------------ | :--------------------------------------------------------------- |
-| `pnpm install`            | Installs dependencies                                            |
-| `pnpm dev`                | Starts local dev server at `localhost:4321`                      |
-| `pnpm build`              | Build your production site to `./dist/`                          |
-| `pnpm preview`            | Preview your build locally, before deploying                     |
-| `pnpm test`               | Runs unit and integration tests with Vitest                      |
-| `pnpm format`             | Formats code using Biome                                         |
-| `pnpm types`              | Generates Cloudflare Worker types                                |
-| `pnpm pull-sb-components` | Downloads component schema from Storyblok (requires login/token) |
-| `pnpm generate-sb-types`  | Generates TypeScript types from downloaded Storyblok schema      |
-| `pnpm backup-storyblok`   | Creates a backup of Storyblok space (requires OAuth token)       |
+| Command                   | Action                                                                   |
+| :------------------------ | :----------------------------------------------------------------------- |
+| `pnpm install`            | Installs dependencies                                                    |
+| `pnpm dev`                | Starts local dev server at `localhost:4321`                              |
+| `pnpm build`              | Build your production site to `./dist/`                                  |
+| `pnpm preview`            | Preview your build locally, before deploying                             |
+| `pnpm test`               | Runs unit and integration tests with Vitest                              |
+| `pnpm format`             | Formats code using Biome                                                 |
+| `pnpm types`              | Generates Cloudflare Worker types                                        |
+| `pnpm pull-sb-components` | Downloads component schema from Storyblok (requires login/token)         |
+| `pnpm generate-sb-types`  | Generates TypeScript types from downloaded Storyblok schema              |
+| `pnpm backup-storyblok`   | Creates a backup of Storyblok space (requires OAuth token)               |
 | `pnpm restore-storyblok`  | Restores content from a Storyblok backup (requires OAuth token and file) |
-| `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check`                 |
-| `pnpm astro -- --help`    | Get help using the Astro CLI                                     |
+| `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check`                         |
+| `pnpm astro -- --help`    | Get help using the Astro CLI                                             |
 
 ## 👀 Want to learn more?
 
