@@ -110,6 +110,8 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm types`              | Generates Cloudflare Worker types                                |
 | `pnpm pull-sb-components` | Downloads component schema from Storyblok (requires login/token) |
 | `pnpm generate-sb-types`  | Generates TypeScript types from downloaded Storyblok schema      |
+| `pnpm backup-storyblok`   | Creates a backup of Storyblok space (requires OAuth token)       |
+| `pnpm restore-storyblok`  | Restores content from a Storyblok backup (requires OAuth token and file) |
 | `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check`                 |
 | `pnpm astro -- --help`    | Get help using the Astro CLI                                     |
 
@@ -120,3 +122,4 @@ Feel free to check [our documentation](https://docs.astro.build) or jump into ou
 ## 📝 Notes
 
 - **PNPM & Storyblok:** This starter uses `pnpm`. An `.npmrc` file is included to ensure Storyblok dependencies are hoisted correctly, which is sometimes required for the Storyblok SDKs to function properly with `pnpm`.
+- **Storyblok Backup & Restore:** This project includes functionality to back up and restore your Storyblok space. You'll need a personal OAuth access token from your Storyblok account settings (not the space access token) to use these features. Set the token via the `STORYBLOK_OAUTH_TOKEN` environment variable in your `.env` file. For more details on the backup and restore functionality, refer to the [storyblok-backup](https://github.com/webflorist/storyblok-backup) documentation.
