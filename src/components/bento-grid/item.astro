@@ -1,5 +1,6 @@
 ---
 import type { BentoGridItemStoryblok } from "../../../storyblok/types";
+import { parseAsset } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 type Props = {
   blok: Prettify<BentoGridItemStoryblok>;
@@ -13,5 +14,5 @@ const {
 <div>
   <h2>{title}</h2>
   <p>{description}</p>
-  <img src={asset.filename} alt={asset.alt} />
+  <img src={parseAsset(asset, "src")} alt={parseAsset(asset, "alt")} />
 </div>

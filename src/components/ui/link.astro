@@ -1,5 +1,6 @@
 ---
 import type { LinkStoryblok } from "../../../storyblok/types";
+import { parseLink } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 
 type Props = {
@@ -11,6 +12,6 @@ const {
 } = Astro.props;
 ---
 
-<a href={link?.url} target={link?.target}>
+<a href={parseLink(link, "href")} target={parseLink(link, "target")}>
   {text}
 </a>

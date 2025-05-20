@@ -1,5 +1,6 @@
 ---
 import type { LeftRightImageStoryblok } from "../../../storyblok/types";
+import { parseAsset } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 import LeftRightImageBenefit from "./benefit.astro";
 type Props = {
@@ -13,7 +14,7 @@ const {
 
 <div>
   <div>
-    <img src={media?.filename} alt={media?.alt} />
+    <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
   </div>
   <div>
     <h2>{title}</h2>

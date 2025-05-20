@@ -1,5 +1,6 @@
 ---
 import type { CtaSectionStoryblok } from "../../storyblok/types";
+import { parseAsset } from "../services/storyblok/helpers";
 import type { Prettify } from "../types";
 import Link from "./ui/link.astro";
 
@@ -13,7 +14,11 @@ const {
 ---
 
 <div>
-  <img src={image?.filename} alt={image?.alt} />
+  {
+    image && (
+      <img src={parseAsset(image, "src")} alt={parseAsset(image, "alt")} />
+    )
+  }
   <h2>{title}</h2>
   <p>{description}</p>
   <div>

@@ -66,7 +66,7 @@ export interface LeftRightImageStoryblok {
   title: string;
   description: string;
   benefits?: LeftRightImageBenefitStoryblok[];
-  media?: AssetStoryblok;
+  media: AssetStoryblok;
   component: "leftRightImage";
   _uid: string;
   [k: string]: unknown;
@@ -155,8 +155,8 @@ export type MultilinkStoryblok =
     };
 
 export interface LinkStoryblok {
-  linkText?: string;
-  link?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
+  linkText: string;
+  link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   linkStyle?: "" | "default" | "button";
   component: "link";
   _uid: string;

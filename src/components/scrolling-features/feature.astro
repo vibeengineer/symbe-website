@@ -1,5 +1,6 @@
 ---
 import type { ScrollingFeatureStoryblok } from "../../../storyblok/types";
+import { parseAsset } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 
 type Props = {
@@ -14,5 +15,5 @@ const {
 <div>
   <h2>{title}</h2>
   <p>{description}</p>
-  <img src={media.filename} alt={media.alt} />
+  <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
 </div>

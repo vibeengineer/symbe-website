@@ -1,6 +1,7 @@
 ---
 import type { TestimonialStoryblok } from "../../storyblok/types";
 import type { Prettify } from "../types";
+import { parseAsset } from "../services/storyblok/helpers";
 
 type Props = {
   blok: Prettify<TestimonialStoryblok>;
@@ -15,5 +16,12 @@ const {
   <p>{quote}</p>
   <p>{author}</p>
   <p>{authorRoleCompany}</p>
-  <img src={authorHeadshot?.filename} alt={authorHeadshot?.alt} />
+  {
+    authorHeadshot && (
+      <img
+        src={parseAsset(authorHeadshot, "src")}
+        alt={parseAsset(authorHeadshot, "alt")}
+      />
+    )
+  }
 </div>

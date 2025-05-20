@@ -1,5 +1,6 @@
 ---
 import type { MainHeroStoryblok } from "../../../storyblok/types";
+import { parseAsset } from "../../services/storyblok/helpers";
 import type { Prettify } from "../../types";
 import Link from "../ui/link.astro";
 
@@ -15,15 +16,15 @@ const {
 <div>
   <h2>{title}</h2>
   <p>{subtitle}</p>
-  <img src={media.filename} alt={media.alt} />
+  <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
   <div>
     {ctas?.map((cta) => <Link blok={cta} />)}
   </div>
   {
-    showBanner && (
+    showBanner && bannerStars && bannerText && (
       <div>
         <p>{bannerText}</p>
-        <img src={bannerStars} alt="Banner Stars" />
+        {parseInt(bannerStars) / 5}
       </div>
     )
   }
