@@ -66,9 +66,8 @@ export async function getStory<T>({
   const storyblok = useStoryblokApi();
 
   const response = await storyblok.getStory(`${slug}`, {
-    version: import.meta.env.CONTENT_VERSION
-      ? import.meta.env.CONTENT_VERSION
-      : "published",
+    version:
+      import.meta.env.CONTENT_VERSION === "draft" ? "draft" : "published",
     ...options,
   });
 
@@ -94,9 +93,8 @@ export async function getStories<T>({
   const storyblok = useStoryblokApi();
 
   const response = await storyblok.getStories({
-    version: import.meta.env.CONTENT_VERSION
-      ? import.meta.env.CONTENT_VERSION
-      : "published",
+    version:
+      import.meta.env.CONTENT_VERSION === "draft" ? "draft" : "published",
     page: page ?? 1,
     per_page: per_page ?? 100,
     ...(contentType ? { content_type: contentType } : {}),
