@@ -418,6 +418,16 @@ export interface PageStoryblok {
     | FiresideChatsListingsStoryblok
     | ContactUsStoryblok
     | LeftRightHeroStoryblok
+    | BenefitsStoryblok
+    | CentreHeroStoryblok
+    | FaqListStoryblok
+    | FullWidthBentoGridStoryblok
+    | LeftRightFeaturesStoryblok
+    | PartnersStoryblok
+    | PricingHeroStoryblok
+    | RelatedContentStoryblok
+    | TeamStoryblok
+    | ValuesStoryblok
   )[];
   seo: SeoStoryblok[];
   component: "page";
