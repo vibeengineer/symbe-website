@@ -1,6 +1,6 @@
 ---
-import type { FooterStoryblok } from "../../storyblok/types";
-
+import type { FooterStoryblok } from "@storyblok/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: FooterStoryblok;
 };
@@ -9,6 +9,7 @@ const { blok } = Astro.props;
 
 <footer
   class="grid grid-cols-1 gap-4 bg-gray-100 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   {
     blok.linkColumns?.map((column) => (

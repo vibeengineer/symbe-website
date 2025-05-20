@@ -1,9 +1,9 @@
 ---
-import type { CtaSectionStoryblok } from "../../storyblok/types";
-import { parseAsset } from "../services/storyblok/helpers";
-import type { Prettify } from "../types";
+import type { CtaSectionStoryblok } from "@storyblok/types";
+import { parseAsset } from "@/services/storyblok/helpers";
+import type { Prettify } from "@/types";
 import Link from "./ui/link.astro";
-
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<CtaSectionStoryblok>;
 };
@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   {
     image && (
       <img src={parseAsset(image, "src")} alt={parseAsset(image, "alt")} />

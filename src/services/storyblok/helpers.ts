@@ -1,9 +1,6 @@
 import { useStoryblokApi, type ISbStoriesParams } from "@storyblok/astro";
 import { z } from "zod";
-import type {
-  AssetStoryblok,
-  MultilinkStoryblok,
-} from "../../../storyblok/types";
+import type { AssetStoryblok, MultilinkStoryblok } from "@storyblok/types";
 
 export const storyblokStoryBaseSchema = z.object({
   name: z.string(),

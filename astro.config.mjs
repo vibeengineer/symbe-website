@@ -30,6 +30,7 @@ export default defineConfig({
         article: "layouts/article",
         customerStory: "layouts/customer-story",
         firesideChat: "layouts/fireside-chat",
+        finePrint: "layouts/fine-print",
         demo: "layouts/demo",
         // Nestable type blocks
         mainHero: "components/main-hero/index",

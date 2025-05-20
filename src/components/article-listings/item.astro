@@ -1,9 +1,9 @@
 ---
 import type { ArticleStoryblok } from "../../../storyblok/types";
-import type { StoryblokStory } from "../../services/storyblok/helpers";
-import { parseAsset } from "../../services/storyblok/helpers";
-import type { Prettify } from "../../types";
-
+import type { StoryblokStory } from "@/services/storyblok/helpers";
+import { parseAsset } from "@/services/storyblok/helpers";
+import type { Prettify } from "@/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   story: Prettify<StoryblokStory<ArticleStoryblok>>;
 };
@@ -15,7 +15,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.story.content as SbBlokData)}>
   <img src={parseAsset(thumbnail, "src")} alt={parseAsset(thumbnail, "alt")} />
   <h2>{title}</h2>
   <p>{blurb}</p>

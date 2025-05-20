@@ -1,8 +1,8 @@
 ---
-import type { LinkStoryblok } from "../../../storyblok/types";
-import { parseLink } from "../../services/storyblok/helpers";
-import type { Prettify } from "../../types";
-
+import type { LinkStoryblok } from "@storyblok/types";
+import { parseLink } from "@/services/storyblok/helpers";
+import type { Prettify } from "@/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<LinkStoryblok>;
 };
@@ -12,6 +12,10 @@ const {
 } = Astro.props;
 ---
 
-<a href={parseLink(link, "href")} target={parseLink(link, "target")}>
+<a
+  href={parseLink(link, "href")}
+  target={parseLink(link, "target")}
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+>
   {linkText}
 </a>

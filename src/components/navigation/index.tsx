@@ -2,8 +2,7 @@ import type {
   LinkDropdownStoryblok,
   LinkStoryblok,
   NavigationStoryblok,
-} from "../../../storyblok/types";
-
+} from "@storyblok/types";
 type NavigationProps = {
   className?: string;
   blok: NavigationStoryblok;

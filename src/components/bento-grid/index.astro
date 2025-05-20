@@ -1,8 +1,8 @@
 ---
-import type { BentoGridStoryblok } from "../../../storyblok/types";
-import type { Prettify } from "../../types";
+import type { BentoGridStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
 import BentoGridItem from "./item.astro";
-
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<BentoGridStoryblok>;
 };
@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <h2>{title}</h2>
   <div>
     {items.map((item) => <BentoGridItem blok={item} />)}

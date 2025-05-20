@@ -5,9 +5,9 @@ import { getGlobals } from "../services/storyblok/globals";
 const {
   env: { SITE_NAME, BASE_URL },
 } = Astro.locals.runtime;
-import "../styles/global.css";
-import Navigation from "../components/navigation/navigation.astro";
-import Footer from "../components/footer.astro";
+import "@/styles/global.css";
+import Navigation from "@/components/navigation/navigation.astro";
+import Footer from "@/components/footer.astro";
 
 type Props = {
   title?: string;

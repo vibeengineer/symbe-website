@@ -1,8 +1,8 @@
 ---
-import type { StatsStoryblok } from "../../../storyblok/types";
-import type { Prettify } from "../../types";
+import type { StatsStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
 import Stat from "./stat.astro";
-
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<StatsStoryblok>;
 };
@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <h2>{title}</h2>
   <p>{subtitle}</p>
   <div>

@@ -27,14 +27,18 @@
 		"@types/react-dom": "^19.1.2",
 		"astro": "^5.7.5",
 		"astro-seo": "^0.8.4",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
 		"prettier-plugin-astro": "^0.14.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"storyblok-js-client": "^6.10.11",
+		"tailwind-merge": "^3.3.0",
 		"tailwindcss": "^4.1.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@tailwindcss/typography": "^0.5.16",
 		"jsdom": "^26.1.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",

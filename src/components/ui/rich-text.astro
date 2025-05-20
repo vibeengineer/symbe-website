@@ -1,0 +1,18 @@
+---
+import { richTextResolver, type StoryblokRichTextNode } from "@storyblok/astro";
+import type { RichtextStoryblok } from "@storyblok/types";
+import { cn } from "@/utils/cn";
+import type { Prettify } from "@/types";
+type Props = {
+  content: Prettify<RichtextStoryblok>;
+  className?: string;
+};
+
+const { content, className } = Astro.props;
+
+const renderedRichText = richTextResolver({
+  // options like custom resolvers
+}).render(content as StoryblokRichTextNode);
+---
+
+<div class={cn("prose", className)} set:html={renderedRichText} />

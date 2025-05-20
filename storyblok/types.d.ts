@@ -137,6 +137,7 @@ export interface FinePrintStoryblok {
   title: string;
   lastModifiedDate: string;
   body: RichtextStoryblok;
+  seo: SeoStoryblok[];
   component: "finePrint";
   _uid: string;
   [k: string]: unknown;

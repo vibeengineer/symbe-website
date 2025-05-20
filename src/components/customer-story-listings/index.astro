@@ -2,15 +2,15 @@
 import type {
   CustomerStoryListingsStoryblok,
   CustomerStoryStoryblok,
-} from "../../../storyblok/types";
+} from "@storyblok/types";
 import {
   getStories,
   parseAsset,
   parseLink,
-} from "../../services/storyblok/helpers";
-import type { Prettify } from "../../types";
+} from "@/services/storyblok/helpers";
+import type { Prettify } from "@/types";
 import CustomerStoryListing from "./item.astro";
-
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<CustomerStoryListingsStoryblok>;
 };
@@ -24,7 +24,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <h2>{title}</h2>
   <p>{subtitle}</p>
   <div>

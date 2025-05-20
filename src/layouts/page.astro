@@ -1,9 +1,9 @@
 ---
-import type { PageStoryblok } from "../../storyblok/types";
+import type { PageStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
 import Base from "./base.astro";
-import type { Prettify } from "../types";
+import type { Prettify } from "@/types";
 
 type Props = {
   blok: Prettify<PageStoryblok>;

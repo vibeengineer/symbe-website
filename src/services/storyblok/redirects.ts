@@ -1,7 +1,7 @@
 import StoryblokClient from "storyblok-js-client";
-import type { RedirectsListStoryblok } from "../../../storyblok/types";
+import type { RedirectsListStoryblok } from "@storyblok/types";
 import type { RedirectConfig } from "astro";
-import { storyblokBaseSchema } from "./helpers";
+import { getStoryResponseSchema } from "./helpers";
 
 export async function getRedirects(
   storyblokApiKey: string,
@@ -13,7 +13,7 @@ export async function getRedirects(
     const response = await sbApi.get("cdn/stories/globals/redirects-list", {
       version: import.meta.env.MODE === "development" ? "draft" : "published",
     });
-    const parsedResponse = storyblokBaseSchema.parse(response);
+    const parsedResponse = getStoryResponseSchema.parse(response);
 
     const story = parsedResponse.data.story.content as RedirectsListStoryblok;
 

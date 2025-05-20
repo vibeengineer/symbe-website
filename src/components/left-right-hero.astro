@@ -1,9 +1,9 @@
 ---
-import type { LeftRightHeroStoryblok } from "../../storyblok/types";
-import type { Prettify } from "../types";
-import { parseAsset } from "../services/storyblok/helpers";
+import type { LeftRightHeroStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import { parseAsset } from "@/services/storyblok/helpers";
 import Link from "./ui/link.astro";
-
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<LeftRightHeroStoryblok>;
 };
@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <h2>{title}</h2>
   <p>{subtitle}</p>
   <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />

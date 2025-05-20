@@ -2,7 +2,7 @@ import type {
   FooterStoryblok,
   NavigationStoryblok,
   SeoDefaultsStoryblok,
-} from "../../../storyblok/types";
+} from "@storyblok/types";
 import { getStory } from "./helpers";
 
 export async function getNavigation() {

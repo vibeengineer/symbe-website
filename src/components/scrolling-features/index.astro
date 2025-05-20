@@ -1,7 +1,8 @@
 ---
-import type { ScrollingFeaturesStoryblok } from "../../../storyblok/types";
-import type { Prettify } from "../../types";
+import type { ScrollingFeaturesStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
 import ScrollingFeature from "./feature.astro";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 type Props = {
   blok: Prettify<ScrollingFeaturesStoryblok>;
 };
@@ -11,7 +12,7 @@ const {
 } = Astro.props;
 ---
 
-<div>
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <h2>{title}</h2>
   <div>
     {features.map((feature) => <ScrollingFeature blok={feature} />)}
