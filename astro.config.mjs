@@ -27,11 +27,15 @@ export default defineConfig({
       components: {
         // Content type blocks
         page: "layouts/page",
-        // Nestable type blocks
-        feature: "components/feature",
-        grid: "components/grid",
-        teaser: "components/teaser",
+        mainHero: "components/main-hero/index",
+        bentoGrid: "components/bento-grid/index",
+        stats: "components/stats/index",
+        scrollingFeatures: "components/scrolling-features/index",
+        testimonial: "components/testimonial",
+        leftRightImage: "components/left-right-image/index",
+        ctaSection: "components/cta-section",
       },
+      enableFallbackComponent: true,
     }),
   ],
   site: SITE_URL,

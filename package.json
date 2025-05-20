@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "astro dev",
+		"dev": "astro dev && pnpm run sslproxy",
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
@@ -13,7 +13,9 @@
 		"pull-sb-components": "storyblok pull-components --space 336379 --path ./storyblok/ --file-name definition",
 		"push-sb-components": "storyblok push-components ./storyblok/components.definition.json --space 336379",
 		"generate-sb-types": "storyblok generate-typescript-typedefs --sourceFilePaths ./storyblok/components.definition.json --destinationFilePath ./storyblok/types.d.ts --compilerOptions storyblok/compiler-options.json",
-		"storyblok": "pnpm run pull-sb-components && pnpm run generate-sb-types"
+		"storyblok": "pnpm run pull-sb-components && pnpm run generate-sb-types",
+		"sslproxy": "local-ssl-proxy --source 4322 --target 4321 --cert localhost.pem --key localhost-key.pem",
+		"generate-cert": "mkcert -install && mkcert localhost"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.5.1",

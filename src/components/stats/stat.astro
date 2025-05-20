@@ -1,0 +1,17 @@
+---
+import type { StatStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+
+type Props = {
+  blok: Prettify<StatStoryblok>;
+};
+
+const {
+  blok: { text, caption },
+} = Astro.props;
+---
+
+<div>
+  <p>{text}</p>
+  <p>{caption}</p>
+</div>

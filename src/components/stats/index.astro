@@ -1,0 +1,21 @@
+---
+import type { StatsStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+import Stat from "./stat.astro";
+
+type Props = {
+  blok: Prettify<StatsStoryblok>;
+};
+
+const {
+  blok: { title, subtitle, stats },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{subtitle}</p>
+  <div>
+    {stats.map((stat) => <Stat blok={stat} />)}
+  </div>
+</div>

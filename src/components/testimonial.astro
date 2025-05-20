@@ -1,0 +1,19 @@
+---
+import type { TestimonialStoryblok } from "../../storyblok/types";
+import type { Prettify } from "../types";
+
+type Props = {
+  blok: Prettify<TestimonialStoryblok>;
+};
+
+const {
+  blok: { quote, author, authorRoleCompany, authorHeadshot },
+} = Astro.props;
+---
+
+<div>
+  <p>{quote}</p>
+  <p>{author}</p>
+  <p>{authorRoleCompany}</p>
+  <img src={authorHeadshot?.filename} alt={authorHeadshot?.alt} />
+</div>

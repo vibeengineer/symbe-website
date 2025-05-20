@@ -1,0 +1,17 @@
+---
+import type { LeftRightImageBenefitStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+
+type Props = {
+  blok: Prettify<LeftRightImageBenefitStoryblok>;
+};
+
+const {
+  blok: { icon, text },
+} = Astro.props;
+---
+
+<div>
+  <img src={icon.filename} alt={icon.alt} />
+  <p>{text}</p>
+</div>

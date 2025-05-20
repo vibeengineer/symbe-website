@@ -1,0 +1,18 @@
+---
+import type { ScrollingFeatureStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+
+type Props = {
+  blok: Prettify<ScrollingFeatureStoryblok>;
+};
+
+const {
+  blok: { title, description, media },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{description}</p>
+  <img src={media.filename} alt={media.alt} />
+</div>

@@ -1,0 +1,22 @@
+---
+import type { CtaSectionStoryblok } from "../../storyblok/types";
+import type { Prettify } from "../types";
+import Link from "./ui/link.astro";
+
+type Props = {
+  blok: Prettify<CtaSectionStoryblok>;
+};
+
+const {
+  blok: { image, title, description, cta },
+} = Astro.props;
+---
+
+<div>
+  <img src={image?.filename} alt={image?.alt} />
+  <h2>{title}</h2>
+  <p>{description}</p>
+  <div>
+    {cta?.map((cta) => <Link blok={cta} />)}
+  </div>
+</div>

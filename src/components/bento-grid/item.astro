@@ -1,0 +1,17 @@
+---
+import type { BentoGridItemStoryblok } from "../../../storyblok/types";
+import type { Prettify } from "../../types";
+type Props = {
+  blok: Prettify<BentoGridItemStoryblok>;
+};
+
+const {
+  blok: { title, description, asset },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{description}</p>
+  <img src={asset.filename} alt={asset.alt} />
+</div>
