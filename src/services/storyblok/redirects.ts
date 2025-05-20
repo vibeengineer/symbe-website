@@ -12,7 +12,9 @@ export async function getRedirects(
   try {
     const response = await sbApi.get("cdn/stories/globals/redirects-list", {
       version:
-        import.meta.env.CONTENT_VERSION === "draft" ? "draft" : "published",
+        import.meta.env.PUBLIC_CONTENT_VERSION === "draft"
+          ? "draft"
+          : "published",
     });
     const parsedResponse = getStoryResponseSchema.parse(response);
 
