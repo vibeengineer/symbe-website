@@ -6,7 +6,7 @@ declare namespace App {
   interface Locals extends Runtime {}
 }
 interface ImportMetaEnv {
-  CONTENT_VERSION: string;
+  PUBLIC_CONTENT_VERSION: string;
   SITE_URL: string;
   STORYBLOK_TOKEN: string;
 }
