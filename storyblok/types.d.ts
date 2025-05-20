@@ -78,6 +78,14 @@ export interface BentoGridItemStoryblok {
   [k: string]: unknown;
 }
 
+export interface ContactUsStoryblok {
+  title: string;
+  subtitle?: RichtextStoryblok;
+  component: "contactUs";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface CtaSectionStoryblok {
   image?: AssetStoryblok;
   title: string;
@@ -112,6 +120,19 @@ export interface CustomerStoryListingsStoryblok {
   [k: string]: unknown;
 }
 
+export interface DemoStoryblok {
+  title: string;
+  subtitle: string;
+  bannerText?: string;
+  bannerStars?: string;
+  showBanner?: boolean;
+  calendarEmbed: string;
+  thankYouTitle: string;
+  component: "demo";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface FinePrintStoryblok {
   title: string;
   lastModifiedDate: string;
@@ -136,12 +157,12 @@ export interface FiresideChatStoryblok {
   [k: string]: unknown;
 }
 
-export interface FiresideListingsStoryblok {
+export interface FiresideChatsListingsStoryblok {
   title: string;
   subtitle: string;
   subscribeLinks?: IconLinkStoryblok[];
   subscribeLinksCaption?: string;
-  component: "firesideListings";
+  component: "firesideChatsListings";
   _uid: string;
   [k: string]: unknown;
 }
@@ -235,6 +256,17 @@ export interface IconLinkStoryblok {
   [k: string]: unknown;
 }
 
+export interface LeftRightHeroStoryblok {
+  title: string;
+  subtitle: string;
+  ctas?: LinkStoryblok[];
+  media: AssetStoryblok;
+  style: "" | "light" | "dark";
+  component: "leftRightHero";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface LeftRightImageStoryblok {
   reverse?: boolean;
   style: "dark" | "light";
@@ -310,6 +342,11 @@ export interface PageStoryblok {
     | ScrollingFeaturesStoryblok
     | StatsStoryblok
     | TestimonialStoryblok
+    | CustomerStoryListingsStoryblok
+    | ArticleListingsStoryblok
+    | FiresideChatsListingsStoryblok
+    | ContactUsStoryblok
+    | LeftRightHeroStoryblok
   )[];
   seo: SeoStoryblok[];
   component: "page";

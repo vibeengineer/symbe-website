@@ -1,0 +1,21 @@
+---
+import type { LeftRightHeroStoryblok } from "../../storyblok/types";
+import type { Prettify } from "../types";
+import { parseAsset } from "../services/storyblok/helpers";
+import Link from "./ui/link.astro";
+
+type Props = {
+  blok: Prettify<LeftRightHeroStoryblok>;
+};
+
+const {
+  blok: { title, subtitle, media, ctas },
+} = Astro.props;
+---
+
+<div>
+  <h2>{title}</h2>
+  <p>{subtitle}</p>
+  <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
+  <div>{ctas?.map((cta) => <Link blok={cta} />)}</div>
+</div>

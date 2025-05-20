@@ -15,11 +15,20 @@ type Props = {
   openGraphTitle?: string;
   openGraphImage?: string;
   noIndex?: boolean;
+  noFooter?: boolean;
+  noNav?: boolean;
 };
 
 const { navigationData, footerData, seoDefaults } = await getGlobals();
-const { title, description, openGraphTitle, openGraphImage, noIndex } =
-  Astro.props;
+const {
+  title,
+  description,
+  openGraphTitle,
+  openGraphImage,
+  noIndex,
+  noFooter,
+  noNav,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -77,9 +86,9 @@ const { title, description, openGraphTitle, openGraphImage, noIndex } =
     />
   </head>
   <body>
-    <Navigation blok={navigationData} />
+    {!noNav && <Navigation blok={navigationData} />}
     <slot />
-    <Footer blok={footerData} />
+    {!noFooter && <Footer blok={footerData} />}
   </body>
 </html>
 

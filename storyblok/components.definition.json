@@ -248,6 +248,43 @@
       "metadata": {}
     },
     {
+      "name": "contactUs",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T17:06:21.149Z",
+      "updated_at": "2025-05-20T17:20:10.338Z",
+      "id": 7363586,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "required": true,
+          "id": "vGBBotVESbGtzs4PrU1jRA"
+        },
+        "subtitle": {
+          "type": "richtext",
+          "pos": 1,
+          "id": "GR5L3B_SReG3fNcRQEaHew"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/926284a1a8/cleanshot-2025-05-20-at-19-19-57-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "contactUs",
+      "component_group_uuid": "all",
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {},
+      "component_group_name": ""
+    },
+    {
       "name": "ctaSection",
       "display_name": null,
       "description": "",
@@ -449,11 +486,77 @@
       "metadata": {}
     },
     {
+      "name": "demo",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T17:12:43.667Z",
+      "updated_at": "2025-05-20T17:15:13.888Z",
+      "id": 7363587,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "AhsV9_J4QkKxHv6JaFfb5g",
+          "required": true
+        },
+        "subtitle": {
+          "type": "text",
+          "pos": 1,
+          "id": "Ob-of-k3Sb-kZ2RcfvaGNA",
+          "required": true
+        },
+        "bannerText": {
+          "type": "text",
+          "pos": 2,
+          "id": "ZNck0WphRWu7qA-_fZhnDQ",
+          "required": false
+        },
+        "bannerStars": {
+          "type": "number",
+          "pos": 3,
+          "id": "gDhALU-zRs2xysJFhZb9ow",
+          "required": false
+        },
+        "showBanner": {
+          "type": "boolean",
+          "pos": 4,
+          "id": "kzb-wQm6R_-okMLilxg4Hw"
+        },
+        "calendarEmbed": {
+          "type": "textarea",
+          "pos": 5,
+          "id": "Myc1hLBjREqxZkP6sPgCAA",
+          "required": true
+        },
+        "thankYouTitle": {
+          "type": "text",
+          "pos": 6,
+          "required": true,
+          "id": "-xE5OAmATpeG4ZhpWN5FhA"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": null,
+      "is_nestable": false,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "demo",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
       "name": "finePrint",
       "display_name": null,
       "description": "",
       "created_at": "2025-05-20T15:57:01.371Z",
-      "updated_at": "2025-05-20T15:58:01.961Z",
+      "updated_at": "2025-05-20T17:02:41.594Z",
       "id": 7363208,
       "schema": {
         "title": {
@@ -466,7 +569,8 @@
           "type": "datetime",
           "pos": 1,
           "id": "zN3K6sYiRyaansYMh1UCNg",
-          "required": true
+          "required": true,
+          "disable_time": true
         },
         "body": {
           "type": "richtext",
@@ -496,7 +600,7 @@
       "display_name": null,
       "description": "",
       "created_at": "2025-05-20T15:06:45.853Z",
-      "updated_at": "2025-05-20T15:52:08.547Z",
+      "updated_at": "2025-05-20T16:26:49.315Z",
       "id": 7363042,
       "schema": {
         "title": {
@@ -531,7 +635,7 @@
           "component_whitelist": [
             "testimonial"
           ],
-          "minimum": 1,
+          "minimum": 0,
           "maximum": 1,
           "id": "xcuqm9iJS822sOeaJlnxpg"
         },
@@ -589,11 +693,11 @@
       "metadata": {}
     },
     {
-      "name": "firesideListings",
+      "name": "firesideChatsListings",
       "display_name": null,
       "description": "",
       "created_at": "2025-05-20T15:16:06.545Z",
-      "updated_at": "2025-05-20T15:33:57.952Z",
+      "updated_at": "2025-05-20T16:17:48.854Z",
       "id": 7363054,
       "schema": {
         "title": {
@@ -631,7 +735,7 @@
       "is_nestable": true,
       "all_presets": [],
       "preset_id": null,
-      "real_name": "firesideListings",
+      "real_name": "firesideChatsListings",
       "component_group_uuid": null,
       "color": null,
       "icon": null,
@@ -704,6 +808,83 @@
       "all_presets": [],
       "preset_id": null,
       "real_name": "iconLink",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "leftRightHero",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T17:19:19.785Z",
+      "updated_at": "2025-05-20T17:25:30.420Z",
+      "id": 7363588,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "FpJPrpL0Qy6nowpxwIjXzg",
+          "required": true
+        },
+        "subtitle": {
+          "type": "textarea",
+          "pos": 1,
+          "id": "9XlnKnMtQtiU5IaXFOCIXA",
+          "required": true
+        },
+        "ctas": {
+          "type": "bloks",
+          "pos": 2,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "link"
+          ],
+          "maximum": 2,
+          "id": "yiuVGIl-TQqsEWli5y24-w"
+        },
+        "media": {
+          "type": "asset",
+          "pos": 3,
+          "filetypes": [
+            "images",
+            "videos"
+          ],
+          "id": "KWGdUFtxQKGr3CGAw34Xbw",
+          "required": true
+        },
+        "style": {
+          "type": "option",
+          "pos": 4,
+          "use_uuid": true,
+          "options": [
+            {
+              "_uid": "d971a7ac-a5aa-4825-b5ba-ec6e930e8f42",
+              "name": "Light",
+              "value": "light"
+            },
+            {
+              "_uid": "f48fe02e-a471-438d-ab75-79f07943b6d9",
+              "value": "dark",
+              "name": "Dark"
+            }
+          ],
+          "id": "MIhRwDoARgmEUB574e1tTw",
+          "required": true
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/a660156396/cleanshot-2025-05-20-at-19-19-27-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "leftRightHero",
       "component_group_uuid": null,
       "color": null,
       "icon": null,
@@ -1098,7 +1279,7 @@
       "display_name": null,
       "description": null,
       "created_at": "2025-04-23T16:14:46.281Z",
-      "updated_at": "2025-05-20T15:29:09.078Z",
+      "updated_at": "2025-05-20T17:21:47.825Z",
       "id": 7259899,
       "schema": {
         "body": {
@@ -1113,7 +1294,12 @@
             "mainHero",
             "scrollingFeatures",
             "stats",
-            "testimonial"
+            "testimonial",
+            "customerStoryListings",
+            "articleListings",
+            "firesideChatsListings",
+            "contactUs",
+            "leftRightHero"
           ]
         },
         "seo": {

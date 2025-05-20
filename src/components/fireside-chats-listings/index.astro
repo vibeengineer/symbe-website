@@ -1,7 +1,7 @@
 ---
 import type {
   FiresideChatStoryblok,
-  FiresideListingsStoryblok,
+  FiresideChatsListingsStoryblok,
 } from "../../../storyblok/types";
 import {
   getStories,
@@ -12,7 +12,7 @@ import type { Prettify } from "../../types";
 import FiresideChatListing from "./item.astro";
 
 type Props = {
-  blok: Prettify<FiresideListingsStoryblok>;
+  blok: Prettify<FiresideChatsListingsStoryblok>;
 };
 
 const firesideChats = await getStories<FiresideChatStoryblok>({

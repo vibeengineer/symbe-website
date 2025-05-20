@@ -30,6 +30,7 @@ export default defineConfig({
         article: "layouts/article",
         customerStory: "layouts/customer-story",
         firesideChat: "layouts/fireside-chat",
+        demo: "layouts/demo",
         // Nestable type blocks
         mainHero: "components/main-hero/index",
         bentoGrid: "components/bento-grid/index",
@@ -41,6 +42,8 @@ export default defineConfig({
         firesideChatsListings: "components/fireside-chats-listings/index",
         articleListings: "components/article-listings/index",
         customerStoryListings: "components/customer-story-listings/index",
+        contactUs: "components/contact-us",
+        leftRightHero: "components/left-right-hero",
       },
       enableFallbackComponent: true,
     }),
