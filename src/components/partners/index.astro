@@ -1,0 +1,21 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { PartnersStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import Logo from "./item.astro";
+type Props = {
+  blok: Prettify<PartnersStoryblok>;
+};
+
+const {
+  blok: { title, subtitle, logos },
+} = Astro.props;
+---
+
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  <h2>{title}</h2>
+  {subtitle && <p>{subtitle}</p>}
+  <ul>
+    {logos.map((logo) => <Logo blok={logo} />)}
+  </ul>
+</div>

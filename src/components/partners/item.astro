@@ -1,0 +1,23 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { IconLinkStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import { parseAsset } from "@/services/storyblok/helpers";
+
+type Props = {
+  blok: Prettify<IconLinkStoryblok>;
+};
+
+const {
+  blok: { link, icon },
+} = Astro.props;
+---
+
+<a
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+  href={link.url}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <img src={parseAsset(icon, "src")} alt={parseAsset(icon, "alt")} />
+</a>

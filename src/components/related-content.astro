@@ -1,0 +1,20 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { RelatedContentStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+
+type Props = {
+  blok: Prettify<RelatedContentStoryblok>;
+};
+
+const {
+  blok: { title, relatedContentItems },
+} = Astro.props;
+---
+
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  <h2>{title}</h2>
+  <div>
+    {relatedContentItems.map((item, index) => <div>Item {index}</div>)}
+  </div>
+</div>

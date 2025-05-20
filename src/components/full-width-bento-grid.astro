@@ -1,0 +1,26 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { FullWidthBentoGridStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+
+type Props = {
+  blok: Prettify<FullWidthBentoGridStoryblok>;
+};
+
+const {
+  blok: { items },
+} = Astro.props;
+---
+
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  <div>
+    {
+      items.map((item) => (
+        <div>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+        </div>
+      ))
+    }
+  </div>
+</div>

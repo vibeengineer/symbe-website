@@ -1,0 +1,18 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { BenefitStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+
+type Props = {
+  blok: Prettify<BenefitStoryblok>;
+};
+
+const {
+  blok: { title, description },
+} = Astro.props;
+---
+
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  <h3>{title}</h3>
+  <p>{description}</p>
+</div>

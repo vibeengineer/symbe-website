@@ -61,6 +61,25 @@ export interface ArticleListingsStoryblok {
   [k: string]: unknown;
 }
 
+export interface BenefitStoryblok {
+  icon?: AssetStoryblok;
+  title?: string;
+  description?: string;
+  component: "benefit";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface BenefitsStoryblok {
+  title?: string;
+  description?: string;
+  ctas?: LinkStoryblok[];
+  benefits: BenefitStoryblok[];
+  component: "benefits";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface BentoGridStoryblok {
   title?: string;
   items: BentoGridItemStoryblok[];
@@ -74,6 +93,14 @@ export interface BentoGridItemStoryblok {
   description: string;
   asset: AssetStoryblok;
   component: "bentoGridItem";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface CentreHeroStoryblok {
+  title: string;
+  subtitle?: string;
+  component: "centreHero";
   _uid: string;
   [k: string]: unknown;
 }
@@ -133,6 +160,22 @@ export interface DemoStoryblok {
   [k: string]: unknown;
 }
 
+export interface FaqStoryblok {
+  question: string;
+  answer: RichtextStoryblok;
+  component: "faq";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FaqListStoryblok {
+  title?: string;
+  faqItems: (ISbStoryData<FaqStoryblok> | string)[];
+  component: "faqList";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface FinePrintStoryblok {
   title: string;
   lastModifiedDate: string;
@@ -171,6 +214,13 @@ export interface FiresideChatsListingsStoryblok {
 export interface FooterStoryblok {
   linkColumns?: LinkColumnStoryblok[];
   component: "footer";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FullWidthBentoGridStoryblok {
+  items: BentoGridItemStoryblok[];
+  component: "fullWidthBentoGrid";
   _uid: string;
   [k: string]: unknown;
 }
@@ -253,6 +303,26 @@ export interface IconLinkStoryblok {
   icon: AssetStoryblok;
   link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   component: "iconLink";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface LeftRightFeatureStoryblok {
+  title?: string;
+  description?: string;
+  cta?: LinkStoryblok[];
+  component: "leftRightFeature";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface LeftRightFeaturesStoryblok {
+  reverse?: boolean;
+  title: string;
+  description: string;
+  features: LeftRightFeatureStoryblok[];
+  media: AssetStoryblok;
+  component: "leftRightFeatures";
   _uid: string;
   [k: string]: unknown;
 }
@@ -355,6 +425,43 @@ export interface PageStoryblok {
   [k: string]: unknown;
 }
 
+export interface PartnersStoryblok {
+  title: string;
+  subtitle?: string;
+  logos: IconLinkStoryblok[];
+  component: "partners";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface PricingHeroStoryblok {
+  monthlyPrice: string;
+  annualPrice: string;
+  planFeatures: PricingTableFeatureStoryblok[];
+  perUnitText: string;
+  planDescription?: string;
+  planCta: LinkStoryblok[];
+  enterprisePlanCta: LinkStoryblok[];
+  enterpriseDescription?: string;
+  enterpriseTitle?: string;
+  enterpriseFeatures: PricingTableFeatureStoryblok[];
+  standard?: unknown;
+  enterprise?: unknown;
+  title: string;
+  subtitle: string;
+  component: "pricingHero";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface PricingTableFeatureStoryblok {
+  icon?: AssetStoryblok;
+  text: string;
+  component: "pricingTableFeature";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface RedirectStoryblok {
   path: string;
   destination: string;
@@ -367,6 +474,14 @@ export interface RedirectStoryblok {
 export interface RedirectsListStoryblok {
   redirects?: RedirectStoryblok[];
   component: "redirectsList";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface RelatedContentStoryblok {
+  title?: string;
+  relatedContentItems: unknown[];
+  component: "relatedContent";
   _uid: string;
   [k: string]: unknown;
 }
@@ -429,12 +544,42 @@ export interface StatsStoryblok {
   [k: string]: unknown;
 }
 
+export interface TeamStoryblok {
+  title?: string;
+  team: TeamMemberStoryblok[];
+  secondaryTitle?: string;
+  description?: string;
+  component: "team";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface TeamMemberStoryblok {
+  headshot: AssetStoryblok;
+  name: string;
+  role: string;
+  bio: string;
+  email: string;
+  component: "teamMember";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface TestimonialStoryblok {
   quote: string;
   author: string;
   authorRoleCompany: string;
   authorHeadshot?: AssetStoryblok;
   component: "testimonial";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface ValuesStoryblok {
+  title?: string;
+  subtitle?: string;
+  valueItems: BenefitStoryblok[];
+  component: "values";
   _uid: string;
   [k: string]: unknown;
 }

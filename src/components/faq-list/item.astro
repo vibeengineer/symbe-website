@@ -1,0 +1,19 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { FaqStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import RichText from "../ui/rich-text.astro";
+
+type Props = {
+  blok: Prettify<FaqStoryblok>;
+};
+
+const {
+  blok: { question, answer },
+} = Astro.props;
+---
+
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  <h2>{question}</h2>
+  <RichText content={answer} />
+</div>

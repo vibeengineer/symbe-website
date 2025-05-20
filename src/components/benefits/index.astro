@@ -1,0 +1,24 @@
+---
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { BenefitsStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import Link from "@/components/ui/link.astro";
+type Props = {
+  blok: Prettify<BenefitsStoryblok>;
+};
+
+const {
+  blok: { title, benefits, ctas, description },
+} = Astro.props;
+---
+
+<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  <h2>{title}</h2>
+  <p>{description}</p>
+  <div>
+    {benefits.map((benefit) => <div>{benefit.title}</div>)}
+  </div>
+  <div>
+    {ctas?.map((cta) => <Link blok={cta} />)}
+  </div>
+</div>

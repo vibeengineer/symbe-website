@@ -161,6 +161,105 @@
       "metadata": {}
     },
     {
+      "name": "benefit",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:07:07.280Z",
+      "updated_at": "2025-05-20T19:07:24.735Z",
+      "id": 7364169,
+      "schema": {
+        "icon": {
+          "type": "asset",
+          "pos": 0,
+          "id": "PsrbwfCgTtC8IbaF5sNf4w"
+        },
+        "title": {
+          "type": "text",
+          "pos": 1,
+          "id": "Bio1sC6pRGeYpoReA02BUw"
+        },
+        "description": {
+          "type": "textarea",
+          "pos": 2,
+          "id": "Bx_gcAPeQh24Hs5lWEj1wQ"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "benefit",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "benefits",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:06:11.879Z",
+      "updated_at": "2025-05-20T19:08:05.590Z",
+      "id": 7364168,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "teg8efj7TzOcPav_fjUiig"
+        },
+        "description": {
+          "type": "text",
+          "pos": 1,
+          "id": "NXXe5_-dSqCo4BnJCc7qSg"
+        },
+        "ctas": {
+          "type": "bloks",
+          "pos": 2,
+          "maximum": 2,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "link"
+          ],
+          "id": "4poIocIjR4iF_3AZIG9K8Q"
+        },
+        "benefits": {
+          "type": "bloks",
+          "pos": 3,
+          "required": true,
+          "minimum": 2,
+          "maximum": 3,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "benefit"
+          ],
+          "id": "QcPoUMCDQhaQ80tPAzf2kQ"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/32645586db/cleanshot-2025-05-20-at-21-07-52-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "benefits",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
       "name": "bentoGrid",
       "display_name": null,
       "description": "",
@@ -239,6 +338,42 @@
       "all_presets": [],
       "preset_id": null,
       "real_name": "bentoGridItem",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "centreHero",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:32:56.584Z",
+      "updated_at": "2025-05-20T19:43:31.952Z",
+      "id": 7364538,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "dqud458YR-6jgOGF-KWTVA",
+          "required": true
+        },
+        "subtitle": {
+          "type": "text",
+          "pos": 1,
+          "id": "7cwOZfzoQ9i0BX74Q4Tttg"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/5d930689f9/cleanshot-2025-05-20-at-21-33-14-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "centreHero",
       "component_group_uuid": null,
       "color": null,
       "icon": null,
@@ -552,11 +687,93 @@
       "metadata": {}
     },
     {
+      "name": "faq",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:13:18.610Z",
+      "updated_at": "2025-05-20T19:26:04.631Z",
+      "id": 7364357,
+      "schema": {
+        "question": {
+          "type": "text",
+          "pos": 0,
+          "id": "rsTrXjyXQNeZ63E3_m75Dg",
+          "translatable": false,
+          "required": true
+        },
+        "answer": {
+          "type": "richtext",
+          "pos": 1,
+          "id": "VzAH-x-gT566JxfLtb2p2g",
+          "required": true
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "faq",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "faqList",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:15:06.663Z",
+      "updated_at": "2025-05-20T19:16:01.025Z",
+      "id": 7364487,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "r5PFHN2UQ3CpGtL-QtoAFw"
+        },
+        "faqItems": {
+          "type": "options",
+          "pos": 1,
+          "is_reference_type": true,
+          "source": "internal_stories",
+          "entry_appearance": "card",
+          "allow_advanced_search": true,
+          "filter_content_type": [
+            "faq"
+          ],
+          "required": true,
+          "min_options": "1",
+          "id": "v0T_dLeKRr-5vWz5rWITlQ"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/067a9261a2/cleanshot-2025-05-20-at-21-15-47-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "faqList",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
       "name": "finePrint",
       "display_name": null,
       "description": "",
       "created_at": "2025-05-20T15:57:01.371Z",
-      "updated_at": "2025-05-20T18:43:29.711Z",
+      "updated_at": "2025-05-20T19:04:39.524Z",
       "id": 7363208,
       "schema": {
         "title": {
@@ -569,8 +786,7 @@
           "type": "datetime",
           "pos": 1,
           "id": "zN3K6sYiRyaansYMh1UCNg",
-          "required": true,
-          "disable_time": true
+          "required": true
         },
         "body": {
           "type": "richtext",
@@ -586,8 +802,8 @@
           "component_whitelist": [
             "seo"
           ],
-          "id": "c4Rquo3GRx6OwG91C4BR5g",
-          "required": true
+          "required": true,
+          "id": "c4Rquo3GRx6OwG91C4BR5g"
         }
       },
       "image": null,
@@ -791,6 +1007,44 @@
       "metadata": {}
     },
     {
+      "name": "fullWidthBentoGrid",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:16:32.713Z",
+      "updated_at": "2025-05-20T19:17:09.497Z",
+      "id": 7364488,
+      "schema": {
+        "items": {
+          "type": "bloks",
+          "pos": 0,
+          "required": true,
+          "minimum": 2,
+          "maximum": 3,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "bentoGridItem"
+          ],
+          "id": "3uV86su1RiKSKfW3X6dSNg"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "fullWidthBentoGrid",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
       "name": "iconLink",
       "display_name": null,
       "description": "",
@@ -826,6 +1080,118 @@
       "internal_tag_ids": [],
       "content_type_asset_preview": null,
       "metadata": {}
+    },
+    {
+      "name": "leftRightFeature",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:09:14.124Z",
+      "updated_at": "2025-05-20T19:09:49.720Z",
+      "id": 7364348,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "44GM3KrUQoSuaUNNU6fNiQ"
+        },
+        "description": {
+          "type": "textarea",
+          "pos": 1,
+          "id": "m4WG7OL6SyKI328B-QU16A"
+        },
+        "cta": {
+          "type": "bloks",
+          "pos": 2,
+          "maximum": 1,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "link"
+          ],
+          "id": "p-q8_xsORSW5KGtrlm-Xog"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "leftRightFeature",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "leftRightFeatures",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:08:24.803Z",
+      "updated_at": "2025-05-20T19:10:37.325Z",
+      "id": 7364346,
+      "schema": {
+        "reverse": {
+          "type": "boolean",
+          "pos": 0,
+          "id": "UZCyTTBnRm6oyYtWJZvWLQ"
+        },
+        "title": {
+          "type": "text",
+          "pos": 2,
+          "required": true,
+          "id": "h9u1LH0kSVOyz_Vsa8fvfA"
+        },
+        "description": {
+          "type": "textarea",
+          "pos": 3,
+          "id": "VyTqTlsCS8-Njqg74m6GqA",
+          "required": true
+        },
+        "features": {
+          "type": "bloks",
+          "pos": 4,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "leftRightFeature"
+          ],
+          "maximum": 4,
+          "minimum": 2,
+          "required": true,
+          "id": "N01nJXUrRxqKIuaic3WvOQ"
+        },
+        "media": {
+          "type": "asset",
+          "pos": 5,
+          "filetypes": [
+            "images",
+            "videos"
+          ],
+          "id": "ust3Xm5yTcmthE-84YPUVw",
+          "required": true
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/5b7d046966/cleanshot-2025-05-20-at-21-08-44-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "leftRightFeatures",
+      "component_group_uuid": "all",
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {},
+      "component_group_name": ""
     },
     {
       "name": "leftRightHero",
@@ -1344,6 +1710,231 @@
       "metadata": {}
     },
     {
+      "name": "partners",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:38:42.342Z",
+      "updated_at": "2025-05-20T19:39:35.927Z",
+      "id": 7364542,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "required": true,
+          "id": "6r9Rlp1OSUyq1Pp4yxEuag"
+        },
+        "subtitle": {
+          "type": "text",
+          "pos": 1,
+          "id": "HwGxhW2RTCWf8783pgZpGQ"
+        },
+        "logos": {
+          "type": "bloks",
+          "pos": 2,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "iconLink"
+          ],
+          "required": true,
+          "id": "Ae6iMxcnRPWmiFmF65rZJg"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/ef077d66ab/cleanshot-2025-05-20-at-21-38-46-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "partners",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "pricingHero",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:27:30.185Z",
+      "updated_at": "2025-05-20T19:42:05.898Z",
+      "id": 7364529,
+      "schema": {
+        "monthlyPrice": {
+          "type": "number",
+          "pos": 0,
+          "id": "XBe1CPv2RXGsD1uHzm4org",
+          "required": true
+        },
+        "annualPrice": {
+          "type": "number",
+          "pos": 1,
+          "id": "FnHzNHkqQZiqHid0EU7dYA",
+          "required": true
+        },
+        "planFeatures": {
+          "type": "bloks",
+          "pos": 2,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "pricingTableFeature"
+          ],
+          "required": true,
+          "id": "jD544H0lS6mT5Y4ZNCviAw"
+        },
+        "perUnitText": {
+          "type": "text",
+          "pos": 3,
+          "required": true,
+          "id": "H7HeckgKQEKA_lYYpdxNSg"
+        },
+        "planDescription": {
+          "type": "text",
+          "pos": 4,
+          "id": "ovxfi7yuR7mT9lu72YmAnQ"
+        },
+        "planCta": {
+          "type": "bloks",
+          "pos": 5,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "link"
+          ],
+          "minimum": 1,
+          "maximum": 1,
+          "required": true,
+          "id": "tFBem4xwSy2LbneSERFh_g"
+        },
+        "enterprisePlanCta": {
+          "type": "bloks",
+          "pos": 6,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "link"
+          ],
+          "minimum": 1,
+          "maximum": 1,
+          "required": true,
+          "id": "rPdR0zTfR5u1CYg9mDqQnA"
+        },
+        "enterpriseDescription": {
+          "type": "text",
+          "pos": 7,
+          "id": "B2mpxJzFRHqdk_JcF3wfvg"
+        },
+        "enterpriseTitle": {
+          "type": "text",
+          "pos": 8,
+          "id": "0sdyTR1lTRCvuYv583mvxw"
+        },
+        "enterpriseFeatures": {
+          "type": "bloks",
+          "pos": 9,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "pricingTableFeature"
+          ],
+          "required": true,
+          "id": "915RpL3lTRGyz0S42rxhow"
+        },
+        "standard": {
+          "type": "section",
+          "pos": 10,
+          "keys": [
+            "monthlyPrice",
+            "annualPrice",
+            "planFeatures",
+            "perUnitText",
+            "planDescription",
+            "planCta"
+          ],
+          "id": "j6xo1Of8R-KyR0bFXAl26w"
+        },
+        "enterprise": {
+          "type": "section",
+          "pos": 11,
+          "id": "l0ttaeWcQjap2pLBRUsLfg",
+          "keys": [
+            "enterprisePlanCta",
+            "enterpriseDescription",
+            "enterpriseTitle",
+            "enterpriseFeatures"
+          ]
+        },
+        "title": {
+          "type": "text",
+          "pos": 12,
+          "id": "bEKbeaPVQqKmLizL5YMGzQ",
+          "required": true
+        },
+        "subtitle": {
+          "type": "text",
+          "pos": 13,
+          "id": "-vE3wztTQtK3LJYM6QDRgw",
+          "required": true
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/f9b2bfa153/cleanshot-2025-05-20-at-21-32-22-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "pricingHero",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "pricingTableFeature",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:30:04.405Z",
+      "updated_at": "2025-05-20T19:30:29.245Z",
+      "id": 7364531,
+      "schema": {
+        "icon": {
+          "type": "asset",
+          "pos": 0,
+          "id": "i9mAB9orRPenBIt6hdZR3Q"
+        },
+        "text": {
+          "type": "text",
+          "pos": 1,
+          "id": "Tl28V9QCQyeNZYOpYFkOjw",
+          "required": true
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "pricingTableFeature",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
       "name": "redirect",
       "display_name": null,
       "description": "",
@@ -1456,6 +2047,48 @@
       "all_presets": [],
       "preset_id": null,
       "real_name": "redirectsList",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "relatedContent",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:11:09.977Z",
+      "updated_at": "2025-05-20T19:13:06.840Z",
+      "id": 7364355,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "n4x9NNmHReWG10bIFuYtQg"
+        },
+        "relatedContentItems": {
+          "type": "options",
+          "pos": 1,
+          "is_reference_type": true,
+          "source": "internal_stories",
+          "entry_appearance": "card",
+          "allow_advanced_search": true,
+          "required": true,
+          "max_options": "3",
+          "min_options": "2",
+          "id": "2AoTA49lScOh_3cjvhJ8gA"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/05be489f60/cleanshot-2025-05-20-at-21-12-54-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "relatedContent",
       "component_group_uuid": null,
       "color": null,
       "icon": null,
@@ -1761,6 +2394,115 @@
       "metadata": {}
     },
     {
+      "name": "team",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:35:55.565Z",
+      "updated_at": "2025-05-20T19:37:08.494Z",
+      "id": 7364540,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "6sB9t3BtR4-NY_oRghgexQ"
+        },
+        "team": {
+          "type": "bloks",
+          "pos": 1,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "teamMember"
+          ],
+          "required": true,
+          "id": "EUYzpGrCRT-Y7be-oL4qIA"
+        },
+        "secondaryTitle": {
+          "type": "text",
+          "pos": 2,
+          "id": "FmogbSvkTRC8h-j-Mr1U_g"
+        },
+        "description": {
+          "type": "textarea",
+          "pos": 3,
+          "id": "Wmuv1Sk8SpW_IhH3mXVZew"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/bbe0cf8402/cleanshot-2025-05-20-at-21-36-56-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "team",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "teamMember",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:33:58.244Z",
+      "updated_at": "2025-05-20T19:35:42.316Z",
+      "id": 7364539,
+      "schema": {
+        "headshot": {
+          "type": "asset",
+          "pos": 0,
+          "filetypes": [
+            "images"
+          ],
+          "id": "gbyDZCC4TTK7B0h-C8j5XQ",
+          "required": true
+        },
+        "name": {
+          "type": "text",
+          "pos": 1,
+          "id": "FEBcdi7_SySI5sbX1I796Q",
+          "required": true
+        },
+        "role": {
+          "type": "text",
+          "pos": 2,
+          "id": "VOaFOv8ARmyDBiSItKsl6A",
+          "required": true
+        },
+        "bio": {
+          "type": "textarea",
+          "pos": 3,
+          "id": "2n3eCGNzQgyab3ppmtgOrw",
+          "required": true
+        },
+        "email": {
+          "type": "text",
+          "pos": 4,
+          "id": "0b3DM1mwTYSLyy13Ze05lg",
+          "required": true
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "teamMember",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
       "name": "testimonial",
       "display_name": null,
       "description": "",
@@ -1800,6 +2542,52 @@
       "all_presets": [],
       "preset_id": null,
       "real_name": "testimonial",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {}
+    },
+    {
+      "name": "values",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-20T19:37:32.858Z",
+      "updated_at": "2025-05-20T19:38:19.365Z",
+      "id": 7364541,
+      "schema": {
+        "title": {
+          "type": "text",
+          "pos": 0,
+          "id": "q7YF0rOiTMOmvSJsnweWUQ"
+        },
+        "subtitle": {
+          "type": "text",
+          "pos": 1,
+          "id": "wGKPYxa8R9S8hls2-hzQcw"
+        },
+        "valueItems": {
+          "type": "bloks",
+          "pos": 2,
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "benefit"
+          ],
+          "required": true,
+          "id": "ONlkjLmRTdO6THplqx-How"
+        }
+      },
+      "image": "//a.storyblok.com/f/336379/x/d73b69aef3/cleanshot-2025-05-20-at-21-38-07-2x.png",
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "values",
       "component_group_uuid": null,
       "color": null,
       "icon": null,
