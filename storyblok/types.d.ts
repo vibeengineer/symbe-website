@@ -188,9 +188,10 @@ export interface FinePrintStoryblok {
 
 export interface FiresideChatStoryblok {
   title: string;
-  watchTime: string;
+  watchTimeMinutes: string;
+  watchTimeSeconds: string;
   embed: string;
-  blurb: string;
+  blurb: RichtextStoryblok;
   quote?: TestimonialStoryblok[];
   datePublished: string;
   dateLastModified: string;

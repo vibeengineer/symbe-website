@@ -72,36 +72,23 @@ const nextPageUrl =
   currentPage < totalPages ? getPageUrl(currentPage + 1) : "#";
 ---
 
-<nav
-  class="mt-8 flex items-center justify-between border-t border-gray-200 px-4 sm:px-0"
->
-  <div class="-mt-px flex w-0 flex-1">
-    <a
-      href={prevPageUrl}
-      class={`inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium ${currentPage > 1 ? "text-gray-500 hover:border-gray-300 hover:text-gray-700" : "text-gray-300 cursor-not-allowed"}`}
-      aria-disabled={currentPage <= 1}
-    >
-      <svg
-        class="mr-3 size-5 text-gray-400"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-        data-slot="icon"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10Z"
-          clip-rule="evenodd"></path>
-      </svg>
-      Previous
-    </a>
-  </div>
-  <div class="hidden md:-mt-px md:flex">
+<nav class="my-8 flex items-center justify-center space-x-2">
+  <!-- Previous button -->
+  <a
+    href={prevPageUrl}
+    class={`flex items-center justify-center px-4 h-10 font-medium text-sm ${currentPage > 1 ? "text-gray-600 hover:bg-gray-100" : "text-gray-300 cursor-not-allowed"}`}
+    aria-disabled={currentPage <= 1}
+  >
+    PREV
+  </a>
+
+  <!-- Page numbers -->
+  <div class="inline-flex">
     {
       pageNumbers.map((page) => {
         if (page === "...") {
           return (
-            <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">
+            <span class="flex h-10 w-10 items-center justify-center text-gray-500">
               ...
             </span>
           );
@@ -110,7 +97,11 @@ const nextPageUrl =
         return (
           <a
             href={getPageUrl(page as number)}
-            class={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${page === currentPage ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"}`}
+            class={`flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium ${
+              page === currentPage
+                ? "bg-[#eb6140] text-white"
+                : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            }`}
             aria-current={page === currentPage ? "page" : undefined}
           >
             {page}
@@ -119,25 +110,13 @@ const nextPageUrl =
       })
     }
   </div>
-  <div class="-mt-px flex w-0 flex-1 justify-end">
-    <a
-      href={nextPageUrl}
-      class={`inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium ${currentPage < totalPages ? "text-gray-500 hover:border-gray-300 hover:text-gray-700" : "text-gray-300 cursor-not-allowed"}`}
-      aria-disabled={currentPage >= totalPages}
-    >
-      Next
-      <svg
-        class="ml-3 size-5 text-gray-400"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-        data-slot="icon"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z"
-          clip-rule="evenodd"></path>
-      </svg>
-    </a>
-  </div>
+
+  <!-- Next button -->
+  <a
+    href={nextPageUrl}
+    class={`flex items-center justify-center px-4 h-10 font-medium text-sm ${currentPage < totalPages ? "text-gray-600 hover:bg-gray-100" : "text-gray-300 cursor-not-allowed"}`}
+    aria-disabled={currentPage >= totalPages}
+  >
+    NEXT
+  </a>
 </nav>

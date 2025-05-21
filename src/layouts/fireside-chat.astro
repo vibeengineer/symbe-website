@@ -3,14 +3,39 @@ import type { FiresideChatStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import Base from "./base.astro";
 import type { Prettify } from "@/types";
-
+import RichText from "@/components/ui/rich-text.astro";
+import YouTubeEmbed from "@/components/ui/youtube-embed.astro";
+import Spacer from "@/components/ui/spacer.astro";
+import InlineQuote from "@/components/ui/inline-quote.astro";
 type Props = {
   blok: Prettify<FiresideChatStoryblok>;
 };
 
 const {
-  blok: { seo, body },
+  blok: {
+    seo,
+    blurb,
+    dateLastModified,
+    datePublished,
+    embed,
+    title,
+    quote,
+    watchTimeMinutes,
+    watchTimeSeconds,
+  },
 } = Astro.props;
+
+function calculateFriendlyTime(minutes: string, seconds: string) {
+  const mins = Number.parseInt(minutes, 10) || 0;
+  const secs = Number.parseInt(seconds, 10) || 0;
+
+  if (mins > 0) {
+    return `${mins}m ${secs}s`;
+  }
+  return `${secs}s`;
+}
+
+const friendlyTime = calculateFriendlyTime(watchTimeMinutes, watchTimeSeconds);
 ---
 
 <Base
@@ -20,5 +45,43 @@ const {
   noIndex={seo?.[0]?.noIndex}
   openGraphImage={seo?.[0]?.openGraphImage?.filename || undefined}
 >
-  <main {...storyblokEditable(Astro.props.blok as SbBlokData)}></main>
+  <main {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+    <Spacer size="2xl" />
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="mb-4 text-3xl font-bold">{title}</h1>
+
+      {
+        datePublished && (
+          <div class="mb-4 text-gray-600">
+            Published: {new Date(datePublished).toLocaleDateString()}
+            {dateLastModified && dateLastModified !== datePublished && (
+              <span>
+                {" "}
+                | Updated: {new Date(dateLastModified).toLocaleDateString()}
+              </span>
+            )}
+          </div>
+        )
+      }
+
+      <div class="my-8">
+        <YouTubeEmbed
+          youtubeInput={embed}
+          width={800}
+          height={450}
+          className="mx-auto"
+        />
+      </div>
+
+      {
+        watchTimeMinutes && watchTimeSeconds && (
+          <div class="mb-6 text-gray-600">Watch time: {friendlyTime}</div>
+        )
+      }
+
+      {quote && quote.length > 0 && <InlineQuote blok={quote[0]} />}
+
+      <RichText content={blurb} className="my-6" />
+    </div>
+  </main>
 </Base>

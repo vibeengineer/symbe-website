@@ -827,7 +827,7 @@
       "display_name": null,
       "description": "",
       "created_at": "2025-05-20T15:06:45.853Z",
-      "updated_at": "2025-05-20T16:26:49.315Z",
+      "updated_at": "2025-05-21T20:59:26.021Z",
       "id": 7363042,
       "schema": {
         "title": {
@@ -836,27 +836,34 @@
           "id": "uEY6uexYTfuDVhq6DEgvfA",
           "required": true
         },
-        "watchTime": {
+        "watchTimeMinutes": {
           "type": "number",
           "pos": 1,
           "id": "yjmTKzqMShicGR5ofs_bmw",
           "required": true
         },
-        "embed": {
-          "type": "text",
+        "watchTimeSeconds": {
+          "type": "number",
           "pos": 2,
-          "id": "_6o-5WThQm6YyQCif_lmew",
+          "id": "qHAOnnc8Te-ppOlYnERm4Q",
           "required": true
         },
-        "blurb": {
-          "type": "textarea",
+        "embed": {
+          "type": "text",
           "pos": 3,
+          "id": "_6o-5WThQm6YyQCif_lmew",
+          "required": true,
+          "regex": "(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/|youtube\\.com\\/embed\\/|youtube\\.com\\/shorts\\/)([a-zA-Z0-9_-]{11})"
+        },
+        "blurb": {
+          "type": "richtext",
+          "pos": 4,
           "id": "JuVcCgr1Rt2htWm0GfmdUQ",
           "required": true
         },
         "quote": {
           "type": "bloks",
-          "pos": 4,
+          "pos": 5,
           "restrict_type": "",
           "restrict_components": true,
           "component_whitelist": [
@@ -868,21 +875,21 @@
         },
         "datePublished": {
           "type": "datetime",
-          "pos": 5,
+          "pos": 6,
           "required": true,
           "id": "WJkkf94BSOendLWYkN9okQ",
           "disable_time": true
         },
         "dateLastModified": {
           "type": "datetime",
-          "pos": 6,
+          "pos": 7,
           "id": "VqNlnMl7RzOPAJSNUclFww",
           "required": true,
           "disable_time": true
         },
         "seo": {
           "type": "bloks",
-          "pos": 7,
+          "pos": 8,
           "minimum": 1,
           "maximum": 1,
           "restrict_type": "",
@@ -895,7 +902,7 @@
         },
         "thumbnail": {
           "type": "asset",
-          "pos": 8,
+          "pos": 9,
           "required": true,
           "filetypes": [
             "images"
