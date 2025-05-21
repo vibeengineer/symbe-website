@@ -3,19 +3,59 @@ import type { LinkStoryblok } from "@storyblok/types";
 import { parseLink } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-type Props = {
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+
+// Define the possible style values explicitly for stricter typing
+type LinkStyle = "primary" | "ghost" | "standard";
+
+export const linkVariants = cva(
+  "font-sans font-medium rounded-md transition-colors duration-200 ease-in-out",
+  {
+    variants: {
+      style: {
+        primary: "bg-accent-electric text-text-000 px-6 py-3 hover:bg-blue-700",
+        ghost: "text-text-000 hover:text-text-200",
+        standard: "text-text-000 underline hover:text-text-200",
+      } as Record<LinkStyle, string>, // Ensure keys are of type LinkStyle
+    },
+    defaultVariants: {
+      style: "standard" as LinkStyle, // Ensure default is of type LinkStyle
+    },
+  },
+);
+
+export interface Props extends VariantProps<typeof linkVariants> {
   blok: Prettify<LinkStoryblok>;
-};
+  style?: LinkStyle; // Use the defined LinkStyle type for the prop
+}
 
 const {
-  blok: { link, linkText, linkStyle },
+  blok,
+  style: variantStyleProp, // Renamed to avoid confusion with CVA's 'style' variant
+  ...attrs
 } = Astro.props;
+
+// Helper to check if a string is a valid LinkStyle
+function isValidLinkStyle(
+  style: string | undefined | null,
+): style is LinkStyle {
+  return (
+    !!style &&
+    (style === "primary" || style === "ghost" || style === "standard")
+  );
+}
+
+const variantClasses = linkVariants({ style: variantStyleProp });
+const finalClasses = cn(variantClasses);
 ---
 
 <a
-  href={parseLink(link, "href")}
-  target={parseLink(link, "target")}
-  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+  href={parseLink(blok.link, "href")}
+  target={parseLink(blok.link, "target")}
+  class={finalClasses}
+  {...storyblokEditable(blok as SbBlokData)}
+  {...attrs}
 >
-  {linkText}
+  {blok.linkText}
 </a>

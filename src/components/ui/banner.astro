@@ -1,15 +1,21 @@
 ---
+import { cn } from "@/utils/cn";
+
 type Props = {
   showCloseButton?: boolean;
+  class?: string;
 };
 
-const { showCloseButton = false } = Astro.props;
+const { showCloseButton = false, class: className } = Astro.props;
 ---
 
 <div
-  class="flex items-center justify-center gap-x-6 bg-gray-900 px-6 py-2.5 sm:px-3.5"
+  class={cn(
+    "flex items-center justify-center gap-x-6 px-6 py-2.5 sm:px-3.5 bg-white text-text-900",
+    className,
+  )}
 >
-  <div class="flex items-center text-sm/6 text-white">
+  <div class="flex items-center text-sm/6">
     <slot />
   </div>
   {

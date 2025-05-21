@@ -2,12 +2,15 @@
 import type { MainHeroStoryblok } from "@storyblok/types";
 import { parseAsset, parseLink } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
-import Link from "../ui/link.astro";
+import Link from "@/components/ui/link.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import Banner from "../ui/banner.astro";
-import G2Logo from "../ui/g2-logo.astro";
-import Stars from "../ui/stars.astro";
+import Banner from "@/components/ui/banner.astro";
+import G2Logo from "@/components/ui/g2-logo.astro";
+import Stars from "@/components/ui/stars.astro";
 import { z } from "zod";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Media from "@/components/ui/media.astro";
 
 const numberOfStarsSchema = z.union([
   z.literal(1),
@@ -52,10 +55,13 @@ if (showBanner && bannerText && bannerStars) {
 }
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+<div
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+  class="bg-dark-right text-text-000 flex flex-col items-center pt-12 pb-24 text-center md:pt-16 md:pb-32"
+>
   {
     showBanner && bannerText && (
-      <Banner>
+      <Banner class="w-full">
         {bannerLink && (
           <a
             href={parseLink(bannerLink, "href")}
@@ -77,10 +83,16 @@ if (showBanner && bannerText && bannerStars) {
       </Banner>
     )
   }
-  <h2>{title}</h2>
-  <p>{subtitle}</p>
-  <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
-  <div>
+  <div class="max-w-3xl">
+    <Heading level="xxl" class="mb-6">
+      {title}
+    </Heading>
+    <BodyText size="xl" class="text-text-200 mb-8">
+      {subtitle}
+    </BodyText>
+  </div>
+  <Media asset={media} class="my-8 rounded-lg shadow-xl" width={800} />
+  <div class="flex gap-x-4">
     {ctas?.map((cta) => <Link blok={cta} />)}
   </div>
 </div>

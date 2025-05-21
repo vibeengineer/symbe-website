@@ -2,31 +2,31 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --surface-white: rgb(255 255 255);
-  --surface-blue: rgb(244 249 253);
-  --surface-dark: rgb(35 53 101);
-  --surface-electric: rgb(0 175 245);
-  --surface-charcoal: rgb(4 8 21);
-  --surface-snow: rgb(245 245 245);
-  --surface-sky: rgb(245 248 255);
-  --surface-accent-electric: rgb(0 175 245);
-  --surface-accent-orange: rgb(254 92 46);
-  --surface-accent-yellow: rgb(249 196 102);
-  --accent-electric: rgb(0 175 245);
-  --accent-orange: rgb(254 92 46);
-  --accent-yellow: rgb(249 196 102);
-  --text-900: rgb(4 8 21);
-  --text-500: rgb(109 109 112);
-  --text-400: rgb(170 169 175);
-  --text-200: rgb(204 204 204);
-  --text-000: rgb(255 255 255);
-  --error-500: rgb(255 64 50);
-  --warning-500: rgb(252 189 17);
-  --success-500: rgb(19 180 94);
 }
 
 @theme {
-  --gradient-dark-up: linear-gradient(
+  --color-surface-white: rgb(255 255 255);
+  --color-surface-blue: rgb(244 249 253);
+  --color-surface-dark: rgb(35 53 101);
+  --color-surface-electric: rgb(0 175 245);
+  --color-surface-charcoal: rgb(4 8 21);
+  --color-surface-snow: rgb(245 245 245);
+  --color-surface-sky: rgb(245 248 255);
+  --color-surface-accent-electric: rgb(0 175 245);
+  --color-surface-accent-orange: rgb(254 92 46);
+  --color-surface-accent-yellow: rgb(249 196 102);
+  --color-accent-electric: rgb(0 175 245);
+  --color-accent-orange: rgb(254 92 46);
+  --color-accent-yellow: rgb(249 196 102);
+  --color-text-900: rgb(4 8 21);
+  --color-text-500: rgb(109 109 112);
+  --color-text-400: rgb(170 169 175);
+  --color-text-200: rgb(204 204 204);
+  --color-text-000: rgb(255 255 255);
+  --color-error-500: rgb(255 64 50);
+  --color-warning-500: rgb(252 189 17);
+  --color-success-500: rgb(19 180 94);
+  --background-image-dark-up: linear-gradient(
     0deg,
     #28496d 1.44%,
     #153456 10.1%,
@@ -35,7 +35,7 @@
     #07182c 78.37%,
     #071427 100%
   );
-  --gradient-dark-left: linear-gradient(
+  --background-image-dark-left: linear-gradient(
     44deg,
     #28496d 3.53%,
     #153456 12.83%,
@@ -44,7 +44,7 @@
     #07182c 77.9%,
     #071427 98.82%
   );
-  --gradient-dark-right: linear-gradient(
+  --background-image-dark-right: linear-gradient(
     316deg,
     #28496d 2.63%,
     #153456 19.93%,
@@ -53,7 +53,7 @@
     #07182c 77.95%,
     #071427 99.13%
   );
-  --gradient-dark-down: linear-gradient(
+  --background-image-dark-down: linear-gradient(
     181deg,
     #28496d 2.58%,
     #153456 14.89%,
@@ -62,24 +62,25 @@
     #07182c 112.03%,
     #071427 142.81%
   );
-  --gradient-electric:
+  --background-image-electric:
     radial-gradient(
       163.62% 192.96% at -20.82% 146.68%,
       rgba(255, 255, 255, 0.02) 0%,
       rgba(0, 15, 57, 0.05) 100%
     ),
     linear-gradient(237deg, #159de7 24.55%, #29aeef 38.06%, #56c1f3 60.72%);
-  --gradient-soft:
+  --background-image-soft:
     linear-gradient(77deg, #edf4fa 57.91%, #f6fbff 99.3%), #f0f9ff;
-  --gradient-purple:
+  --background-image-purple:
     linear-gradient(77deg, rgba(243, 245, 255, 0.2) 57.91%, #d7e2ff 99.3%),
     #f5f8ff;
-  --gradient-rose: linear-gradient(
+  --background-image-rose: linear-gradient(
     90deg,
     #a44498 0%,
     #ff9ff2 26.44%,
     #eb90df 56.53%,
     #ffb4f5 100%
   );
+
   --font-sans: var(--font-dm-sans);
 }
