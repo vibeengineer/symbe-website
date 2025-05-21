@@ -5,6 +5,7 @@ import Link from "@/components/ui/link.astro";
 import Media from "@/components/ui/media.astro";
 import type { Prettify } from "@/types";
 import { cn } from "@/utils/cn";
+import { ChevronDown } from "@lucide/astro";
 
 interface Props {
   className?: string;
@@ -82,11 +83,16 @@ const themeStyles = {
                   themeStyles.link,
                   themeStyles.linkHover,
                   "cursor-pointer",
+                  "flex items-center gap-1",
                 )}
                 aria-expanded="false"
                 aria-haspopup="true"
               >
                 {item.dropdownTitle}
+                <ChevronDown
+                  data-chevron
+                  class="h-4 w-4 transition-transform duration-200 ease-in-out"
+                />
               </button>
               <div
                 data-panel
@@ -145,4 +151,9 @@ const themeStyles = {
     display: block;
     width: 100%;
   }
+
+  /* Chevron animation - can be done with JS too */
+  /* button[aria-expanded="true"] [data-chevron] {
+    transform: rotate(180deg);
+  } */
 </style>

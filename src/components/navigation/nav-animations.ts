@@ -71,10 +71,20 @@ const initNavigationAnimations = () => {
     gsap.set(mobileDrawer, { autoAlpha: 0, yPercent: -5 });
   }
 
+  // Set initial state for chevrons (idempotent)
+  const chevrons = document.querySelectorAll<HTMLElement>("[data-chevron]");
+  gsap.set(chevrons, { rotation: 0 });
+
   // --- Helper functions for dropdowns ---
   function openDropdown(panelToOpen: HTMLElement) {
     if (currentDropdown && currentDropdown !== panelToOpen) {
       gsap.set(currentDropdown, { autoAlpha: 0, y: -10, scaleY: 0.95 }); // Instant close
+      const prevChevron = currentDropdown
+        .closest(".dropdown-wrapper")
+        ?.querySelector<HTMLElement>("[data-chevron]");
+      if (prevChevron) {
+        gsap.to(prevChevron, { rotation: 0, duration: 0.15 });
+      }
     }
     currentDropdown = panelToOpen;
     gsap.to(panelToOpen, {
@@ -84,6 +94,13 @@ const initNavigationAnimations = () => {
       duration: 0.2,
       ease: "power2.out",
     });
+
+    const chevron = panelToOpen
+      .closest(".dropdown-wrapper")
+      ?.querySelector<HTMLElement>("[data-chevron]");
+    if (chevron) {
+      gsap.to(chevron, { rotation: 180, duration: 0.15 });
+    }
   }
 
   function closeDropdown(panelToClose: HTMLElement) {
@@ -98,6 +115,13 @@ const initNavigationAnimations = () => {
         }
       },
     });
+
+    const chevron = panelToClose
+      .closest(".dropdown-wrapper")
+      ?.querySelector<HTMLElement>("[data-chevron]");
+    if (chevron) {
+      gsap.to(chevron, { rotation: 0, duration: 0.15 });
+    }
   }
 
   function startCloseTimer(panel: HTMLElement) {

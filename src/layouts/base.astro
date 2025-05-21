@@ -7,6 +7,7 @@ import "@/styles/global.css";
 import Navigation from "@/components/navigation/index.astro";
 import Footer from "@/components/footer.astro";
 import Spacer from "@/components/ui/spacer.astro";
+import CookieConsent from "@/components/cookie-consent/index.astro";
 
 type Props = {
   title?: string;
@@ -95,6 +96,7 @@ const {
     <Spacer size="2xl" />
     <slot />
     {!noFooter && <Footer blok={footerData} />}
+    <CookieConsent />
   </body>
 </html>
 

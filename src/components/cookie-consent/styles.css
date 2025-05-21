@@ -1,0 +1,37 @@
+/* 
+  Custom CSS variables for vanilla-cookieconsent.
+  You can override the default styles here.
+  Refer to the documentation for available CSS variables: 
+  https://cookieconsent.orestbida.com/reference/css-variables.html
+*/
+
+/* Example: Change primary button color and font */
+/*
+#cc-main {
+  --cc-font-family: 'YourFont', sans-serif;
+  --cc-btn-primary-bg: #007bff;
+  --cc-btn-primary-text-color: white;
+  --cc-btn-primary-border-color: #007bff;
+  --cc-btn-primary-hover-bg: #0056b3;
+  --cc-btn-primary-hover-border-color: #0056b3;
+
+  --cc-modal-bg: #f8f9fa;
+  --cc-modal-text-color: #212529;
+  --cc-modal-border-radius: 0.5rem;
+}
+*/
+
+/* Ensure the cookie consent modal has a high z-index */
+#cc-main {
+  z-index: 9999; /* Or any value higher than your navigation */
+}
+
+/* Dark mode specific overrides if you plan to use it */
+/*
+html.cc--darkmode #cc-main {
+  --cc-modal-bg: #333;
+  --cc-modal-text-color: #fff;
+  --cc-btn-primary-bg: #555;
+  --cc-btn-primary-border-color: #555;
+}
+*/
