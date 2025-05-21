@@ -1,142 +1,83 @@
 import gsap from "gsap";
 
-// Track the currently open dropdown
+// Module-level state for the dropdown
 let currentDropdown: HTMLElement | null = null;
-let dropdownTimeout: number | null = null;
+let dropdownTimeoutId: number | null = null;
+
+// Store listener references to remove them if init is called again
+const eventListeners: Array<{
+  target: EventTarget;
+  type: string;
+  listener: EventListenerOrEventListenerObject;
+  options?: AddEventListenerOptions | boolean;
+}> = [];
+
+function addManagedEventListener(
+  target: EventTarget,
+  type: string,
+  listener: EventListenerOrEventListenerObject,
+  options?: AddEventListenerOptions | boolean,
+) {
+  target.addEventListener(type, listener, options);
+  eventListeners.push({ target, type, listener, options });
+}
+
+function removeAllManagedEventListeners() {
+  for (const { target, type, listener, options } of eventListeners) {
+    target.removeEventListener(type, listener, options);
+  }
+  eventListeners.length = 0; // Clear the array
+}
 
 /**
- * Initialize all navigation animations
+ * Initialize all navigation animations.
+ * This function might be called multiple times due to Astro View Transitions.
  */
 const initNavigationAnimations = () => {
-  // Desktop navigation
-  const desktopNav = document.querySelector('[data-nav="desktop"]');
-  const dropdownTriggers = document.querySelectorAll("[data-trigger]");
-  const dropdownPanels = document.querySelectorAll("[data-panel]");
+  // 1. Clean up old listeners and state
+  removeAllManagedEventListeners();
 
-  // Mobile navigation
-  const mobileToggle = document.querySelector("[data-mobile-toggle]");
-  const mobileDrawer = document.querySelector("[data-mobile-drawer]");
+  // Reset shared state variables
+  if (currentDropdown) {
+    gsap.set(currentDropdown, { autoAlpha: 0 }); // Immediately hide
+    currentDropdown = null;
+  }
+  if (dropdownTimeoutId !== null) {
+    clearTimeout(dropdownTimeoutId);
+    dropdownTimeoutId = null;
+  }
 
-  // Add js-enabled class to enable animations
-  document.documentElement.classList.add("js-enabled");
+  // 2. Query for elements
+  const dropdownPanels = document.querySelectorAll<HTMLElement>("[data-panel]");
+  const mobileToggle = document.querySelector<HTMLElement>(
+    "[data-mobile-toggle]",
+  );
+  const mobileDrawer = document.querySelector<HTMLElement>(
+    "[data-mobile-drawer]",
+  );
 
-  // Set initial states for dropdowns and mobile menu
+  if (!document.documentElement.classList.contains("js-enabled")) {
+    document.documentElement.classList.add("js-enabled");
+  }
+
+  // Set initial states for dropdowns (idempotent)
   gsap.set(dropdownPanels, {
     autoAlpha: 0,
     y: -10,
     scaleY: 0.95,
     transformOrigin: "top",
   });
-  if (mobileDrawer) gsap.set(mobileDrawer, { autoAlpha: 0, yPercent: -5 });
-
-  // Handle dropdown panels
-  if (dropdownTriggers.length && dropdownPanels.length) {
-    // Create a map of triggers to panels
-    const panelMap = new Map<Element, HTMLElement>();
-
-    for (let i = 0; i < dropdownTriggers.length; i++) {
-      if (dropdownPanels[i]) {
-        panelMap.set(dropdownTriggers[i], dropdownPanels[i] as HTMLElement);
-      }
-    }
-
-    // Show dropdown on hover
-    for (const trigger of dropdownTriggers) {
-      const panel = panelMap.get(trigger);
-      if (!panel) continue;
-
-      // Create a wrapper around the trigger for better hover detection
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("dropdown-wrapper");
-      wrapper.style.position = "relative";
-      wrapper.style.display = "inline-block";
-
-      // Insert the wrapper
-      trigger.parentNode?.insertBefore(wrapper, trigger);
-      wrapper.appendChild(trigger);
-
-      // Handle mouseenter on trigger
-      wrapper.addEventListener("mouseenter", () => {
-        // Clear any pending timeout
-        if (dropdownTimeout !== null) {
-          clearTimeout(dropdownTimeout);
-          dropdownTimeout = null;
-        }
-
-        // Close any other open dropdown immediately
-        if (currentDropdown && currentDropdown !== panel) {
-          gsap.to(currentDropdown, {
-            autoAlpha: 0,
-            y: -10,
-            scaleY: 0.95,
-            duration: 0.1,
-            onComplete: () => {
-              // Open the new dropdown
-              openDropdown(panel);
-            },
-          });
-        } else if (currentDropdown !== panel) {
-          // Open this dropdown if it's not already open
-          openDropdown(panel);
-        }
-      });
-
-      // Handle mouseleave
-      wrapper.addEventListener("mouseleave", (e) => {
-        // Make sure we're not moving to the panel
-        const relatedTarget = e.relatedTarget as HTMLElement;
-        if (
-          relatedTarget &&
-          (relatedTarget === panel || panel.contains(relatedTarget))
-        ) {
-          return;
-        }
-
-        // Use timeout to allow for moving between dropdowns
-        dropdownTimeout = window.setTimeout(() => {
-          closeDropdown(panel);
-        }, 100);
-      });
-
-      // Add mouseenter to panel to prevent closing when moving to panel
-      panel.addEventListener("mouseenter", () => {
-        if (dropdownTimeout !== null) {
-          clearTimeout(dropdownTimeout);
-          dropdownTimeout = null;
-        }
-      });
-
-      // Add mouseleave to panel
-      panel.addEventListener("mouseleave", (e) => {
-        // Make sure we're not moving to the trigger
-        const relatedTarget = e.relatedTarget as HTMLElement;
-        if (
-          relatedTarget &&
-          (relatedTarget === trigger || wrapper.contains(relatedTarget))
-        ) {
-          return;
-        }
-
-        closeDropdown(panel);
-      });
-    }
-
-    // Close dropdowns when clicking outside
-    document.addEventListener("click", (e) => {
-      if (
-        currentDropdown &&
-        !(e.target as Element).closest(".dropdown-wrapper") &&
-        !(e.target as Element).closest("[data-panel]")
-      ) {
-        closeDropdown(currentDropdown);
-      }
-    });
+  if (mobileDrawer) {
+    gsap.set(mobileDrawer, { autoAlpha: 0, yPercent: -5 });
   }
 
-  // Helper functions
-  function openDropdown(panel: HTMLElement) {
-    currentDropdown = panel;
-    gsap.to(panel, {
+  // --- Helper functions for dropdowns ---
+  function openDropdown(panelToOpen: HTMLElement) {
+    if (currentDropdown && currentDropdown !== panelToOpen) {
+      gsap.set(currentDropdown, { autoAlpha: 0, y: -10, scaleY: 0.95 }); // Instant close
+    }
+    currentDropdown = panelToOpen;
+    gsap.to(panelToOpen, {
       autoAlpha: 1,
       y: 0,
       scaleY: 1,
@@ -145,42 +86,103 @@ const initNavigationAnimations = () => {
     });
   }
 
-  function closeDropdown(panel: HTMLElement) {
-    gsap.to(panel, {
+  function closeDropdown(panelToClose: HTMLElement) {
+    gsap.to(panelToClose, {
       autoAlpha: 0,
       y: -10,
       scaleY: 0.95,
       duration: 0.2,
       onComplete: () => {
-        if (currentDropdown === panel) {
+        if (currentDropdown === panelToClose) {
           currentDropdown = null;
         }
       },
     });
   }
 
-  // Mobile drawer
+  function startCloseTimer(panel: HTMLElement) {
+    if (dropdownTimeoutId !== null) {
+      clearTimeout(dropdownTimeoutId);
+    }
+    dropdownTimeoutId = window.setTimeout(() => {
+      closeDropdown(panel);
+      dropdownTimeoutId = null;
+    }, 250);
+  }
+
+  function cancelCloseTimer() {
+    if (dropdownTimeoutId !== null) {
+      clearTimeout(dropdownTimeoutId);
+      dropdownTimeoutId = null;
+    }
+  }
+
+  // --- Desktop Dropdown Logic ---
+  const wrappers = document.querySelectorAll<HTMLElement>(".dropdown-wrapper");
+  for (const wrapper of wrappers) {
+    const trigger = wrapper.querySelector<HTMLElement>("[data-trigger]");
+    const panel = wrapper.querySelector<HTMLElement>("[data-panel]");
+
+    if (!trigger || !panel) {
+      // console.warn("Dropdown wrapper missing trigger or panel:", wrapper); // Optional warning
+      return;
+    }
+
+    addManagedEventListener(wrapper, "mouseenter", () => {
+      cancelCloseTimer();
+      openDropdown(panel);
+    });
+
+    addManagedEventListener(wrapper, "mouseleave", () => {
+      startCloseTimer(panel);
+    });
+
+    addManagedEventListener(panel, "mouseenter", () => {
+      cancelCloseTimer();
+    });
+
+    addManagedEventListener(panel, "mouseleave", () => {
+      startCloseTimer(panel);
+    });
+  }
+
+  // Close dropdowns when clicking outside
+  addManagedEventListener(document, "click", (e) => {
+    if (currentDropdown && e.target instanceof Element) {
+      const currentOpenDropdownWrapper =
+        currentDropdown.closest(".dropdown-wrapper");
+      if (
+        currentOpenDropdownWrapper &&
+        !currentOpenDropdownWrapper.contains(e.target)
+      ) {
+        cancelCloseTimer();
+        closeDropdown(currentDropdown);
+      } else if (!currentOpenDropdownWrapper) {
+        cancelCloseTimer();
+        closeDropdown(currentDropdown);
+      }
+    }
+  });
+
+  // --- Mobile Drawer Logic ---
   if (mobileToggle && mobileDrawer) {
     let isOpen = false;
 
-    mobileToggle.addEventListener("click", () => {
+    addManagedEventListener(mobileToggle, "click", () => {
       isOpen = !isOpen;
-
       if (isOpen) {
-        // Open drawer
         mobileToggle.setAttribute("aria-expanded", "true");
         mobileDrawer.setAttribute("aria-hidden", "false");
         mobileDrawer.classList.add("open");
         document.body.style.overflow = "hidden";
-
         gsap.to(mobileDrawer, {
           autoAlpha: 1,
           yPercent: 0,
           duration: 0.3,
           ease: "power2.out",
           onComplete: () => {
-            // Animate in menu items
-            const menuItems = mobileDrawer.querySelectorAll(".flex > *");
+            const menuItems =
+              mobileDrawer.querySelectorAll<HTMLElement>(".flex > *");
             gsap.fromTo(
               menuItems,
               { y: 20, autoAlpha: 0 },
@@ -195,12 +197,10 @@ const initNavigationAnimations = () => {
           },
         });
       } else {
-        // Close drawer
         mobileToggle.setAttribute("aria-expanded", "false");
         mobileDrawer.setAttribute("aria-hidden", "true");
         mobileDrawer.classList.remove("open");
         document.body.style.overflow = "";
-
         gsap.to(mobileDrawer, {
           autoAlpha: 0,
           yPercent: -5,
@@ -210,42 +210,45 @@ const initNavigationAnimations = () => {
       }
     });
 
-    // Close when clicking on links
-    const links = mobileDrawer.querySelectorAll("a");
+    const links = mobileDrawer.querySelectorAll<HTMLElement>("a");
     for (const link of links) {
-      link.addEventListener("click", () => {
-        if (mobileToggle instanceof HTMLElement) {
+      addManagedEventListener(link, "click", () => {
+        if (
+          mobileToggle instanceof HTMLElement &&
+          typeof mobileToggle.click === "function"
+        ) {
           mobileToggle.click();
         } else {
-          // Fallback if click() is not available
           isOpen = false;
-          mobileToggle.setAttribute("aria-expanded", "false");
-          mobileDrawer.setAttribute("aria-hidden", "true");
-          mobileDrawer.classList.remove("open");
+          mobileToggle?.setAttribute("aria-expanded", "false");
+          mobileDrawer?.setAttribute("aria-hidden", "true");
+          mobileDrawer?.classList.remove("open");
           document.body.style.overflow = "";
-
-          gsap.to(mobileDrawer, {
-            autoAlpha: 0,
-            yPercent: -5,
-            duration: 0.25,
-          });
+          if (mobileDrawer)
+            gsap.to(mobileDrawer, {
+              autoAlpha: 0,
+              yPercent: -5,
+              duration: 0.25,
+            });
         }
       });
     }
 
-    // Close on escape key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isOpen) {
-        if (mobileToggle instanceof HTMLElement) {
+    const keydownListener = (e: Event) => {
+      if ((e as KeyboardEvent).key === "Escape" && isOpen) {
+        if (
+          mobileToggle instanceof HTMLElement &&
+          typeof mobileToggle.click === "function"
+        ) {
           mobileToggle.click();
         }
       }
-    });
+    };
+    addManagedEventListener(document, "keydown", keydownListener);
   }
 };
 
 // Initialize when DOM is ready
 document.addEventListener("DOMContentLoaded", initNavigationAnimations);
-
 // Support Astro View Transitions
 document.addEventListener("astro:page-load", initNavigationAnimations);
