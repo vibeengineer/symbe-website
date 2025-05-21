@@ -2,9 +2,6 @@
 import { SEO } from "astro-seo";
 import { Font } from "astro:assets";
 import { getGlobals } from "../services/storyblok/globals";
-const {
-  env: { SITE_NAME, SITE_URL, CONTENT_VERSION },
-} = import.meta;
 import "@/styles/global.css";
 import Navigation from "@/components/navigation/navigation.astro";
 import Footer from "@/components/footer.astro";
@@ -19,8 +16,9 @@ type Props = {
   noNav?: boolean;
 };
 
-const { navigationData, footerData, seoDefaults } =
-  await getGlobals(CONTENT_VERSION);
+const { navigationData, footerData, seoDefaults } = await getGlobals(
+  import.meta.env.CONTENT_VERSION,
+);
 const {
   title,
   description,
@@ -52,7 +50,7 @@ const {
           image:
             openGraphImage ??
             seoDefaults.openGraphImage?.filename ??
-            `${SITE_URL}/og.png`,
+            `${import.meta.env.SITE_URL}/og.png`,
           type: "website",
         },
       }}
@@ -79,8 +77,11 @@ const {
           { rel: "manifest", href: "/favicon/site.webmanifest" },
         ],
         meta: [
-          { name: "apple-mobile-web-app-title", content: SITE_NAME },
-          { property: "og:site_name", content: SITE_NAME },
+          {
+            name: "apple-mobile-web-app-title",
+            content: import.meta.env.SITE_NAME,
+          },
+          { property: "og:site_name", content: import.meta.env.SITE_NAME },
           { name: "theme-color", content: "#000000" },
         ],
       }}
