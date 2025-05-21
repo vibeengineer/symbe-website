@@ -14,10 +14,13 @@ interface Props {
 const { blok, className, theme = "light" } = Astro.props as Props;
 ---
 
-<div {...storyblokEditable(blok as SbBlokData)}>
+<header
+  class="fixed top-0 left-0 z-50 w-full"
+  {...storyblokEditable(blok as SbBlokData)}
+>
   <DesktopNav blok={blok} className={className} theme={theme} />
   <MobileNav blok={blok} className={className} theme={theme} />
-</div>
+</header>
 
 <!-- Attach the animations script -->
 <script src="./nav-animations.ts"></script>
