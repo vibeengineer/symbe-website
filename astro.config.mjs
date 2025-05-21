@@ -87,5 +87,8 @@ export default defineConfig({
   vite: {
     //@ts-ignore
     plugins: [tailwindcss()],
+    server: {
+      port: import.meta.env.PORT || 4321,
+    },
   },
 });
