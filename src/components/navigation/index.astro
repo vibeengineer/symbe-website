@@ -1,8 +1,8 @@
 ---
 import type { NavigationStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import Link from "../ui/link.astro";
-import Media from "../ui/media.astro";
+import Link from "@/components/ui/link.astro";
+import Media from "@/components/ui/media.astro";
 import type { Prettify } from "@/types";
 type Props = {
   className?: string;
@@ -17,7 +17,7 @@ const {
 
 <nav class={className} {...storyblokEditable(Astro.props.blok as SbBlokData)}>
   <div>
-    {logo?.filename && <Media asset={logo} width={140} height={66} />}
+    {logo?.filename && <Media asset={logo} width={132} height={45} />}
   </div>
   <div>
     {
