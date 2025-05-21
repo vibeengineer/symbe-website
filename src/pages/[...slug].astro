@@ -24,6 +24,14 @@ if (liveStory) {
   }
 }
 // If you are using `resolve_relations` or `resolve_links`, you must also pass them to the Bridge configuration in `astro.config.mjs`.
+
+const serverEnv = JSON.stringify(import.meta.env);
 ---
 
+<div>
+  client
+  {JSON.stringify(import.meta.env)}
+  server
+  {serverEnv}
+</div>
 <StoryblokComponent blok={story.content} />
