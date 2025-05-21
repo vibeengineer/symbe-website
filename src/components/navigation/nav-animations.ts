@@ -76,51 +76,89 @@ const initNavigationAnimations = () => {
   gsap.set(chevrons, { rotation: 0 });
 
   // --- Helper functions for dropdowns ---
-  function openDropdown(panelToOpen: HTMLElement) {
-    if (currentDropdown && currentDropdown !== panelToOpen) {
-      gsap.set(currentDropdown, { autoAlpha: 0, y: -10, scaleY: 0.95 }); // Instant close
-      const prevChevron = currentDropdown
-        .closest(".dropdown-wrapper")
-        ?.querySelector<HTMLElement>("[data-chevron]");
-      if (prevChevron) {
-        gsap.to(prevChevron, { rotation: 0, duration: 0.15 });
-      }
-    }
-    currentDropdown = panelToOpen;
-    gsap.to(panelToOpen, {
+
+  // Helper to actually perform the opening animation for a panel
+  function _animatePanelOpen(panel: HTMLElement) {
+    currentDropdown = panel; // It's now officially the current one
+
+    // Kill any stray animations on this panel or its chevron before opening
+    gsap.killTweensOf(panel);
+    const chevronToOpen = panel
+      .closest(".dropdown-wrapper")
+      ?.querySelector<HTMLElement>("[data-chevron]");
+    if (chevronToOpen) gsap.killTweensOf(chevronToOpen);
+
+    gsap.to(panel, {
       autoAlpha: 1,
       y: 0,
       scaleY: 1,
       duration: 0.2,
       ease: "power2.out",
     });
-
-    const chevron = panelToOpen
-      .closest(".dropdown-wrapper")
-      ?.querySelector<HTMLElement>("[data-chevron]");
-    if (chevron) {
-      gsap.to(chevron, { rotation: 180, duration: 0.15 });
+    if (chevronToOpen) {
+      gsap.to(chevronToOpen, { rotation: 180, duration: 0.15 });
     }
   }
 
-  function closeDropdown(panelToClose: HTMLElement) {
+  // Modified closeDropdown function
+  function closeDropdown(
+    panelToClose: HTMLElement,
+    onClosedCallback?: () => void,
+  ) {
+    // Kill any stray animations on this panel or its chevron before closing
+    gsap.killTweensOf(panelToClose);
+    const chevronToClose = panelToClose
+      .closest(".dropdown-wrapper")
+      ?.querySelector<HTMLElement>("[data-chevron]");
+    if (chevronToClose) gsap.killTweensOf(chevronToClose);
+
     gsap.to(panelToClose, {
       autoAlpha: 0,
       y: -10,
       scaleY: 0.95,
-      duration: 0.2,
+      duration: 0.2, // Closing animation duration
       onComplete: () => {
         if (currentDropdown === panelToClose) {
           currentDropdown = null;
         }
+        if (onClosedCallback) {
+          onClosedCallback();
+        }
       },
     });
+    if (chevronToClose) {
+      gsap.to(chevronToClose, { rotation: 0, duration: 0.15 });
+    }
+  }
 
-    const chevron = panelToClose
-      .closest(".dropdown-wrapper")
-      ?.querySelector<HTMLElement>("[data-chevron]");
-    if (chevron) {
-      gsap.to(chevron, { rotation: 0, duration: 0.15 });
+  // Renamed and revised from original openDropdown
+  function requestOpenDropdown(panelToOpen: HTMLElement) {
+    cancelCloseTimer(); // Always cancel any pending auto-close first.
+
+    if (currentDropdown === panelToOpen) {
+      // Re-hovering the trigger of the currently active/intended dropdown.
+      // Ensure it's opening or stays open.
+      gsap.killTweensOf(panelToOpen); // Stop any animation (e.g., closing)
+      const chevron = panelToOpen
+        .closest(".dropdown-wrapper")
+        ?.querySelector<HTMLElement>("[data-chevron]");
+      if (chevron) gsap.killTweensOf(chevron);
+
+      _animatePanelOpen(panelToOpen); // If already open, GSAP handles it gracefully.
+      return;
+    }
+
+    // If we are here, panelToOpen is different from currentDropdown (or currentDropdown is null)
+    if (currentDropdown) {
+      // Implicitly, currentDropdown !== panelToOpen
+      const dropdownToActuallyClose = currentDropdown;
+      closeDropdown(dropdownToActuallyClose, () => {
+        // AFTER the old one has finished closing
+        _animatePanelOpen(panelToOpen);
+      });
+    } else {
+      // No dropdown is currently open, so just open the new one.
+      _animatePanelOpen(panelToOpen);
     }
   }
 
@@ -154,7 +192,7 @@ const initNavigationAnimations = () => {
 
     addManagedEventListener(wrapper, "mouseenter", () => {
       cancelCloseTimer();
-      openDropdown(panel);
+      requestOpenDropdown(panel);
     });
 
     addManagedEventListener(wrapper, "mouseleave", () => {
