@@ -1,0 +1,104 @@
+---
+import { Image } from "@unpic/astro";
+import { parseAsset } from "../../services/storyblok/helpers";
+import type { AssetStoryblok } from "../../../storyblok/types";
+
+// Props type for the Media component
+export type Props = {
+  src?: string;
+  asset?: AssetStoryblok;
+  alt?: string | null;
+  width?: number;
+  height?: number;
+  layout?: "constrained" | "fullWidth" | "fixed";
+  fullWidth?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+  controls?: boolean;
+  poster?: string;
+  playsinline?: boolean;
+  preload?: "auto" | "metadata" | "none";
+  [key: string]: unknown;
+};
+
+const {
+  src: rawSrc,
+  asset,
+  alt: rawAlt,
+  width,
+  height,
+  layout = "constrained",
+  fullWidth = false,
+  // Video-specific props
+  autoplay = true,
+  loop = false,
+  muted = true,
+  controls = true,
+  poster,
+  playsinline = true,
+  preload = "metadata",
+  ...rest
+} = Astro.props;
+
+// Determine src/alt from asset or direct props
+let src: string | undefined = rawSrc;
+let alt: string | null | undefined = rawAlt;
+let contentType: string | undefined;
+
+if (asset) {
+  const assetData = parseAsset(asset);
+  src = assetData.src;
+  alt = rawAlt ?? assetData.alt;
+  contentType = asset?.content_type;
+}
+
+if (!src) {
+  throw new Error("Media component requires either a 'src' or 'asset' prop.");
+}
+
+// Helper: is video?
+function isVideo(src: string, contentType?: string): boolean {
+  if (contentType?.startsWith("video/")) return true;
+  // fallback: check file extension
+  return /\.(mp4|webm|ogg|mov|m4v)(\?.*)?$/i.test(src);
+}
+
+const isMediaVideo = isVideo(src, contentType);
+
+const className = fullWidth ? "block w-full h-auto max-w-screen" : "";
+---
+
+{
+  isMediaVideo ? (
+    <video
+      src={src}
+      poster={poster}
+      width={width}
+      height={height}
+      class={className}
+      autoplay={autoplay}
+      loop={loop}
+      muted={muted}
+      controls={controls}
+      playsinline={playsinline}
+      preload={preload}
+      {...rest}
+    >
+      {alt ? (
+        <track kind="descriptions" label="Description" srclang="en" default />
+      ) : null}
+      Your browser does not support the video tag.
+    </video>
+  ) : (
+    <Image
+      src={src}
+      alt={alt ?? ""}
+      width={width}
+      height={height}
+      layout={layout}
+      class={className}
+      {...rest}
+    />
+  )
+}
