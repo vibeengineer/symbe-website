@@ -1,10 +1,14 @@
 ---
 import type { FooterStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { Prettify } from "@/types";
+import Link from "./ui/link.astro";
 type Props = {
-  blok: FooterStoryblok;
+  blok: Prettify<FooterStoryblok>;
 };
-const { blok } = Astro.props;
+const {
+  blok: { linkColumns },
+} = Astro.props;
 ---
 
 <footer
@@ -12,15 +16,10 @@ const { blok } = Astro.props;
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   {
-    blok.linkColumns?.map((column) => (
+    linkColumns?.map((column) => (
       <div class="flex flex-col gap-2">
         {column.links?.map((link) => {
-          const url = link.link?.cached_url || link.link?.url;
-          return (
-            <a href={url} class="text-gray-700 hover:underline">
-              {link.linkText}
-            </a>
-          );
+          return <Link blok={link} />;
         })}
       </div>
     ))

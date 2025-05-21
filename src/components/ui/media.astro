@@ -3,8 +3,7 @@ import { Image } from "@unpic/astro";
 import { parseAsset } from "../../services/storyblok/helpers";
 import type { AssetStoryblok } from "../../../storyblok/types";
 
-// Props type for the Media component
-export type Props = {
+type Props = {
   src?: string;
   asset?: AssetStoryblok;
   alt?: string | null;
@@ -57,7 +56,6 @@ if (!src) {
   throw new Error("Media component requires either a 'src' or 'asset' prop.");
 }
 
-// Helper: is video?
 function isVideo(src: string, contentType?: string): boolean {
   if (contentType?.startsWith("video/")) return true;
   // fallback: check file extension
