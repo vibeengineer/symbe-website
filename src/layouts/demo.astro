@@ -14,14 +14,11 @@ const {
 ---
 
 <Base
-  title={seo[0].title}
-  description={seo[0].description}
-  openGraphTitle={seo[0].openGraphTitle}
-  noIndex={seo[0].noIndex}
-  openGraphImage={seo[0].openGraphImage?.filename &&
-  typeof seo[0].openGraphImage?.filename
-    ? seo[0].openGraphImage.filename
-    : undefined}
+  title={seo?.[0]?.title}
+  description={seo?.[0]?.description}
+  openGraphTitle={seo?.[0]?.openGraphTitle}
+  noIndex={seo?.[0]?.noIndex}
+  openGraphImage={seo?.[0]?.openGraphImage?.filename || undefined}
   noFooter
   noNav
 >
