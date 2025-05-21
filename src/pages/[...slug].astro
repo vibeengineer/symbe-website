@@ -5,9 +5,13 @@ const {
   env: { CONTENT_VERSION },
 } = Astro.locals.runtime;
 
+// slug can be an array when using catch-all routes (e.g. [...slug])
 const { slug } = Astro.params;
+const slugParam = Array.isArray(slug) ? slug.join("/") : (slug ?? "home");
+
 let story = null;
 
+// Check for the live-editing payload first (Storyblok Bridge)
 const liveStory = await getLiveStory(Astro);
 
 if (liveStory) {
@@ -15,14 +19,29 @@ if (liveStory) {
 } else {
   const sbApi = useStoryblokApi();
   try {
-    const { data } = await sbApi.get(`cdn/stories/${slug || "home"}`, {
+    const { data } = await sbApi.get(`cdn/stories/${slugParam}`, {
       version: CONTENT_VERSION === "draft" ? "draft" : "published",
     });
     story = data?.story;
   } catch (error) {
+    // Log the full error so that it surfaces in Wrangler/Workers logs.
+    console.error("Error fetching Storyblok story", {
+      slug: slugParam,
+      error,
+    });
+
+    // Return a proper 404 response without an invalid Location header.
+    // Using Astro.redirect() with a 3xx status is recommended for redirects,
+    // but here we simply return a 404 HTML response so the Worker immediately resolves.
     return Astro.redirect("404", 404);
   }
 }
+
+if (!story) {
+  // No story returned – avoid rendering undefined and send a 404.
+  return Astro.redirect("404", 404);
+}
+
 // If you are using `resolve_relations` or `resolve_links`, you must also pass them to the Bridge configuration in `astro.config.mjs`.
 ---
 
