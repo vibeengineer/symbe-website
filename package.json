@@ -15,7 +15,8 @@
 		"generate-sb-types": "storyblok generate-typescript-typedefs --sourceFilePaths ./storyblok/components.definition.json --destinationFilePath ./storyblok/types.d.ts --compilerOptions storyblok/compiler-options.json",
 		"storyblok": "pnpm run pull-sb-components && pnpm run generate-sb-types",
 		"sslproxy": "local-ssl-proxy --source 4322 --target 4321 --cert localhost.pem --key localhost-key.pem",
-		"generate-cert": "mkcert -install && mkcert localhost"
+		"generate-cert": "mkcert -install && mkcert localhost",
+		"start": "node ./dist/server/entry.mjs"
 	},
 	"dependencies": {
 		"@astrojs/node": "^9.2.1",
