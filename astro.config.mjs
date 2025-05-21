@@ -88,7 +88,8 @@ export default defineConfig({
     //@ts-ignore
     plugins: [tailwindcss()],
     server: {
-      port: Number.parseInt(import.meta.env.PORT) || 4321,
+      // to allow railway to accept traffic, if not configured a 502 error is returned
+      host: "0.0.0.0",
     },
   },
 });
