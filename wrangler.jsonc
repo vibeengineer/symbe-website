@@ -10,6 +10,7 @@
   "vars": {
     "BASE_URL": "https://symbe-website-preview.symbe.workers.dev/",
     "SITE_NAME": "Symbe Website",
+    "CONTENT_VERSION": "draft",
     "SITE_DESCRIPTION": "Build deal-winning business cases in seconds. The Intelligent Business Case Platform for value-based sales professionals."
   }
 }

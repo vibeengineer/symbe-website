@@ -59,17 +59,16 @@ export const getStoriesResponseSchema = z.object({
 export async function getStory<T>({
   slug,
   options,
+  version,
 }: {
+  version: "draft" | "published";
   slug: string;
   options?: ISbStoriesParams;
 }) {
   const storyblok = useStoryblokApi();
 
   const response = await storyblok.getStory(`${slug}`, {
-    version:
-      import.meta.env.PUBLIC_CONTENT_VERSION === "draft"
-        ? "draft"
-        : "published",
+    version,
     ...options,
   });
 
@@ -86,7 +85,9 @@ export async function getStories<T>({
   page,
   per_page,
   options,
+  version,
 }: {
+  version: "draft" | "published";
   contentType?: string;
   page?: number;
   per_page?: number;
@@ -95,10 +96,7 @@ export async function getStories<T>({
   const storyblok = useStoryblokApi();
 
   const response = await storyblok.getStories({
-    version:
-      import.meta.env.PUBLIC_CONTENT_VERSION === "draft"
-        ? "draft"
-        : "published",
+    version,
     page: page ?? 1,
     per_page: per_page ?? 100,
     ...(contentType ? { content_type: contentType } : {}),

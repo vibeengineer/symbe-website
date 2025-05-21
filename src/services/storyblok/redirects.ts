@@ -2,19 +2,21 @@ import StoryblokClient from "storyblok-js-client";
 import type { RedirectsListStoryblok } from "@storyblok/types";
 import type { RedirectConfig } from "astro";
 import { getStoryResponseSchema } from "./helpers";
+import { z } from "zod";
+
+const versionSchema = z.enum(["draft", "published"]);
 
 export async function getRedirects(
   storyblokApiKey: string,
+  version: string,
 ): Promise<Record<string, RedirectConfig>> {
   const sbApi = new StoryblokClient({
     accessToken: storyblokApiKey,
   });
   try {
+    const parsedVersion = versionSchema.parse(version);
     const response = await sbApi.get("cdn/stories/globals/redirects-list", {
-      version:
-        import.meta.env.PUBLIC_CONTENT_VERSION === "draft"
-          ? "draft"
-          : "published",
+      version: parsedVersion,
     });
     const parsedResponse = getStoryResponseSchema.parse(response);
 

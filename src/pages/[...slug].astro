@@ -1,6 +1,9 @@
 ---
 import { getLiveStory, useStoryblokApi } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
+const {
+  env: { CONTENT_VERSION },
+} = Astro.locals.runtime;
 
 const { slug } = Astro.params;
 let story = null;
@@ -13,10 +16,7 @@ if (liveStory) {
   const sbApi = useStoryblokApi();
   try {
     const { data } = await sbApi.get(`cdn/stories/${slug || "home"}`, {
-      version:
-        import.meta.env.PUBLIC_CONTENT_VERSION === "draft"
-          ? "draft"
-          : "published",
+      version: CONTENT_VERSION === "draft" ? "draft" : "published",
     });
     story = data?.story;
   } catch (error) {
@@ -24,14 +24,6 @@ if (liveStory) {
   }
 }
 // If you are using `resolve_relations` or `resolve_links`, you must also pass them to the Bridge configuration in `astro.config.mjs`.
-
-const serverEnv = JSON.stringify(import.meta.env);
 ---
 
-<div>
-  client
-  {JSON.stringify(import.meta.env)}
-  server
-  {serverEnv}
-</div>
 <StoryblokComponent blok={story.content} />
