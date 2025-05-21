@@ -1,52 +1,23 @@
 ---
 import type { NavigationStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import Link from "@/components/ui/link.astro";
-import Media from "@/components/ui/media.astro";
 import type { Prettify } from "@/types";
-type Props = {
+import DesktopNav from "./desktop-nav.astro";
+import MobileNav from "./mobile-nav.astro";
+
+interface Props {
   className?: string;
   blok: Prettify<NavigationStoryblok>;
-};
+  theme?: "light" | "dark";
+}
 
-const {
-  blok: { logo, centreLinks, rightLinks },
-  className,
-} = Astro.props;
+const { blok, className, theme = "light" } = Astro.props as Props;
 ---
 
-<nav class={className} {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <div>
-    {logo?.filename && <Media asset={logo} width={132} height={45} />}
-  </div>
-  <div>
-    {
-      centreLinks?.map((item) => {
-        if (item.component === "link") {
-          return <Link blok={item} />;
-        }
+<div {...storyblokEditable(blok as SbBlokData)}>
+  <DesktopNav blok={blok} className={className} theme={theme} />
+  <MobileNav blok={blok} className={className} theme={theme} />
+</div>
 
-        if (item.component === "linkDropdown") {
-          return (
-            <div>
-              <span>{item.dropdownTitle}</span>
-              <div>
-                {item.links?.map((dropdownLink) => {
-                  return <Link blok={dropdownLink} />;
-                })}
-              </div>
-            </div>
-          );
-        }
-        return null;
-      })
-    }
-  </div>
-  <div>
-    {
-      rightLinks?.map((link) => {
-        return <Link blok={link} />;
-      })
-    }
-  </div>
-</nav>
+<!-- Attach the animations script -->
+<script src="./nav-animations.ts"></script>

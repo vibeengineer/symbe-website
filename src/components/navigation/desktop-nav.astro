@@ -1,0 +1,92 @@
+---
+import type { NavigationStoryblok } from "@storyblok/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Link from "@/components/ui/link.astro";
+import Media from "@/components/ui/media.astro";
+import type { Prettify } from "@/types";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  className?: string;
+  blok: Prettify<NavigationStoryblok>;
+  theme?: "light" | "dark";
+}
+
+const { blok, className, theme = "light" } = Astro.props as Props;
+const { logo, centreLinks, rightLinks } = blok;
+---
+
+<nav
+  data-nav="desktop"
+  class={cn(
+    "hidden md:grid relative grid-cols-[auto_1fr_auto] items-center gap-8 p-4 md:p-6",
+    "bg-black/50 backdrop-blur-lg",
+    className,
+  )}
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <!-- Highlight pill -->
+  <div
+    class={cn(
+      "nav-highlight absolute bg-white/10 rounded-lg pointer-events-none invisible opacity-0",
+      "transition-all duration-200 ease-out",
+    )}
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Logo -->
+  <div class="flex items-center">
+    {logo?.filename && <Media asset={logo} width={132} height={45} />}
+  </div>
+
+  <!-- Centre links -->
+  <div class="flex items-center gap-6">
+    {
+      centreLinks?.map((item: any) => {
+        if (item.component === "link") {
+          return <Link blok={item} />;
+        }
+        if (item.component === "linkDropdown") {
+          return (
+            <div class="relative">
+              <button
+                data-trigger
+                class={cn(
+                  "relative px-4 py-2 text-[0.9375rem]",
+                  "border-none bg-transparent text-white",
+                  "cursor-pointer transition-colors duration-200",
+                )}
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
+                {item.dropdownTitle}
+              </button>
+              <div
+                data-panel
+                class={cn(
+                  "absolute top-[calc(100%+0.5rem)] left-1/2 -translate-x-1/2",
+                  "min-w-[220px] p-2",
+                  "rounded-lg border border-white/10 bg-black/80",
+                  "invisible opacity-0 backdrop-blur-lg",
+                  "transition-all duration-200 ease-out",
+                )}
+                role="menu"
+              >
+                {item.links?.map((dropdownLink: any) => (
+                  <Link blok={dropdownLink} />
+                ))}
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })
+    }
+  </div>
+
+  <!-- Right links -->
+  <div class="flex items-center gap-4">
+    {rightLinks?.map((link: any) => <Link blok={link} />)}
+  </div>
+</nav>

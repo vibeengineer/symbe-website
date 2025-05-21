@@ -1,0 +1,77 @@
+---
+import type { NavigationStoryblok } from "@storyblok/types";
+import Link from "@/components/ui/link.astro";
+import type { Prettify } from "@/types";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  blok: Prettify<NavigationStoryblok>;
+  className?: string;
+  theme?: "light" | "dark";
+}
+
+const {
+  blok: { centreLinks, rightLinks },
+  className,
+  theme = "light",
+} = Astro.props as Props;
+---
+
+<!-- Mobile hamburger toggle -->
+<button
+  data-mobile-toggle
+  class={cn(
+    "block md:hidden fixed top-4 right-4 z-[101] p-3 cursor-pointer bg-transparent border-none",
+  )}
+  aria-label="Toggle navigation"
+  aria-expanded="false"
+>
+  <span
+    class={cn(
+      "relative block w-6 h-0.5 bg-white transition-colors duration-200",
+      "[&::before]:content-[''] [&::before]:absolute [&::before]:left-0 [&::before]:w-6 [&::before]:h-0.5 [&::before]:bg-white [&::before]:-top-2 [&::before]:transition-transform [&::before]:duration-200",
+      "[&::after]:content-[''] [&::after]:absolute [&::after]:left-0 [&::after]:w-6 [&::after]:h-0.5 [&::after]:bg-white [&::after]:-bottom-2 [&::after]:transition-transform [&::after]:duration-200",
+      "[aria-expanded='true']:bg-transparent",
+      "[aria-expanded='true']:[&::before]:translate-y-2 [aria-expanded='true']:[&::before]:rotate-45",
+      "[aria-expanded='true']:[&::after]:-translate-y-2 [aria-expanded='true']:[&::after]:-rotate-45",
+    )}></span>
+</button>
+
+<!-- Mobile drawer -->
+<aside
+  data-mobile-drawer
+  class={cn(
+    "fixed inset-0 w-full h-screen md:hidden",
+    "bg-black/95 backdrop-blur-lg z-[100] invisible opacity-0",
+    "transition-all duration-300 ease-out",
+    className,
+  )}
+  aria-hidden="true"
+>
+  <div class="flex flex-col gap-6 p-6 pt-20">
+    {
+      centreLinks?.map((item: any) => {
+        if (item.component === "link") {
+          return <Link blok={item} />;
+        }
+
+        if (item.component === "linkDropdown") {
+          return (
+            <div class="border-b border-white/10 pb-4">
+              <div class="mb-3 font-medium text-white">
+                {item.dropdownTitle}
+              </div>
+              <div class="flex flex-col gap-3 pl-4">
+                {item.links?.map((dropdownLink: any) => (
+                  <Link blok={dropdownLink} />
+                ))}
+              </div>
+            </div>
+          );
+        }
+        return null;
+      })
+    }
+    {rightLinks?.map((link: any) => <Link blok={link} />)}
+  </div>
+</aside>
