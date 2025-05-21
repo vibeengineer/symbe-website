@@ -20,7 +20,7 @@ if (liveStory) {
   const sbApi = useStoryblokApi();
   try {
     const { data } = await sbApi.get(`cdn/stories/${slugParam}`, {
-      version: CONTENT_VERSION === "draft" ? "draft" : "published",
+      version: CONTENT_VERSION as "draft" | "published",
     });
     story = data?.story;
   } catch (error) {
