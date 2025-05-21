@@ -88,7 +88,7 @@ export default defineConfig({
     //@ts-ignore
     plugins: [tailwindcss()],
     server: {
-      port: import.meta.env.PORT || 4321,
+      port: Number.parseInt(import.meta.env.PORT) || 4321,
     },
   },
 });
