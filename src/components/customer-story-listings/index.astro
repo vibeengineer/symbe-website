@@ -11,10 +11,13 @@ type Props = {
   blok: Prettify<CustomerStoryListingsStoryblok>;
 };
 
-const customerStories = await getStories<CustomerStoryStoryblok>({
-  contentType: "customerStory",
-  version: import.meta.env.CONTENT_VERSION,
-});
+const { stories: customerStories, total } =
+  await getStories<CustomerStoryStoryblok>({
+    contentType: "customerStory",
+    version: import.meta.env.CONTENT_VERSION,
+    per_page: 9,
+    page: 1,
+  });
 
 const {
   blok: { title, subtitle },

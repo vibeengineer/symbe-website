@@ -11,14 +11,26 @@ import {
 import type { Prettify } from "@/types";
 import FiresideChatListing from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Pagination from "@/components/ui/pagination.astro";
 type Props = {
   blok: Prettify<FiresideChatsListingsStoryblok>;
 };
 
-const firesideChats = await getStories<FiresideChatStoryblok>({
-  contentType: "firesideChat",
-  version: import.meta.env.CONTENT_VERSION,
-});
+const param = Astro.url.searchParams.get("page");
+const currentPage = param ? Number.parseInt(param) : 1;
+
+const { stories: firesideChats, total } =
+  await getStories<FiresideChatStoryblok>({
+    contentType: "firesideChat",
+    version: import.meta.env.CONTENT_VERSION,
+    per_page: 9,
+    page: currentPage,
+  });
+
+// Calculate total pages
+const totalPages = Math.ceil(total / 9);
+
+console.log(total, firesideChats);
 
 const {
   blok: { title, subtitle, subscribeLinks, subscribeLinksCaption },
@@ -47,4 +59,10 @@ const {
   <div>
     {firesideChats.map((chat) => <FiresideChatListing story={chat} />)}
   </div>
+
+  {
+    totalPages > 0 && (
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    )
+  }
 </div>

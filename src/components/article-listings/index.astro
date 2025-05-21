@@ -11,9 +11,13 @@ type Props = {
   blok: Prettify<ArticleListingsStoryblok>;
 };
 
-const articles = await getStories<ArticleStoryblok>({
+const param = Astro.url.searchParams.get("page");
+
+const { stories: articles, total } = await getStories<ArticleStoryblok>({
   contentType: "article",
   version: import.meta.env.CONTENT_VERSION,
+  per_page: 9,
+  page: param ? Number.parseInt(param) : 1,
 });
 
 const {

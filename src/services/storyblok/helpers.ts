@@ -105,7 +105,11 @@ export async function getStories<T>({
 
   const parsedResponse = getStoriesResponseSchema.parse(response);
 
-  return parsedResponse.data.stories as StoryblokStory<T>[];
+  return {
+    stories: parsedResponse.data.stories as StoryblokStory<T>[],
+    total: parsedResponse.total,
+    perPage: parsedResponse.perPage,
+  };
 }
 
 export type ParseLinkInput =

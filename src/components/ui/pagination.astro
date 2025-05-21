@@ -1,0 +1,143 @@
+---
+type Props = {
+  totalPages: number;
+  currentPage: number;
+};
+
+// will set the current page search param
+
+const { totalPages, currentPage } = Astro.props;
+
+// Create an array for page numbers to display
+const pageNumbers = [];
+const maxPagesShown = 7; // Total number of page links to show (including ellipsis)
+
+// Logic to determine which page numbers to show
+if (totalPages <= maxPagesShown) {
+  // If we have fewer pages than max, show all
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+} else {
+  // Always include first page
+  pageNumbers.push(1);
+
+  // Determine start and end of the shown page range
+  let startPage = Math.max(2, currentPage - 1);
+  let endPage = Math.min(totalPages - 1, currentPage + 1);
+
+  // Adjust if we're at the beginning
+  if (currentPage <= 3) {
+    startPage = 2;
+    endPage = Math.min(startPage + 2, totalPages - 1);
+  }
+
+  // Adjust if we're at the end
+  if (currentPage >= totalPages - 2) {
+    endPage = totalPages - 1;
+    startPage = Math.max(endPage - 2, 2);
+  }
+
+  // Add ellipsis before the range if needed
+  if (startPage > 2) {
+    pageNumbers.push("...");
+  }
+
+  // Add the range
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
+  // Add ellipsis after the range if needed
+  if (endPage < totalPages - 1) {
+    pageNumbers.push("...");
+  }
+
+  // Always include last page
+  pageNumbers.push(totalPages);
+}
+
+// Function to generate the URL for a page
+const getPageUrl = (page: number | string) => {
+  if (typeof page !== "number") return "#";
+
+  const url = new URL(Astro.url);
+  url.searchParams.set("page", page.toString());
+  return url.pathname + url.search;
+};
+
+// Previous and next page URLs
+const prevPageUrl = currentPage > 1 ? getPageUrl(currentPage - 1) : "#";
+const nextPageUrl =
+  currentPage < totalPages ? getPageUrl(currentPage + 1) : "#";
+---
+
+<nav
+  class="mt-8 flex items-center justify-between border-t border-gray-200 px-4 sm:px-0"
+>
+  <div class="-mt-px flex w-0 flex-1">
+    <a
+      href={prevPageUrl}
+      class={`inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium ${currentPage > 1 ? "text-gray-500 hover:border-gray-300 hover:text-gray-700" : "text-gray-300 cursor-not-allowed"}`}
+      aria-disabled={currentPage <= 1}
+    >
+      <svg
+        class="mr-3 size-5 text-gray-400"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+        data-slot="icon"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10Z"
+          clip-rule="evenodd"></path>
+      </svg>
+      Previous
+    </a>
+  </div>
+  <div class="hidden md:-mt-px md:flex">
+    {
+      pageNumbers.map((page) => {
+        if (page === "...") {
+          return (
+            <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">
+              ...
+            </span>
+          );
+        }
+
+        return (
+          <a
+            href={getPageUrl(page as number)}
+            class={`inline-flex items-center border-t-2 px-4 pt-4 text-sm font-medium ${page === currentPage ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"}`}
+            aria-current={page === currentPage ? "page" : undefined}
+          >
+            {page}
+          </a>
+        );
+      })
+    }
+  </div>
+  <div class="-mt-px flex w-0 flex-1 justify-end">
+    <a
+      href={nextPageUrl}
+      class={`inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium ${currentPage < totalPages ? "text-gray-500 hover:border-gray-300 hover:text-gray-700" : "text-gray-300 cursor-not-allowed"}`}
+      aria-disabled={currentPage >= totalPages}
+    >
+      Next
+      <svg
+        class="ml-3 size-5 text-gray-400"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+        data-slot="icon"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </a>
+  </div>
+</nav>
