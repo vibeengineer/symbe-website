@@ -23,6 +23,10 @@ const redirects = await getRedirects(STORYBLOK_TOKEN, CONTENT_VERSION);
 // https://astro.build/config
 export default defineConfig({
   redirects: redirects,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "viewport",
+  },
   integrations: [
     react(),
     sitemap(),

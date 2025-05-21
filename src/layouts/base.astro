@@ -1,10 +1,12 @@
 ---
 import { SEO } from "astro-seo";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import { getGlobals } from "../services/storyblok/globals";
 import "@/styles/global.css";
 import Navigation from "@/components/navigation/index.astro";
 import Footer from "@/components/footer.astro";
+import Spacer from "@/components/ui/spacer.astro";
 
 type Props = {
   title?: string;
@@ -36,6 +38,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-dm-sans" preload />
+    <ClientRouter />
     <SEO
       title={title ? title : seoDefaults.title}
       description={description ? description : seoDefaults.description}
@@ -89,6 +92,7 @@ const {
   </head>
   <body>
     {!noNav && <Navigation blok={navigationData} />}
+    <Spacer size="2xl" />
     <slot />
     {!noFooter && <Footer blok={footerData} />}
   </body>
