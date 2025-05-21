@@ -391,6 +391,7 @@ export interface MainHeroStoryblok {
   subtitle: string;
   ctas?: LinkStoryblok[];
   media: AssetStoryblok;
+  bannerLink?: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   component: "mainHero";
   _uid: string;
   [k: string]: unknown;

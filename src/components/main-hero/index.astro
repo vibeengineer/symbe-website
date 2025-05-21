@@ -1,31 +1,86 @@
 ---
 import type { MainHeroStoryblok } from "@storyblok/types";
-import { parseAsset } from "@/services/storyblok/helpers";
+import { parseAsset, parseLink } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
 import Link from "../ui/link.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Banner from "../ui/banner.astro";
+import G2Logo from "../ui/g2-logo.astro";
+import Stars from "../ui/stars.astro";
+import { z } from "zod";
+
+const numberOfStarsSchema = z.union([
+  z.literal(1),
+  z.literal(1.5),
+  z.literal(2),
+  z.literal(2.5),
+  z.literal(3),
+  z.literal(3.5),
+  z.literal(4),
+  z.literal(4.5),
+  z.literal(5),
+]);
+type NumberOfStars = z.infer<typeof numberOfStarsSchema>;
+
 type Props = {
   blok: Prettify<MainHeroStoryblok>;
 };
 
 const {
-  blok: { title, subtitle, media, ctas, bannerStars, bannerText, showBanner },
+  blok: {
+    title,
+    subtitle,
+    media,
+    ctas,
+    bannerStars,
+    bannerText,
+    showBanner,
+    bannerLink,
+  },
 } = Astro.props;
+
+let starsToDisplay: NumberOfStars = 5; // Default to 5 stars
+
+if (showBanner && bannerText && bannerStars) {
+  const parsedBannerStars = Number.parseFloat(bannerStars);
+  const validationResult = numberOfStarsSchema.safeParse(parsedBannerStars);
+  if (validationResult.success) {
+    starsToDisplay = validationResult.data;
+  } else {
+    starsToDisplay = 5;
+  }
+}
 ---
 
 <div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
+  {
+    showBanner && bannerText && (
+      <Banner>
+        {bannerLink && (
+          <a
+            href={parseLink(bannerLink, "href")}
+            target={parseLink(bannerLink, "target")}
+            class="flex items-center gap-x-3 no-underline"
+          >
+            <G2Logo />
+            <span>{bannerText}</span>
+            <Stars numberOfStars={starsToDisplay} />
+          </a>
+        )}
+        {!bannerLink && (
+          <div>
+            <G2Logo />
+            <span>{bannerText}</span>
+            <Stars numberOfStars={starsToDisplay} />
+          </div>
+        )}
+      </Banner>
+    )
+  }
   <h2>{title}</h2>
   <p>{subtitle}</p>
   <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
   <div>
     {ctas?.map((cta) => <Link blok={cta} />)}
   </div>
-  {
-    showBanner && bannerStars && bannerText && (
-      <div>
-        <p>{bannerText}</p>
-        {parseInt(bannerStars) / 5}
-      </div>
-    )
-  }
 </div>
