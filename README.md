@@ -27,9 +27,8 @@ This starter kit provides a foundation for building a website using Astro, Story
     - Configure local fonts under `experimental.fonts` if needed. Place font files in `src/assets/fonts/` (or update the path) and ensure the configuration matches your files.
 3.  **Configure Cloudflare (`wrangler.jsonc`):**
     - Define **non-secret**, **runtime** variables for your deployed Worker here (under the `vars` section).
-    - `BASE_URL`: Your final production domain (e.g., `https://yourdomain.com`).
+    - `SITE_URL`: Your final production domain (e.g., `https://yourdomain.com`).
     - `SITE_NAME`: Used for SEO/metadata.
-    - `SITE_DESCRIPTION`: Used for SEO/metadata.
 4.  **Set Up Environment Variables:**
     - **`.env` (Build-time & Local Secrets):**
       - Create a `.env` file (gitignored) by copying `.env.example`.

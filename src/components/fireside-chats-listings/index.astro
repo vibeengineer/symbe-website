@@ -17,7 +17,7 @@ type Props = {
 
 const firesideChats = await getStories<FiresideChatStoryblok>({
   contentType: "firesideChat",
-  version: Astro.locals.runtime.env.CONTENT_VERSION as "draft" | "published",
+  version: import.meta.env.CONTENT_VERSION,
 });
 
 const {

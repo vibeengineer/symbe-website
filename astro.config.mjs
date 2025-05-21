@@ -10,6 +10,8 @@ import { getRedirects } from "./src/services/storyblok/redirects";
 // Fetch redirects
 import { loadEnv } from "vite";
 
+import node from "@astrojs/node";
+
 const { STORYBLOK_TOKEN, SITE_URL, CONTENT_VERSION } = loadEnv(
   //@ts-ignore
   process.env,
@@ -63,12 +65,8 @@ export default defineConfig({
     }),
   ],
   site: SITE_URL,
-  adapter: cloudflare({
-    imageService: "cloudflare",
-    platformProxy: {
-      enabled: true,
-      configPath: "wrangler.jsonc",
-    },
+  adapter: node({
+    mode: "standalone",
   }),
   output: "server",
   experimental: {

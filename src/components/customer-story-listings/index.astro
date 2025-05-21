@@ -3,11 +3,7 @@ import type {
   CustomerStoryListingsStoryblok,
   CustomerStoryStoryblok,
 } from "@storyblok/types";
-import {
-  getStories,
-  parseAsset,
-  parseLink,
-} from "@/services/storyblok/helpers";
+import { getStories } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
 import CustomerStoryListing from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
@@ -17,7 +13,7 @@ type Props = {
 
 const customerStories = await getStories<CustomerStoryStoryblok>({
   contentType: "customerStory",
-  version: Astro.locals.runtime.env.CONTENT_VERSION as "draft" | "published",
+  version: import.meta.env.CONTENT_VERSION,
 });
 
 const {
