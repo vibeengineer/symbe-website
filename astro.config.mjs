@@ -84,12 +84,12 @@ export default defineConfig({
       },
     ],
   },
+  server: {
+    // to allow node to accept traffic, if not configured a 502 error is returned
+    host: "0.0.0.0",
+  },
   vite: {
     //@ts-ignore
     plugins: [tailwindcss()],
-    server: {
-      // to allow railway to accept traffic, if not configured a 502 error is returned
-      host: "0.0.0.0",
-    },
   },
 });
