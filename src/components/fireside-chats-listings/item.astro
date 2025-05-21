@@ -11,6 +11,7 @@ type Props = {
 
 const {
   story: {
+    full_slug,
     content: {
       blurb,
       dateLastModified,
@@ -24,9 +25,12 @@ const {
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.story.content as SbBlokData)}>
+<a
+  href={`/${full_slug}`}
+  {...storyblokEditable(Astro.props.story.content as SbBlokData)}
+>
   <img src={parseAsset(thumbnail, "src")} alt={parseAsset(thumbnail, "alt")} />
   <h2>{title}</h2>
   <p>{blurb}</p>
   <p>{watchTime}</p>
-</div>
+</a>
