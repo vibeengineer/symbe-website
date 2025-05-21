@@ -10,10 +10,14 @@ import { getRedirects } from "./src/services/storyblok/redirects";
 // Fetch redirects
 import { loadEnv } from "vite";
 
-//@ts-ignore
-const { STORYBLOK_TOKEN, SITE_URL } = loadEnv(process.env, process.cwd(), "");
+const { STORYBLOK_TOKEN, SITE_URL, CONTENT_VERSION } = loadEnv(
+  //@ts-ignore
+  process.env,
+  process.cwd(),
+  "",
+);
 
-const redirects = await getRedirects(STORYBLOK_TOKEN);
+const redirects = await getRedirects(STORYBLOK_TOKEN, CONTENT_VERSION);
 
 // https://astro.build/config
 export default defineConfig({

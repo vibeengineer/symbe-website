@@ -19,7 +19,9 @@ type Props = {
   noNav?: boolean;
 };
 
-const { navigationData, footerData, seoDefaults } = await getGlobals();
+const { navigationData, footerData, seoDefaults } = await getGlobals(
+  Astro.locals.runtime.env.CONTENT_VERSION as "draft" | "published",
+);
 const {
   title,
   description,

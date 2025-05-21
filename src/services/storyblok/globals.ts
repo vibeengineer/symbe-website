@@ -5,24 +5,27 @@ import type {
 } from "@storyblok/types";
 import { getStory } from "./helpers";
 
-export async function getNavigation() {
+export async function getNavigation(version: "draft" | "published") {
   const { content } = await getStory<NavigationStoryblok>({
     slug: "globals/navigation",
+    version,
   });
   return content;
 }
 
-export async function getFooter() {
+export async function getFooter(version: "draft" | "published") {
   const { content } = await getStory<FooterStoryblok>({
     slug: "globals/footer",
+    version,
   });
 
   return content;
 }
 
-export async function getSeoDefaults() {
+export async function getSeoDefaults(version: "draft" | "published") {
   const { content } = await getStory<SeoDefaultsStoryblok>({
     slug: "globals/seo-defaults",
+    version,
   });
 
   return {
@@ -37,11 +40,11 @@ export async function getSeoDefaults() {
   };
 }
 
-export async function getGlobals() {
+export async function getGlobals(version: "draft" | "published") {
   const [navigationData, footerData, seoDefaults] = await Promise.all([
-    getNavigation(),
-    getFooter(),
-    getSeoDefaults(),
+    getNavigation(version),
+    getFooter(version),
+    getSeoDefaults(version),
   ]);
 
   return {

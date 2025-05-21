@@ -13,6 +13,7 @@ type Props = {
 
 const articles = await getStories<ArticleStoryblok>({
   contentType: "article",
+  version: Astro.locals.runtime.env.CONTENT_VERSION as "draft" | "published",
 });
 
 const {

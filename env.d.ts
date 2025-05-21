@@ -11,6 +11,10 @@ interface ImportMetaEnv {
   STORYBLOK_TOKEN: string;
 }
 
+interface ImportMetaEnv {
+  readonly CONTENT_VERSION: "draft" | "published";
+}
+
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
