@@ -18,10 +18,73 @@ export const initMobileNavigationAnimations = () => {
   const mobileDrawer = document.querySelector<HTMLElement>(
     "[data-mobile-drawer]",
   );
+  const mobileToggleSpan = document.querySelector<HTMLElement>(
+    "[data-mobile-toggle-span]",
+  );
+  const mobileLogo = document.querySelector<HTMLElement>("[data-mobile-logo]");
 
   if (!mobileToggle || !mobileDrawer) {
     return; // No mobile nav elements found
   }
+
+  // Get theme from data attribute
+  const theme = mobileToggle.getAttribute("data-theme") || "light";
+
+  // Helper function to set colors based on theme and state
+  const setColors = (isOpen: boolean) => {
+    if (mobileToggleSpan) {
+      // Remove all color classes first
+      mobileToggleSpan.classList.remove(
+        "bg-white",
+        "bg-gray-800",
+        "before:bg-white",
+        "before:bg-gray-800",
+        "after:bg-white",
+        "after:bg-gray-800",
+      );
+
+      if (theme === "light") {
+        // Light theme: white when closed, black when open
+        if (isOpen) {
+          mobileToggleSpan.classList.add(
+            "bg-gray-800",
+            "before:bg-gray-800",
+            "after:bg-gray-800",
+          );
+        } else {
+          mobileToggleSpan.classList.add(
+            "bg-white",
+            "before:bg-white",
+            "after:bg-white",
+          );
+        }
+      } else {
+        // Dark theme: always black
+        mobileToggleSpan.classList.add(
+          "bg-gray-800",
+          "before:bg-gray-800",
+          "after:bg-gray-800",
+        );
+      }
+    }
+
+    if (mobileLogo) {
+      // Remove existing color classes
+      mobileLogo.classList.remove("text-white", "text-gray-800");
+
+      if (theme === "light") {
+        // Light theme: white when closed, black when open
+        if (isOpen) {
+          mobileLogo.classList.add("text-gray-800");
+        } else {
+          mobileLogo.classList.add("text-white");
+        }
+      } else {
+        // Dark theme: always black
+        mobileLogo.classList.add("text-gray-800");
+      }
+    }
+  };
 
   // Initial visual states (idempotent)
   gsap.set(mobileDrawer, { autoAlpha: 0, yPercent: -5 });
@@ -30,6 +93,9 @@ export const initMobileNavigationAnimations = () => {
   mobileDrawer.classList.remove("open");
   document.body.style.overflow = ""; // Ensure overflow is reset
 
+  // Set initial colors
+  setColors(false);
+
   addManagedEventListener(mobileEventListeners, mobileToggle, "click", () => {
     isMobileDrawerOpen = !isMobileDrawerOpen;
     if (isMobileDrawerOpen) {
@@ -37,6 +103,10 @@ export const initMobileNavigationAnimations = () => {
       mobileDrawer.setAttribute("aria-hidden", "false");
       mobileDrawer.classList.add("open");
       document.body.style.overflow = "hidden";
+
+      // Update colors to open state
+      setColors(true);
+
       gsap.to(mobileDrawer, {
         autoAlpha: 1,
         yPercent: 0,
@@ -63,6 +133,10 @@ export const initMobileNavigationAnimations = () => {
       mobileDrawer.setAttribute("aria-hidden", "true");
       mobileDrawer.classList.remove("open");
       document.body.style.overflow = "";
+
+      // Update colors to closed state
+      setColors(false);
+
       gsap.to(mobileDrawer, {
         autoAlpha: 0,
         yPercent: -5,
@@ -90,6 +164,10 @@ export const initMobileNavigationAnimations = () => {
           mobileDrawer.setAttribute("aria-hidden", "true");
           mobileDrawer.classList.remove("open");
           document.body.style.overflow = "";
+
+          // Update colors to closed state
+          setColors(false);
+
           gsap.to(mobileDrawer, {
             autoAlpha: 0,
             yPercent: -5,

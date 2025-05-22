@@ -7,11 +7,11 @@ import MobileDrawer from "./mobile-drawer.astro";
 interface Props {
   blok: Prettify<NavigationStoryblok>;
   className?: string;
-  theme?: "transparent" | "white";
+  theme?: "light" | "dark";
 }
 
-const { blok, className, theme = "transparent" } = Astro.props as Props;
+const { blok, className, theme = "light" } = Astro.props as Props;
 ---
 
 <MobileToggle theme={theme} />
-<MobileDrawer blok={blok} className={className} theme={theme} />
+<MobileDrawer blok={blok} className={className} />

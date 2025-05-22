@@ -14,13 +14,11 @@ import Logo from "../desktop/logo.astro";
 interface Props {
   blok: Prettify<NavigationStoryblok>;
   className?: string;
-  theme: "transparent" | "white";
 }
 
 const {
   blok: { centreLinks, rightLinks, logo },
   className,
-  theme,
 } = Astro.props as Props;
 ---
 
@@ -28,9 +26,7 @@ const {
   data-mobile-drawer
   class={cn(
     "fixed inset-0 w-full h-screen md:hidden",
-    theme === "transparent"
-      ? "bg-white/95 text-gray-900"
-      : "bg-black/95 text-white backdrop-blur-lg",
+    "bg-white/95 text-gray-900 backdrop-blur-lg",
     "z-[100] invisible opacity-0 translate-y-[-10px]",
     "transition-all duration-300 ease-in-out",
     "[&.open]:visible [&.open]:opacity-100 [&.open]:translate-y-0",
@@ -38,32 +34,23 @@ const {
   )}
   aria-hidden="true"
 >
-  <div class="absolute top-4 left-6 z-[102]">
+  <div class="absolute top-4 left-6 z-[102]" data-mobile-logo>
     <Logo logo={logo} />
   </div>
   <div class="flex max-h-screen flex-col gap-6 overflow-y-auto p-6 pt-24">
     {
       centreLinks?.map((item: LinkStoryblok | LinkDropdownStoryblok) => {
         if (item.component === "link") {
-          return <MobileLinkItem blok={item as LinkStoryblok} theme={theme} />;
+          return <MobileLinkItem blok={item as LinkStoryblok} />;
         }
         if (item.component === "linkDropdown") {
-          return (
-            <MobileDropdownSection
-              item={item as LinkDropdownStoryblok}
-              theme={theme}
-            />
-          );
+          return <MobileDropdownSection item={item as LinkDropdownStoryblok} />;
         }
         return null;
       })
     }
     <div class="mt-4 flex flex-col gap-2">
-      {
-        rightLinks?.map((link: LinkStoryblok) => (
-          <MobileLinkItem blok={link} theme={theme} />
-        ))
-      }
+      {rightLinks?.map((link: LinkStoryblok) => <MobileLinkItem blok={link} />)}
     </div>
   </div>
 </aside>

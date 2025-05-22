@@ -20,7 +20,7 @@ const { blok, className, theme = "light" } = Astro.props as Props;
   {...storyblokEditable(blok as SbBlokData)}
 >
   <DesktopNav blok={blok} className={className} theme={theme} />
-  <!-- <MobileNav blok={blok} className={className} theme={theme} /> -->
+  <MobileNav blok={blok} className={className} theme={theme} />
 </header>
 
 <script src="./animations.ts"></script>

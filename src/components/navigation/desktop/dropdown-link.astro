@@ -46,12 +46,15 @@ console.log(Astro.props);
     ) : null
   }
   <div>
-    <Heading level="xxs" class="text-text-900 group-hover:text-text-900"
-      >{linkText}</Heading
+    <Heading
+      as="span"
+      level="xxs"
+      class="text-text-900 group-hover:text-text-900 block">{linkText}</Heading
     >
     <BodyText
       size="s"
-      class="text-text-500 group-hover:text-text-900 transition-colors duration-150"
+      as="span"
+      class="text-text-500 group-hover:text-text-900 block transition-colors duration-150"
       >{linkDescription}</BodyText
     >
   </div>
