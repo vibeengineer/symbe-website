@@ -135,6 +135,8 @@ export function parseLink(
   let calculatedHref: string;
   let calculatedTarget: "_blank" | "_self" = link.target ?? "_self";
 
+  console.log("link", link);
+
   switch (link.linktype) {
     case "story":
       if (link.story && typeof link.story.full_slug === "string") {
@@ -165,10 +167,40 @@ export function parseLink(
           calculatedHref = calculatedHref.replace(/\/{2,}/g, "/");
         }
       } else {
-        console.warn(
-          `Invalid story link: 'story' object or 'story.full_slug' is missing or not a string for link ID ${link.id}. Received story: ${JSON.stringify(link.story)}. Defaulting to '#'.`,
-        );
-        calculatedHref = "#";
+        if (
+          link.cached_url &&
+          typeof link.cached_url === "string" &&
+          link.cached_url.trim() !== ""
+        ) {
+          calculatedHref = link.cached_url;
+          if (link.anchor) {
+            // Attempt to append anchor safely, similar to how it's done for story.full_slug
+            if (/^[a-z][a-z0-9+.-]*:\/\//i.test(calculatedHref)) {
+              try {
+                const urlObj = new URL(calculatedHref);
+                urlObj.hash = link.anchor;
+                calculatedHref = urlObj.toString();
+              } catch (e) {
+                console.warn(
+                  `Could not parse URL from cached_url "${calculatedHref}" to append anchor. Appending manually. Error: ${e instanceof Error ? e.message : String(e)}`,
+                );
+                calculatedHref += `#${link.anchor}`;
+              }
+            } else {
+              // Treat as relative path
+              calculatedHref = calculatedHref.startsWith("/")
+                ? calculatedHref
+                : `/${calculatedHref}`;
+              calculatedHref += `#${link.anchor}`;
+              calculatedHref = calculatedHref.replace(/\/{2,}/g, "/");
+            }
+          }
+        } else {
+          console.warn(
+            `Invalid story link: 'story' object or 'story.full_slug' is missing or not a string, and 'cached_url' is also invalid for link ID ${link.id}. Received story: ${JSON.stringify(link.story)}, Received cached_url: ${link.cached_url}. Defaulting to '#'.`,
+          );
+          calculatedHref = "#";
+        }
       }
       break;
 
