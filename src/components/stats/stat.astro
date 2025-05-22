@@ -2,16 +2,39 @@
 import type { StatStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+
 type Props = {
   blok: Prettify<StatStoryblok>;
+  isFirst?: boolean;
+  isLast?: boolean;
 };
 
 const {
   blok: { text, caption },
+  isFirst = false,
+  isLast = false,
 } = Astro.props;
+
+const paddingClasses = isFirst
+  ? "md:pl-0 md:pr-16"
+  : isLast
+    ? "md:pr-0 md:pl-16"
+    : "md:px-16";
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <p>{text}</p>
-  <p>{caption}</p>
+<div
+  class={`flex flex-col items-center text-center flex-1 py-10 ${paddingClasses}`}
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+>
+  <Heading level="xxxl" class="text-text-000 font-bold tracking-tight">
+    {text}
+  </Heading>
+  <BodyText
+    size="s"
+    class="text-text-200 mt-4 font-semibold tracking-[0.05em] uppercase"
+  >
+    {caption}
+  </BodyText>
 </div>
