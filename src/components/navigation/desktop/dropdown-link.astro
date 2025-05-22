@@ -7,23 +7,53 @@ import BodyText from "@/components/ui/body-text.astro";
 import Label from "@/components/ui/label.astro";
 import { linkVariants, type LinkVariants } from "@/components/ui/link.astro";
 import { cn } from "@/utils/cn";
+import LucideIcon from "@/components/ui/lucide-icon.astro";
 
 export type Props = LinkVariants & {
   blok: Prettify<DropdownLinkStoryblok>;
 };
 
 const {
-  blok: { link, linkText, linkDescription },
+  blok: { link, linkText, linkDescription, icon },
   style: variantStyleProp,
 } = Astro.props;
+
+console.log(Astro.props);
 ---
 
 <a
   href={parseLink(link, "href")}
   target={parseLink(link, "target")}
-  class={cn(linkVariants({ style: variantStyleProp }), "hover:no-underline")}
+  class={cn(
+    linkVariants({ style: variantStyleProp }),
+    "hover:no-underline",
+    "whitespace-nowrap",
+    "flex items-start gap-3.5",
+    "group",
+  )}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
-  <Label size="m" weight="medium" class="text-text-900">{linkText}</Label>
-  <BodyText size="s" class="text-text-500">{linkDescription}</BodyText>
+  {
+    icon && typeof icon === "string" ? (
+      <div class="group-hover:bg-surface-charcoal group-hover:border-text-900 flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 transition-colors duration-150">
+        <LucideIcon
+          icon={icon}
+          class="text-text-900 group-hover:text-text-000 transition-colors duration-150"
+          size={16}
+        />
+      </div>
+    ) : null
+  }
+  <div>
+    <Label
+      size="m"
+      weight="medium"
+      class="text-text-900 group-hover:text-text-900">{linkText}</Label
+    >
+    <BodyText
+      size="s"
+      class="text-text-500 group-hover:text-text-900 transition-colors duration-150"
+      >{linkDescription}</BodyText
+    >
+  </div>
 </a>

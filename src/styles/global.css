@@ -71,9 +71,8 @@
     linear-gradient(237deg, #159de7 24.55%, #29aeef 38.06%, #56c1f3 60.72%);
   --background-image-soft:
     linear-gradient(77deg, #edf4fa 57.91%, #f6fbff 99.3%), #f0f9ff;
-  --background-image-purple:
-    linear-gradient(77deg, rgba(243, 245, 255, 0.2) 57.91%, #d7e2ff 99.3%),
-    #f5f8ff;
+  --background-image-purple: linear-gradient(77deg, rgba(243, 245, 255, 0.20) 57.91%, #D7E2FF 99.3%)
+  );
   --background-image-rose: linear-gradient(
     90deg,
     #a44498 0%,

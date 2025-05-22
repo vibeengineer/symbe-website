@@ -56,43 +56,51 @@ if (showBanner && bannerText && bannerStars) {
 ---
 
 <div
+  class="text-text-000 relative"
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
-  class="bg-dark-right text-text-000 flex flex-col items-center pt-16 pb-24 text-center md:pt-28 md:pb-32"
 >
-  {
-    showBanner && bannerText && (
-      <Banner class="w-full">
-        {bannerLink && (
-          <a
-            href={parseLink(bannerLink, "href")}
-            target={parseLink(bannerLink, "target")}
-            class="flex items-center gap-x-3 no-underline"
-          >
-            <G2Logo />
-            <span>{bannerText}</span>
-            <Stars numberOfStars={starsToDisplay} />
-          </a>
-        )}
-        {!bannerLink && (
-          <div>
-            <G2Logo />
-            <span>{bannerText}</span>
-            <Stars numberOfStars={starsToDisplay} />
-          </div>
-        )}
-      </Banner>
-    )
-  }
-  <div class="max-w-3xl">
-    <Heading level="xxl" class="mb-6">
-      {title}
-    </Heading>
-    <BodyText size="xl" class="text-text-200 mb-8">
-      {subtitle}
-    </BodyText>
+  <div
+    class="bg-dark-right flex min-h-[80dvh] flex-col items-center justify-center py-64 text-center md:py-72"
+  >
+    {
+      showBanner && bannerText && (
+        <Banner class="absolute top-20 left-0 w-full">
+          {bannerLink && (
+            <a
+              href={parseLink(bannerLink, "href")}
+              target={parseLink(bannerLink, "target")}
+              class="flex items-center gap-x-3 no-underline"
+            >
+              <G2Logo />
+              <span>{bannerText}</span>
+              <Stars numberOfStars={starsToDisplay} />
+            </a>
+          )}
+          {!bannerLink && (
+            <div>
+              <G2Logo />
+              <span>{bannerText}</span>
+              <Stars numberOfStars={starsToDisplay} />
+            </div>
+          )}
+        </Banner>
+      )
+    }
+    <div class="max-w-4xl">
+      <Heading level="xxl" class="mb-6 text-pretty">
+        {title}
+      </Heading>
+      <BodyText size="xl" class="mx-auto mb-8 max-w-3xl text-balance">
+        {subtitle}
+      </BodyText>
+    </div>
+    <div class="mt-2.5 flex gap-x-4">
+      {ctas?.map((cta) => <Link blok={cta} />)}
+    </div>
   </div>
-  <Media asset={media} class="my-8 rounded-lg shadow-xl" width={800} />
-  <div class="flex gap-x-4">
-    {ctas?.map((cta) => <Link blok={cta} />)}
+  <div
+    class="-mt-64 flex min-h-[700px] w-full items-center justify-center pb-12"
+  >
+    <Media asset={media} class="" width={800} />
   </div>
 </div>

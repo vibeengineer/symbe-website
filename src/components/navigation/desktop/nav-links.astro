@@ -12,12 +12,12 @@ interface Props {
 const { links }: Props = Astro.props;
 ---
 
-<div class="absolute left-1/2 flex -translate-x-1/2 items-center gap-3">
+<div class="absolute left-1/2 flex -translate-x-1/2 items-center gap-2">
   {
     links.map((item) => {
       if (item.component === "link") {
         return (
-          <div class={cn("relative block w-full rounded-lg px-4 py-2")}>
+          <div class={cn("relative block w-full rounded-lg")}>
             <Link blok={{ ...item, linkStyle: "ghost" }} />
           </div>
         );

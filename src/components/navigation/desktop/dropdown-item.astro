@@ -11,11 +11,6 @@ interface Props {
 const { blok }: Props = Astro.props;
 ---
 
-<div
-  class={cn(
-    "dropdown-item rounded-md px-3 py-[0.45rem]",
-    "transition-colors duration-150 hover:bg-gray-200/80",
-  )}
->
+<div class={cn("dropdown-item rounded-md px-1.5 py-[0.45rem]")}>
   <DropdownLink blok={blok} />
 </div>

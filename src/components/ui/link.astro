@@ -5,13 +5,15 @@ import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/cn";
+import Label from "./label.astro";
 
 export const linkVariants = cva(
-  "font-sans font-medium rounded-md transition-colors duration-200 ease-in-out",
+  "font-sans font-medium rounded-full transition-colors duration-200 ease-in-out whitespace-nowrap",
   {
     variants: {
       style: {
-        primary: "bg-accent-electric text-text-000 px-6 py-3 hover:bg-blue-700",
+        primary:
+          "bg-accent-electric/90 hover:bg-accent-electric text-text-000 px-4.5 py-2",
         ghost: "hover:bg-gray-200/10 px-4 py-2",
         default: "hover:underline",
       },
@@ -38,8 +40,8 @@ const {
 <a
   href={parseLink(link, "href")}
   target={parseLink(link, "target")}
-  class={cn(linkVariants({ style: linkStyle }), "whitespace-nowrap", className)}
+  class={cn(linkVariants({ style: linkStyle }), className)}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
-  {linkText}
+  <Label as="span" size="m" weight="medium">{linkText}</Label>
 </a>

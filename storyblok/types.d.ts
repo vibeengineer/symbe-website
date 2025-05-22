@@ -238,6 +238,7 @@ export interface DropdownLinkStoryblok {
   linkText: string;
   link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
   linkDescription?: string;
+  icon: number | string;
   component: "dropdownLink";
   _uid: string;
   [k: string]: unknown;

@@ -1,0 +1,31 @@
+---
+import {
+  Building2,
+  Flame,
+  ChartLine,
+  Handshake,
+  SlidersHorizontal,
+  ThumbsUp,
+  PackageSearch,
+  Newspaper,
+  Mail,
+} from "@lucide/astro";
+
+const { icon, ...rest } = Astro.props;
+
+const iconMap = {
+  building2: Building2,
+  flame: Flame,
+  lineChart: ChartLine,
+  handshake: Handshake,
+  slidersHorizontal: SlidersHorizontal,
+  thumbsUp: ThumbsUp,
+  packageSearch: PackageSearch,
+  newspaper: Newspaper,
+  mail: Mail,
+};
+
+const SelectedIcon = iconMap[icon as keyof typeof iconMap];
+---
+
+{SelectedIcon ? <SelectedIcon {...rest} /> : null}
