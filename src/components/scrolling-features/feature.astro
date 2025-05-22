@@ -3,17 +3,43 @@ import type { ScrollingFeatureStoryblok } from "@storyblok/types";
 import { parseAsset } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+
 type Props = {
   blok: Prettify<ScrollingFeatureStoryblok>;
+  index: number;
 };
 
 const {
+  blok,
   blok: { title, description, media },
+  index,
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <h2>{title}</h2>
-  <p>{description}</p>
-  <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
+<div
+  class="feature-section w-full"
+  data-attribute="scrolling-feature-trigger"
+  data-feature-index={index}
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <!-- Mobile-only image -->
+  <div class="mb-8 lg:hidden">
+    <img
+      src={parseAsset(media, "src")}
+      alt={parseAsset(media, "alt") || title}
+      class="mx-auto h-auto max-h-[300px] w-full rounded-lg object-contain shadow-lg"
+    />
+  </div>
+
+  <div class="max-w-xl">
+    <Heading level="l" class="text-text-900 text-accent-electric mb-6">
+      {title}
+    </Heading>
+
+    <BodyText size="l" class="text-text-500">
+      {description}
+    </BodyText>
+  </div>
 </div>
