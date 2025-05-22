@@ -12,6 +12,7 @@ import Heading from "@/components/ui/heading.astro";
 import BodyText from "@/components/ui/body-text.astro";
 import Media from "@/components/ui/media.astro";
 import Label from "../ui/label.astro";
+import BgEmbed from "./bg-embed.astro";
 
 const numberOfStarsSchema = z.union([
   z.literal(1),
@@ -60,53 +61,63 @@ if (showBanner && bannerText && bannerStars) {
   class="text-text-000 relative"
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
-  <div
-    class="bg-dark-right flex min-h-[80dvh] flex-col items-center py-52 text-center md:py-64"
-  >
-    {
-      showBanner && bannerText && (
-        <Banner class="absolute top-20 left-0 w-full">
-          {bannerLink && (
-            <a
-              href={parseLink(bannerLink, "href")}
-              target={parseLink(bannerLink, "target")}
-              class="flex items-center gap-x-3 no-underline"
-            >
-              <G2Logo />
-              <span>{bannerText}</span>
-              <Stars numberOfStars={starsToDisplay} />
-            </a>
-          )}
-          {!bannerLink && (
-            <div>
-              <G2Logo />
-              <Label size="s" weight="regular">
-                {bannerText}
-              </Label>
-              <Stars numberOfStars={starsToDisplay} />
-            </div>
-          )}
-        </Banner>
-      )
-    }
-    <div class="max-w-4xl">
-      <Heading level="xxl" class="mb-6 text-pretty">
-        {title}
-      </Heading>
-      <BodyText
-        size="l"
-        class="mx-auto mb-8 max-w-2xl text-balance opacity-80 md:max-w-[40rem]"
-      >
-        {subtitle}
-      </BodyText>
+  <div class="relative">
+    <!-- Background embed layer -->
+    <div class="absolute inset-0 min-h-[60dvh] overflow-hidden">
+      <BgEmbed />
     </div>
-    <div class="mt-2.5 flex gap-x-4">
-      {ctas?.map((cta) => <Link blok={cta} />)}
+
+    <!-- Content layer -->
+    <div
+      class="relative z-10 flex min-h-[60dvh] flex-col items-center pt-52 pb-96 text-center md:pt-64"
+    >
+      {
+        showBanner && bannerText && (
+          <Banner class="absolute top-20 left-0 w-full">
+            {bannerLink && (
+              <a
+                href={parseLink(bannerLink, "href")}
+                target={parseLink(bannerLink, "target")}
+                class="flex items-center gap-x-3 no-underline"
+              >
+                <G2Logo />
+                <span>{bannerText}</span>
+                <Stars numberOfStars={starsToDisplay} />
+              </a>
+            )}
+            {!bannerLink && (
+              <div>
+                <G2Logo />
+                <Label size="s" weight="regular">
+                  {bannerText}
+                </Label>
+                <Stars numberOfStars={starsToDisplay} />
+              </div>
+            )}
+          </Banner>
+        )
+      }
+      <div class="max-w-4xl">
+        <Heading level="xxl" class="mb-6 text-pretty">
+          {title}
+        </Heading>
+        <BodyText
+          size="l"
+          class="mx-auto mb-8 max-w-2xl text-balance opacity-80 md:max-w-[40rem]"
+        >
+          {subtitle}
+        </BodyText>
+      </div>
+      <div class="mt-2.5 flex gap-x-4">
+        {ctas?.map((cta) => <Link blok={cta} />)}
+      </div>
     </div>
-  </div>
-  <div
-    class="-mt-72 flex min-h-[700px] w-full items-center justify-center pb-12"
-  >
-    <Media asset={media} class="" width={800} />
+
+    <!-- Media layer -->
+    <div
+      class="relative z-20 -mt-72 flex min-h-[700px] w-full items-center justify-center pb-12"
+    >
+      <Media asset={media} class="" width={1200} />
+    </div>
   </div>
 </div>
