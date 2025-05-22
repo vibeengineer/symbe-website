@@ -17,15 +17,32 @@ const { theme = "light" } = Astro.props as Props;
   aria-expanded="false"
   data-theme={theme}
 >
-  <span
-    class={cn(
-      "relative block w-6 h-0.5 transition-all duration-300",
-      "[&::before]:content-[''] [&::before]:absolute [&::before]:left-0 [&::before]:w-6 [&::before]:h-0.5 [&::before]:-top-2 [&::before]:transition-all [&::before]:duration-300",
-      "[&::after]:content-[''] [&::after]:absolute [&::after]:left-0 [&::after]:w-6 [&::after]:h-0.5 [&::after]:-bottom-2 [&::after]:transition-all [&::after]:duration-300",
-      // Transform animations - hide middle line and transform pseudo-elements to form X
-      "[aria-expanded='true']:bg-transparent",
-      "[aria-expanded='true']:[&::before]:translate-y-2 [aria-expanded='true']:[&::before]:rotate-45",
-      "[aria-expanded='true']:[&::after]:-translate-y-2 [aria-expanded='true']:[&::after]:-rotate-45",
-    )}
-    data-mobile-toggle-span></span>
+  <div
+    class="relative flex h-4 w-6 flex-col justify-between"
+    data-mobile-toggle-span
+  >
+    <!-- Top line -->
+    <span
+      class={cn(
+        "block w-6 h-0.5 transition-all duration-300 origin-center",
+        theme === "light" ? "bg-white" : "bg-gray-800",
+      )}
+      data-hamburger-line="top"></span>
+
+    <!-- Middle line -->
+    <span
+      class={cn(
+        "block w-6 h-0.5 transition-all duration-300 origin-center",
+        theme === "light" ? "bg-white" : "bg-gray-800",
+      )}
+      data-hamburger-line="middle"></span>
+
+    <!-- Bottom line -->
+    <span
+      class={cn(
+        "block w-6 h-0.5 transition-all duration-300 origin-center",
+        theme === "light" ? "bg-white" : "bg-gray-800",
+      )}
+      data-hamburger-line="bottom"></span>
+  </div>
 </button>

@@ -23,48 +23,105 @@ export const initMobileNavigationAnimations = () => {
   );
   const mobileLogo = document.querySelector<HTMLElement>("[data-mobile-logo]");
 
-  if (!mobileToggle || !mobileDrawer) {
+  // Get hamburger lines
+  const topLine = document.querySelector<HTMLElement>(
+    "[data-hamburger-line='top']",
+  );
+  const middleLine = document.querySelector<HTMLElement>(
+    "[data-hamburger-line='middle']",
+  );
+  const bottomLine = document.querySelector<HTMLElement>(
+    "[data-hamburger-line='bottom']",
+  );
+
+  if (
+    !mobileToggle ||
+    !mobileDrawer ||
+    !topLine ||
+    !middleLine ||
+    !bottomLine
+  ) {
     return; // No mobile nav elements found
   }
 
   // Get theme from data attribute
   const theme = mobileToggle.getAttribute("data-theme") || "light";
 
+  // Helper function to animate hamburger to X and vice versa
+  const animateHamburgerIcon = (isOpen: boolean) => {
+    if (isOpen) {
+      // Animate to X
+      // Hide middle line
+      gsap.to(middleLine, {
+        autoAlpha: 0,
+        duration: 0.15,
+        ease: "power2.out",
+      });
+
+      // Transform top line to form top part of X
+      gsap.to(topLine, {
+        y: 7,
+        rotation: 45,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+
+      // Transform bottom line to form bottom part of X
+      gsap.to(bottomLine, {
+        y: -7,
+        rotation: -45,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    } else {
+      // Animate back to hamburger
+      // Show middle line
+      gsap.to(middleLine, {
+        autoAlpha: 1,
+        duration: 0.15,
+        ease: "power2.out",
+        delay: 0.1,
+      });
+
+      // Reset top line
+      gsap.to(topLine, {
+        y: 0,
+        rotation: 0,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+
+      // Reset bottom line
+      gsap.to(bottomLine, {
+        y: 0,
+        rotation: 0,
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    }
+  };
+
   // Helper function to set colors based on theme and state
   const setColors = (isOpen: boolean) => {
-    if (mobileToggleSpan) {
-      // Remove all color classes first
-      mobileToggleSpan.classList.remove(
-        "bg-white",
-        "bg-gray-800",
-        "before:bg-white",
-        "before:bg-gray-800",
-        "after:bg-white",
-        "after:bg-gray-800",
-      );
+    // Update hamburger line colors
+    const lines = [topLine, middleLine, bottomLine];
 
-      if (theme === "light") {
-        // Light theme: white when closed, black when open
-        if (isOpen) {
-          mobileToggleSpan.classList.add(
-            "bg-gray-800",
-            "before:bg-gray-800",
-            "after:bg-gray-800",
-          );
+    for (const line of lines) {
+      if (line) {
+        // Remove existing color classes
+        line.classList.remove("bg-white", "bg-gray-800");
+
+        if (theme === "light") {
+          // Light theme: white when closed, black when open
+          if (isOpen) {
+            line.classList.add("bg-gray-800");
+          } else {
+            line.classList.add("bg-white");
+          }
         } else {
-          mobileToggleSpan.classList.add(
-            "bg-white",
-            "before:bg-white",
-            "after:bg-white",
-          );
+          // Dark theme: always black
+          line.classList.add("bg-gray-800");
         }
-      } else {
-        // Dark theme: always black
-        mobileToggleSpan.classList.add(
-          "bg-gray-800",
-          "before:bg-gray-800",
-          "after:bg-gray-800",
-        );
       }
     }
 
@@ -93,8 +150,9 @@ export const initMobileNavigationAnimations = () => {
   mobileDrawer.classList.remove("open");
   document.body.style.overflow = ""; // Ensure overflow is reset
 
-  // Set initial colors
+  // Set initial colors and hamburger state
   setColors(false);
+  animateHamburgerIcon(false);
 
   addManagedEventListener(mobileEventListeners, mobileToggle, "click", () => {
     isMobileDrawerOpen = !isMobileDrawerOpen;
@@ -106,6 +164,8 @@ export const initMobileNavigationAnimations = () => {
 
       // Update colors to open state immediately
       setColors(true);
+      // Animate hamburger to X
+      animateHamburgerIcon(true);
 
       gsap.to(mobileDrawer, {
         autoAlpha: 1,
@@ -133,6 +193,9 @@ export const initMobileNavigationAnimations = () => {
       mobileDrawer.setAttribute("aria-hidden", "true");
       mobileDrawer.classList.remove("open");
       document.body.style.overflow = "";
+
+      // Animate X back to hamburger
+      animateHamburgerIcon(false);
 
       gsap.to(mobileDrawer, {
         autoAlpha: 0,
@@ -165,6 +228,9 @@ export const initMobileNavigationAnimations = () => {
           mobileDrawer.setAttribute("aria-hidden", "true");
           mobileDrawer.classList.remove("open");
           document.body.style.overflow = "";
+
+          // Animate X back to hamburger
+          animateHamburgerIcon(false);
 
           gsap.to(mobileDrawer, {
             autoAlpha: 0,
