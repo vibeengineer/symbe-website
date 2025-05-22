@@ -10,7 +10,8 @@
 		"ignore": [
 			"node_modules",
 			"dist",
-			"build"
+			"build",
+			"src/components/main-hero/unicornstudio.js"
 		]
 	},
 	"formatter": {
