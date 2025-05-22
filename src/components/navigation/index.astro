@@ -8,14 +8,20 @@ import MobileNav from "./mobile/index.astro";
 interface Props {
   className?: string;
   blok: Prettify<NavigationStoryblok>;
-  theme?: "transparent" | "white";
+  theme?: "light" | "dark";
+  initialTransparent?: boolean;
 }
 
-const { blok, className, theme = "transparent" } = Astro.props as Props;
+const {
+  blok,
+  className,
+  theme = "transparent",
+  initialTransparent = false,
+} = Astro.props as Props;
 ---
 
 <header
-  class="fixed top-0 left-0 z-50 w-full"
+  class="absolute top-0 left-0 z-50 w-full"
   {...storyblokEditable(blok as SbBlokData)}
 >
   <DesktopNav blok={blok} className={className} theme={theme} />

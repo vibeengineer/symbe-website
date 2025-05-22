@@ -3,11 +3,13 @@ import type {
   LinkStoryblok,
   LinkDropdownStoryblok,
   NavigationStoryblok,
+  AssetStoryblok,
 } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import { cn } from "@/utils/cn";
 import MobileLinkItem from "./mobile-link-item.astro";
 import MobileDropdownSection from "./mobile-dropdown-section.astro";
+import Logo from "../desktop/logo.astro";
 
 interface Props {
   blok: Prettify<NavigationStoryblok>;
@@ -16,7 +18,7 @@ interface Props {
 }
 
 const {
-  blok: { centreLinks, rightLinks },
+  blok: { centreLinks, rightLinks, logo },
   className,
   theme,
 } = Astro.props as Props;
@@ -36,7 +38,10 @@ const {
   )}
   aria-hidden="true"
 >
-  <div class="flex max-h-screen flex-col gap-6 overflow-y-auto p-6 pt-20">
+  <div class="absolute top-4 left-6 z-[102]">
+    <Logo logo={logo} />
+  </div>
+  <div class="flex max-h-screen flex-col gap-6 overflow-y-auto p-6 pt-24">
     {
       centreLinks?.map((item: LinkStoryblok | LinkDropdownStoryblok) => {
         if (item.component === "link") {
