@@ -3,16 +3,35 @@ import type { LeftRightImageBenefitStoryblok } from "@storyblok/types";
 import { parseAsset } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Media from "@/components/ui/media.astro";
+
 type Props = {
   blok: Prettify<LeftRightImageBenefitStoryblok>;
 };
 
 const {
   blok: { icon, text },
+  blok,
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <img src={parseAsset(icon, "src")} alt={parseAsset(icon, "alt")} />
-  <p>{text}</p>
+<div
+  class="mb-6 flex items-start last:mb-0"
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <!-- Icon -->
+  <div class="mr-4 h-8 w-8 flex-shrink-0">
+    <Media
+      asset={icon}
+      width={32}
+      height={32}
+      class="h-full w-full object-contain"
+    />
+  </div>
+
+  <!-- Text -->
+  <BodyText size="l" class="text-text-000 pt-0.5 font-semibold">
+    {text}
+  </BodyText>
 </div>

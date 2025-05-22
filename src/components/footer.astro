@@ -3,25 +3,186 @@ import type { FooterStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import type { Prettify } from "@/types";
 import Link from "@/components/ui/link.astro";
+import BodyText from "@/components/ui/body-text.astro";
+
 type Props = {
   blok: Prettify<FooterStoryblok>;
 };
-const {
-  blok: { linkColumns },
-} = Astro.props;
+const { blok } = Astro.props;
 ---
 
 <footer
-  class="grid grid-cols-1 gap-4 bg-gray-100 p-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+  class="border-t border-gray-200 pt-16 pb-12"
+  {...storyblokEditable(blok as SbBlokData)}
 >
-  {
-    linkColumns?.map((column) => (
-      <div class="flex flex-col gap-2">
-        {column.links?.map((link) => {
-          return <Link blok={link} />;
-        })}
+  <div class="container mx-auto px-6 md:px-8">
+    <!-- Main footer content -->
+    <div class="grid grid-cols-1 gap-y-10 md:grid-cols-4 md:gap-x-8">
+      <!-- Product column -->
+      <div>
+        <h3 class="text-text-900 mb-6 text-lg font-semibold">Product</h3>
+        <ul class="space-y-4">
+          <li>
+            <a href="/features" class="text-text-700 hover:text-primary"
+              >Features</a>
+          </li>
+          <li>
+            <a href="/sales" class="text-text-700 hover:text-primary">Sales</a>
+          </li>
+          <li>
+            <a href="/customer-success" class="text-text-700 hover:text-primary"
+              >Customer Success</a>
+          </li>
+          <li>
+            <a href="/marketing" class="text-text-700 hover:text-primary"
+              >Marketing</a>
+          </li>
+        </ul>
       </div>
-    ))
-  }
+
+      <!-- Company column -->
+      <div>
+        <h3 class="text-text-900 mb-6 text-lg font-semibold">Company</h3>
+        <ul class="space-y-4">
+          <li>
+            <a href="/pricing" class="text-text-700 hover:text-primary"
+              >Pricing</a>
+          </li>
+          <li>
+            <a href="/customers" class="text-text-700 hover:text-primary"
+              >Customers</a>
+          </li>
+          <li>
+            <a href="/book-a-demo" class="text-text-700 hover:text-primary"
+              >Book a Demo</a>
+          </li>
+          <li>
+            <a href="/company" class="text-text-700 hover:text-primary"
+              >Company</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Resources column -->
+      <div>
+        <h3 class="text-text-900 mb-6 text-lg font-semibold">Resources</h3>
+        <ul class="space-y-4">
+          <li>
+            <a href="/business-cases" class="text-text-700 hover:text-primary"
+              >Business Cases</a>
+          </li>
+          <li>
+            <a href="/fireside-chats" class="text-text-700 hover:text-primary"
+              >Fireside Chats</a>
+          </li>
+          <li>
+            <a href="/news" class="text-text-700 hover:text-primary">News</a>
+          </li>
+          <li>
+            <a href="/terms" class="text-text-700 hover:text-primary"
+              >Terms & Conditions</a>
+          </li>
+          <li>
+            <a href="/privacy" class="text-text-700 hover:text-primary"
+              >Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Us column -->
+      <div>
+        <h3 class="text-text-900 mb-6 text-lg font-semibold">Contact Us</h3>
+        <address class="text-text-700 space-y-1 not-italic">
+          <p>9 Appold Street</p>
+          <p>London</p>
+          <p>EC2A 2AP</p>
+          <p>United Kingdom</p>
+        </address>
+        <div class="mt-4 space-y-1">
+          <p>
+            <a
+              href="mailto:hello@symbe.co"
+              class="text-text-700 hover:text-primary">hello@symbe.co</a>
+          </p>
+          <p>
+            <a href="tel:+442038353898" class="text-text-700 hover:text-primary"
+              >+44 (0) 203 835 3898</a>
+          </p>
+        </div>
+
+        <!-- Certification badges -->
+        <div class="mt-8 flex flex-wrap gap-4">
+          <div class="flex items-center">
+            <img
+              src="/soc2-badge.png"
+              alt="SOC 2 Type II Certified"
+              class="h-12 w-auto"
+            />
+          </div>
+          <div class="flex items-center">
+            <img
+              src="/gdpr-badge.png"
+              alt="GDPR Compliant"
+              class="h-12 w-auto"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom footer section with logo, copyright, and social -->
+    <div class="mt-16 border-t border-gray-200 pt-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <!-- Logo -->
+        <div class="mb-6 md:mb-0">
+          <a href="/" aria-label="Symbe">
+            <span class="text-3xl font-semibold text-blue-900">Symbe</span>
+          </a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-text-700 mb-6 md:mb-0 md:text-center">
+          <p>&copy; 2025 Symbe All rights reserved</p>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex space-x-4">
+          <a
+            href="https://linkedin.com/company/symbe"
+            aria-label="LinkedIn"
+            class="hover:text-primary text-gray-500"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href="https://twitter.com/symbeHQ"
+            aria-label="Twitter"
+            class="hover:text-primary text-gray-500"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
