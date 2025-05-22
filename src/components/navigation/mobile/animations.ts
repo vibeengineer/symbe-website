@@ -104,7 +104,7 @@ export const initMobileNavigationAnimations = () => {
       mobileDrawer.classList.add("open");
       document.body.style.overflow = "hidden";
 
-      // Update colors to open state
+      // Update colors to open state immediately
       setColors(true);
 
       gsap.to(mobileDrawer, {
@@ -134,14 +134,15 @@ export const initMobileNavigationAnimations = () => {
       mobileDrawer.classList.remove("open");
       document.body.style.overflow = "";
 
-      // Update colors to closed state
-      setColors(false);
-
       gsap.to(mobileDrawer, {
         autoAlpha: 0,
         yPercent: -5,
         duration: 0.25,
         ease: "power2.in",
+        onComplete: () => {
+          // Update colors to closed state after drawer animation completes
+          setColors(false);
+        },
       });
     }
   });
@@ -165,13 +166,14 @@ export const initMobileNavigationAnimations = () => {
           mobileDrawer.classList.remove("open");
           document.body.style.overflow = "";
 
-          // Update colors to closed state
-          setColors(false);
-
           gsap.to(mobileDrawer, {
             autoAlpha: 0,
             yPercent: -5,
             duration: 0.25,
+            onComplete: () => {
+              // Update colors to closed state after drawer animation completes
+              setColors(false);
+            },
           });
         }
       }
