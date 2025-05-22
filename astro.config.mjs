@@ -34,7 +34,7 @@ export default defineConfig({
       accessToken: STORYBLOK_TOKEN,
       livePreview: true,
       bridge: {
-        resolveLinks: "link",
+        resolveLinks: "url",
       },
       components: {
         // Content type blocks
