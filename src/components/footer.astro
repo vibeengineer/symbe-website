@@ -2,9 +2,7 @@
 import type { FooterStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import type { Prettify } from "@/types";
-import Link from "@/components/ui/link.astro";
-import BodyText from "@/components/ui/body-text.astro";
-import { parseLink, parseAsset } from "@/services/storyblok/helpers";
+import { parseLink } from "@/services/storyblok/utils/parse-link";
 import Media from "@/components/ui/media.astro";
 
 type Props = {

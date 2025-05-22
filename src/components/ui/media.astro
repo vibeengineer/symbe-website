@@ -1,7 +1,7 @@
 ---
 import { Image } from "@unpic/astro";
-import { parseAsset } from "../../services/storyblok/helpers";
-import type { AssetStoryblok } from "../../../storyblok/types";
+import type { AssetStoryblok } from "@storyblok/types";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 
 type Props = {
   src?: string;

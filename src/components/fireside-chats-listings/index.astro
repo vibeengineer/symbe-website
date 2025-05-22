@@ -3,11 +3,9 @@ import type {
   FiresideChatStoryblok,
   FiresideChatsListingsStoryblok,
 } from "@storyblok/types";
-import {
-  getStories,
-  parseAsset,
-  parseLink,
-} from "@/services/storyblok/helpers";
+import { getStories } from "@/services/storyblok/get-stories";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
+import { parseLink } from "@/services/storyblok/utils/parse-link";
 import type { Prettify } from "@/types";
 import FiresideChatListing from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";

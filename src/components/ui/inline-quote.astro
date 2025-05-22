@@ -5,7 +5,7 @@
 import type { Prettify } from "@/types";
 import type { TestimonialStoryblok } from "../../../storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import { parseAsset } from "@/services/storyblok/helpers";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 type Props = {
   blok: Prettify<TestimonialStoryblok>;
 };

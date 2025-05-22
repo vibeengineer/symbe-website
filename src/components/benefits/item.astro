@@ -2,7 +2,7 @@
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import type { BenefitStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
-import { parseAsset } from "@/services/storyblok/helpers";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 
 type Props = {
   blok: Prettify<BenefitStoryblok>;

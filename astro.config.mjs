@@ -4,7 +4,7 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import { storyblok } from "@storyblok/astro";
-import { getRedirects } from "./src/services/storyblok/redirects";
+import { getRedirects } from "./src/services/storyblok/get-redirects";
 
 // Fetch redirects
 import { loadEnv } from "vite";

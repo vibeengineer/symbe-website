@@ -1,6 +1,6 @@
 ---
 import type { ScrollingFeatureStoryblok } from "@storyblok/types";
-import { parseAsset } from "@/services/storyblok/helpers";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import Heading from "@/components/ui/heading.astro";
@@ -34,7 +34,7 @@ const {
   </div>
 
   <div class="max-w-xl">
-    <Heading level="l" class="text-text-900 text-accent-electric mb-6">
+    <Heading level="l" class="text-text-900 mb-6">
       {title}
     </Heading>
 
