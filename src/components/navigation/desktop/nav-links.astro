@@ -9,7 +9,7 @@ interface Props {
   links: (LinkStoryblok | LinkDropdownStoryblok)[];
 }
 
-const { links, theme = "transparent" }: Props = Astro.props;
+const { links }: Props = Astro.props;
 ---
 
 <div class="absolute left-1/2 flex -translate-x-1/2 items-center gap-6">
@@ -25,8 +25,8 @@ const { links, theme = "transparent" }: Props = Astro.props;
       if (item.component === "linkDropdown") {
         return (
           <div data-dropdown-wrapper class="relative">
-            <DropdownTrigger dropdownTitle={item.dropdownTitle} theme={theme} />
-            {item.links && <DropdownMenu links={item.links} theme={theme} />}
+            <DropdownTrigger dropdownTitle={item.dropdownTitle} />
+            {item.links && <DropdownMenu links={item.links} />}
           </div>
         );
       }

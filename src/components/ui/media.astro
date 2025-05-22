@@ -64,7 +64,9 @@ function isVideo(src: string, contentType?: string): boolean {
 
 const isMediaVideo = isVideo(src, contentType);
 
-const className = fullWidth ? "block w-full h-auto max-w-screen" : "";
+const className = fullWidth
+  ? "block w-full h-auto max-w-screen text-white"
+  : "";
 ---
 
 {

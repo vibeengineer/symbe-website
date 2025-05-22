@@ -380,7 +380,7 @@ export interface LeftRightImageBenefitStoryblok {
 export interface LinkStoryblok {
   linkText: string;
   link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
-  linkStyle?: "default" | "button";
+  linkStyle?: "default" | "primary" | "ghost";
   component: "link";
   _uid: string;
   [k: string]: unknown;

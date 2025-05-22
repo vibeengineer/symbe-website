@@ -10,7 +10,7 @@ import RightLinks from "./right-links.astro";
 interface Props {
   className?: string;
   blok: Prettify<NavigationStoryblok>;
-  theme?: "transparent" | "white";
+  theme?: "light" | "dark";
 }
 
 const { blok, className, theme = "transparent" } = Astro.props as Props;
@@ -21,15 +21,13 @@ const { logo, centreLinks, rightLinks } = blok;
   data-nav="desktop"
   data-theme={theme}
   class={cn(
-    "hidden md:flex relative items-center justify-between p-4 md:p-6",
-    theme === "transparent"
-      ? "bg-transparent text-gray-900"
-      : "bg-white/90 text-gray-900",
+    "hidden md:flex relative items-center justify-between p-4 md:p-6 bg-transparent",
+    theme === "light" ? "text-text-000" : "text-text-900",
     className,
   )}
   {...storyblokEditable(blok as SbBlokData)}
 >
   <Logo logo={logo} />
-  {centreLinks && <NavLinks links={centreLinks} theme={theme} />}
-  {rightLinks && <RightLinks links={rightLinks} theme={theme} />}
+  {centreLinks && <NavLinks links={centreLinks} />}
+  {rightLinks && <RightLinks links={rightLinks} />}
 </nav>

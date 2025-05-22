@@ -17,9 +17,7 @@ const { links, theme = "transparent" }: Props = Astro.props;
     "absolute top-full left-1/2 mt-3 -translate-x-1/2",
     "min-w-[220px] px-2 py-2",
     "rounded-lg border",
-    theme === "transparent"
-      ? "border-gray-200 bg-white/95 shadow-lg"
-      : "border-white/10 bg-black/90 backdrop-blur-lg",
+    "border-gray-200 bg-white shadow-lg",
     "invisible opacity-0",
     "origin-top",
     "z-10",
@@ -32,7 +30,7 @@ const { links, theme = "transparent" }: Props = Astro.props;
       "h-0 w-0",
       "border-x-[7px] border-x-transparent",
       "border-b-[7px]",
-      theme === "transparent" ? "border-b-gray-200" : "border-b-white/10",
+      "border-b-gray-200",
     )}
   >
   </div>
@@ -42,7 +40,6 @@ const { links, theme = "transparent" }: Props = Astro.props;
       "h-0 w-0",
       "border-x-[6px] border-x-transparent",
       "border-b-[6px]",
-      theme === "transparent" ? "border-b-white" : "border-b-black",
     )}
   >
   </div>
