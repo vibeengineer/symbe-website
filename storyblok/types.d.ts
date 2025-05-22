@@ -160,72 +160,6 @@ export interface DemoStoryblok {
   [k: string]: unknown;
 }
 
-export interface FaqStoryblok {
-  question: string;
-  answer: RichtextStoryblok;
-  component: "faq";
-  _uid: string;
-  [k: string]: unknown;
-}
-
-export interface FaqListStoryblok {
-  title?: string;
-  faqItems: (ISbStoryData<FaqStoryblok> | string)[];
-  component: "faqList";
-  _uid: string;
-  [k: string]: unknown;
-}
-
-export interface FinePrintStoryblok {
-  title: string;
-  lastModifiedDate: string;
-  body: RichtextStoryblok;
-  seo: SeoStoryblok[];
-  component: "finePrint";
-  _uid: string;
-  [k: string]: unknown;
-}
-
-export interface FiresideChatStoryblok {
-  title: string;
-  watchTimeMinutes: string;
-  watchTimeSeconds: string;
-  embed: string;
-  blurb: RichtextStoryblok;
-  quote?: TestimonialStoryblok[];
-  datePublished: string;
-  dateLastModified: string;
-  seo: SeoStoryblok[];
-  thumbnail: AssetStoryblok;
-  component: "firesideChat";
-  _uid: string;
-  [k: string]: unknown;
-}
-
-export interface FiresideChatsListingsStoryblok {
-  title: string;
-  subtitle: string;
-  subscribeLinks?: IconLinkStoryblok[];
-  subscribeLinksCaption?: string;
-  component: "firesideChatsListings";
-  _uid: string;
-  [k: string]: unknown;
-}
-
-export interface FooterStoryblok {
-  linkColumns?: LinkColumnStoryblok[];
-  component: "footer";
-  _uid: string;
-  [k: string]: unknown;
-}
-
-export interface FullWidthBentoGridStoryblok {
-  items: BentoGridItemStoryblok[];
-  component: "fullWidthBentoGrid";
-  _uid: string;
-  [k: string]: unknown;
-}
-
 export type MultilinkStoryblok =
   | {
       fieldtype: "multilink";
@@ -300,6 +234,90 @@ export type MultilinkStoryblok =
       [k: string]: unknown;
     };
 
+export interface DropdownLinkStoryblok {
+  linkText: string;
+  link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
+  linkDescription?: string;
+  component: "dropdownLink";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FaqStoryblok {
+  question: string;
+  answer: RichtextStoryblok;
+  component: "faq";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FaqListStoryblok {
+  title?: string;
+  faqItems: (ISbStoryData<FaqStoryblok> | string)[];
+  component: "faqList";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FinePrintStoryblok {
+  title: string;
+  lastModifiedDate: string;
+  body: RichtextStoryblok;
+  seo: SeoStoryblok[];
+  component: "finePrint";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FiresideChatStoryblok {
+  title: string;
+  watchTimeMinutes: string;
+  watchTimeSeconds: string;
+  embed: string;
+  blurb: RichtextStoryblok;
+  quote?: TestimonialStoryblok[];
+  datePublished: string;
+  dateLastModified: string;
+  seo: SeoStoryblok[];
+  thumbnail: AssetStoryblok;
+  component: "firesideChat";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FiresideChatsListingsStoryblok {
+  title: string;
+  subtitle: string;
+  subscribeLinks?: IconLinkStoryblok[];
+  subscribeLinksCaption?: string;
+  component: "firesideChatsListings";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FooterStoryblok {
+  linkColumns: LinkColumnStoryblok[];
+  socialLinks?: IconLinkStoryblok[];
+  address?: string;
+  email?: string;
+  phoneNumber?: string;
+  gdprBadge: AssetStoryblok;
+  socBadge: AssetStoryblok;
+  copyrightText: string;
+  logo: AssetStoryblok;
+  addressColumnTitle?: string;
+  component: "footer";
+  _uid: string;
+  [k: string]: unknown;
+}
+
+export interface FullWidthBentoGridStoryblok {
+  items: BentoGridItemStoryblok[];
+  component: "fullWidthBentoGrid";
+  _uid: string;
+  [k: string]: unknown;
+}
+
 export interface IconLinkStoryblok {
   icon: AssetStoryblok;
   link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
@@ -370,6 +388,7 @@ export interface LinkStoryblok {
 
 export interface LinkColumnStoryblok {
   links?: LinkStoryblok[];
+  title?: string;
   component: "linkColumn";
   _uid: string;
   [k: string]: unknown;
@@ -377,7 +396,7 @@ export interface LinkColumnStoryblok {
 
 export interface LinkDropdownStoryblok {
   dropdownTitle?: string;
-  links?: LinkStoryblok[];
+  links?: DropdownLinkStoryblok[];
   component: "linkDropdown";
   _uid: string;
   [k: string]: unknown;

@@ -33,6 +33,9 @@ export default defineConfig({
     storyblok({
       accessToken: STORYBLOK_TOKEN,
       livePreview: true,
+      bridge: {
+        resolveLinks: "link",
+      },
       components: {
         // Content type blocks
         page: "layouts/page",

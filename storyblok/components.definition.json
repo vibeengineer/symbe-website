@@ -687,6 +687,49 @@
       "metadata": {}
     },
     {
+      "name": "dropdownLink",
+      "display_name": null,
+      "description": "",
+      "created_at": "2025-05-22T09:51:07.725Z",
+      "updated_at": "2025-05-22T09:54:39.357Z",
+      "id": 7372977,
+      "schema": {
+        "linkText": {
+          "type": "text",
+          "pos": 1,
+          "id": "6PyvjNRgSB-Ys14FnwWB4A",
+          "required": true
+        },
+        "link": {
+          "type": "multilink",
+          "pos": 2,
+          "id": "P0C-EL7MS4icEYkmqtIJ1Q",
+          "required": true
+        },
+        "linkDescription": {
+          "type": "textarea",
+          "pos": 3,
+          "id": "eu1pyzuITGWFDtgqiQGZYg"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "dropdownLink",
+      "component_group_uuid": "all",
+      "color": null,
+      "icon": null,
+      "internal_tags_list": [],
+      "internal_tag_ids": [],
+      "content_type_asset_preview": null,
+      "metadata": {},
+      "component_group_name": ""
+    },
+    {
       "name": "faq",
       "display_name": null,
       "description": "",
@@ -983,7 +1026,7 @@
       "display_name": null,
       "description": "",
       "created_at": "2025-04-27T14:00:22.340Z",
-      "updated_at": "2025-04-27T14:00:36.120Z",
+      "updated_at": "2025-05-22T09:37:28.180Z",
       "id": 7273800,
       "schema": {
         "linkColumns": {
@@ -994,7 +1037,65 @@
           "component_whitelist": [
             "linkColumn"
           ],
-          "id": "g3e-PfhCQmOYb1J7vUgZBg"
+          "id": "g3e-PfhCQmOYb1J7vUgZBg",
+          "required": true
+        },
+        "socialLinks": {
+          "type": "bloks",
+          "pos": 1,
+          "required": false,
+          "id": "HQyOj02zSzyMzNfehiz_7A",
+          "restrict_type": "",
+          "restrict_components": true,
+          "component_whitelist": [
+            "iconLink"
+          ]
+        },
+        "address": {
+          "type": "textarea",
+          "pos": 2,
+          "id": "h4cRrbTGRtmR5SlYdepMEA",
+          "required": false
+        },
+        "email": {
+          "type": "text",
+          "pos": 3,
+          "id": "vsUqOCP3RoKg08cubLRlbA"
+        },
+        "phoneNumber": {
+          "type": "text",
+          "pos": 4,
+          "id": "ASlCXGH3TBOgJTmIy3UHmw"
+        },
+        "gdprBadge": {
+          "type": "asset",
+          "pos": 5,
+          "id": "r29zMFBFQoCyUUoBur-3uQ",
+          "required": true
+        },
+        "socBadge": {
+          "type": "asset",
+          "pos": 6,
+          "id": "9bVrric7QI--1n-h9dRiPw",
+          "required": true
+        },
+        "copyrightText": {
+          "type": "text",
+          "pos": 7,
+          "id": "z3cOGMT6QxW_cZz81C4iBw",
+          "required": true
+        },
+        "logo": {
+          "type": "asset",
+          "pos": 8,
+          "id": "bV3RSL0XT1yQzWyYhhLsMw",
+          "required": true
+        },
+        "addressColumnTitle": {
+          "type": "text",
+          "pos": 9,
+          "required": false,
+          "id": "EemS1y96QJSxTcSGS9k_ZA"
         }
       },
       "image": null,
@@ -1459,7 +1560,7 @@
       "display_name": null,
       "description": "",
       "created_at": "2025-04-27T13:56:54.750Z",
-      "updated_at": "2025-04-27T13:57:09.286Z",
+      "updated_at": "2025-05-22T10:01:05.694Z",
       "id": 7273798,
       "schema": {
         "links": {
@@ -1471,6 +1572,12 @@
             "link"
           ],
           "id": "5xkVNFcUTpCE4_0U4BfeoQ"
+        },
+        "title": {
+          "type": "text",
+          "pos": 1,
+          "required": false,
+          "id": "8GR6GZjvQ6yddOmAn_l81A"
         }
       },
       "image": null,
@@ -1494,7 +1601,7 @@
       "display_name": null,
       "description": "",
       "created_at": "2025-04-27T13:57:36.240Z",
-      "updated_at": "2025-04-27T13:57:55.169Z",
+      "updated_at": "2025-05-22T09:52:36.645Z",
       "id": 7273799,
       "schema": {
         "dropdownTitle": {
@@ -1508,13 +1615,13 @@
           "restrict_type": "",
           "restrict_components": true,
           "component_whitelist": [
-            "link"
+            "dropdownLink"
           ],
           "id": "Uf0C7nclTZC5ILz4Wmxa5g"
         }
       },
       "image": null,
-      "preview_field": null,
+      "preview_field": "dropdownTitle",
       "is_root": false,
       "preview_tmpl": null,
       "is_nestable": true,

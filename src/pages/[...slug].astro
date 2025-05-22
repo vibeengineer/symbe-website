@@ -18,6 +18,7 @@ if (liveStory) {
   try {
     const { data } = await sbApi.get(`cdn/stories/${slugParam}`, {
       version: import.meta.env.CONTENT_VERSION,
+      resolve_links: "url",
     });
     story = data?.story;
   } catch (error) {
