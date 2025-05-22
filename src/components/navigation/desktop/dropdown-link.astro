@@ -8,6 +8,7 @@ import Label from "@/components/ui/label.astro";
 import { linkVariants, type LinkVariants } from "@/components/ui/link.astro";
 import { cn } from "@/utils/cn";
 import LucideIcon from "@/components/ui/lucide-icon.astro";
+import Heading from "@/components/ui/heading.astro";
 
 export type Props = LinkVariants & {
   blok: Prettify<DropdownLinkStoryblok>;
@@ -35,20 +36,18 @@ console.log(Astro.props);
 >
   {
     icon && typeof icon === "string" ? (
-      <div class="group-hover:bg-surface-charcoal group-hover:border-text-900 flex h-9.5 w-9.5 items-center justify-center rounded-lg border border-gray-300 transition-colors duration-150">
+      <div class="group-hover:bg-surface-charcoal group-hover:border-text-900 flex h-10.5 w-10.5 items-center justify-center rounded-lg border border-gray-300 transition-colors duration-150">
         <LucideIcon
           icon={icon}
           class="text-text-900 group-hover:text-text-000 transition-colors duration-150"
-          size={16}
+          size={21}
         />
       </div>
     ) : null
   }
   <div>
-    <Label
-      size="s"
-      weight="medium"
-      class="text-text-900 group-hover:text-text-900">{linkText}</Label
+    <Heading level="xxs" class="text-text-900 group-hover:text-text-900"
+      >{linkText}</Heading
     >
     <BodyText
       size="s"

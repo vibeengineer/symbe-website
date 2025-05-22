@@ -15,9 +15,9 @@ const { links, theme = "transparent" }: Props = Astro.props;
   data-panel
   class={cn(
     "absolute top-full left-1/2 mt-3 -translate-x-1/2",
-    "min-w-[220px] px-1.5 py-1.5",
+    "min-w-[220px] p-3",
     "rounded-lg border",
-    "border-gray-200 bg-white shadow-2xl",
+    "border-gray-200 bg-white shadow-2xl shadow-accent-electric/50",
     "invisible opacity-0",
     "origin-top",
     "z-10",
@@ -43,7 +43,7 @@ const { links, theme = "transparent" }: Props = Astro.props;
     )}
   >
   </div>
-  <div class="flex flex-col">
+  <div class="flex flex-col gap-y-1.5">
     {
       links?.map((dropdownLink: DropdownLinkStoryblok) => (
         <DropdownItem blok={dropdownLink} theme={theme} />
