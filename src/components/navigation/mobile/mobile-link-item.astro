@@ -10,11 +10,15 @@ interface Props {
 const { blok } = Astro.props as Props;
 ---
 
-<div
-  class={cn(
-    "rounded-lg p-2 transition-colors duration-150",
-    "hover:bg-gray-100",
-  )}
->
-  <Link blok={blok} />
+<div>
+  <Link
+    className={cn(
+      "block w-full",
+      blok.linkStyle === "primary" && "text-center",
+    )}
+    blok={{
+      ...blok,
+      linkStyle: `${blok.linkStyle !== "primary" ? "default" : "primary"}`,
+    }}
+  />
 </div>
