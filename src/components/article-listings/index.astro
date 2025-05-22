@@ -13,7 +13,7 @@ type Props = {
 
 const param = Astro.url.searchParams.get("page");
 
-const { stories: articles, total } = await getStories<ArticleStoryblok>({
+const { stories: articles } = await getStories<ArticleStoryblok>({
   contentType: "article",
   version: import.meta.env.CONTENT_VERSION,
   per_page: 9,
