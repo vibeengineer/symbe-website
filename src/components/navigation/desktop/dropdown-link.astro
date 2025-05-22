@@ -3,11 +3,10 @@ import type { DropdownLinkStoryblok } from "@storyblok/types";
 import { parseLink } from "@/services/storyblok/utils/parse-link";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/utils/cn";
 import BodyText from "@/components/ui/body-text.astro";
 import Label from "@/components/ui/label.astro";
 import { linkVariants, type LinkVariants } from "@/components/ui/link.astro";
+import { cn } from "@/utils/cn";
 
 export type Props = LinkVariants & {
   blok: Prettify<DropdownLinkStoryblok>;
@@ -22,9 +21,8 @@ const {
 <a
   href={parseLink(link, "href")}
   target={parseLink(link, "target")}
-  class={linkVariants({ style: variantStyleProp })}
+  class={cn(linkVariants({ style: variantStyleProp }), "hover:no-underline")}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
-  class="text-text-900"
 >
   <Label size="m" weight="medium" class="text-text-900">{linkText}</Label>
   <BodyText size="s" class="text-text-500">{linkDescription}</BodyText>

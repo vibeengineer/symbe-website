@@ -12,7 +12,7 @@ export const linkVariants = cva(
     variants: {
       style: {
         primary: "bg-accent-electric text-text-000 px-6 py-3 hover:bg-blue-700",
-        ghost: "hover:text-text-200 hover:bg-gray-200/10",
+        ghost: "hover:bg-gray-200/10 px-4 py-2",
         default: "hover:underline",
       },
     },
@@ -38,7 +38,7 @@ const {
 <a
   href={parseLink(link, "href")}
   target={parseLink(link, "target")}
-  class={cn(linkVariants({ style: linkStyle }), className)}
+  class={cn(linkVariants({ style: linkStyle }), "whitespace-nowrap", className)}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   {linkText}
