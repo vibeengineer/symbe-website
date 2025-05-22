@@ -28,14 +28,14 @@ console.log(Astro.props);
     linkVariants({ style: variantStyleProp }),
     "hover:no-underline",
     "whitespace-nowrap",
-    "flex items-start gap-3.5",
+    "flex items-center gap-2.5",
     "group",
   )}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   {
     icon && typeof icon === "string" ? (
-      <div class="group-hover:bg-surface-charcoal group-hover:border-text-900 flex h-8 w-8 items-center justify-center rounded-lg border border-gray-300 transition-colors duration-150">
+      <div class="group-hover:bg-surface-charcoal group-hover:border-text-900 flex h-9.5 w-9.5 items-center justify-center rounded-lg border border-gray-300 transition-colors duration-150">
         <LucideIcon
           icon={icon}
           class="text-text-900 group-hover:text-text-000 transition-colors duration-150"
@@ -46,7 +46,7 @@ console.log(Astro.props);
   }
   <div>
     <Label
-      size="m"
+      size="s"
       weight="medium"
       class="text-text-900 group-hover:text-text-900">{linkText}</Label
     >
