@@ -135,8 +135,6 @@ export function parseLink(
   let calculatedHref: string;
   let calculatedTarget: "_blank" | "_self" = link.target ?? "_self";
 
-  console.log("link", link);
-
   switch (link.linktype) {
     case "story":
       if (link.story && typeof link.story.full_slug === "string") {

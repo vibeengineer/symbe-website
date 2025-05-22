@@ -56,7 +56,9 @@ const themeStyles = {
 >
   <!-- Logo -->
   <div class="flex-shrink-0">
-    {logo?.filename && <Media asset={logo} width={132} height={45} />}
+    <a href="/" aria-label="Homepage">
+      {logo?.filename && <Media asset={logo} width={132} height={45} />}
+    </a>
   </div>
 
   <!-- Centre links -->
