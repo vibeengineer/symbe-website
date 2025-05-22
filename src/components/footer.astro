@@ -4,11 +4,17 @@ import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import type { Prettify } from "@/types";
 import Link from "@/components/ui/link.astro";
 import BodyText from "@/components/ui/body-text.astro";
+import Media from "@/components/ui/media.astro";
 
 type Props = {
   blok: Prettify<FooterStoryblok>;
 };
 const { blok } = Astro.props;
+
+// Find the appropriate logo asset from the blok or use a default
+const logoSrc = blok.logo?.filename || "/logo-dark.svg";
+const soc2Badge = blok.soc2Badge?.filename || "/images/soc2-badge.png";
+const gdprBadge = blok.gdprBadge?.filename || "/images/gdpr-badge.png";
 ---
 
 <footer
@@ -24,18 +30,21 @@ const { blok } = Astro.props;
         <ul class="space-y-4">
           <li>
             <a href="/features" class="text-text-700 hover:text-primary"
-              >Features</a>
+              >Features</a
+            >
           </li>
           <li>
             <a href="/sales" class="text-text-700 hover:text-primary">Sales</a>
           </li>
           <li>
             <a href="/customer-success" class="text-text-700 hover:text-primary"
-              >Customer Success</a>
+              >Customer Success</a
+            >
           </li>
           <li>
             <a href="/marketing" class="text-text-700 hover:text-primary"
-              >Marketing</a>
+              >Marketing</a
+            >
           </li>
         </ul>
       </div>
@@ -46,19 +55,23 @@ const { blok } = Astro.props;
         <ul class="space-y-4">
           <li>
             <a href="/pricing" class="text-text-700 hover:text-primary"
-              >Pricing</a>
+              >Pricing</a
+            >
           </li>
           <li>
             <a href="/customers" class="text-text-700 hover:text-primary"
-              >Customers</a>
+              >Customers</a
+            >
           </li>
           <li>
             <a href="/book-a-demo" class="text-text-700 hover:text-primary"
-              >Book a Demo</a>
+              >Book a Demo</a
+            >
           </li>
           <li>
             <a href="/company" class="text-text-700 hover:text-primary"
-              >Company</a>
+              >Company</a
+            >
           </li>
         </ul>
       </div>
@@ -69,22 +82,26 @@ const { blok } = Astro.props;
         <ul class="space-y-4">
           <li>
             <a href="/business-cases" class="text-text-700 hover:text-primary"
-              >Business Cases</a>
+              >Business Cases</a
+            >
           </li>
           <li>
             <a href="/fireside-chats" class="text-text-700 hover:text-primary"
-              >Fireside Chats</a>
+              >Fireside Chats</a
+            >
           </li>
           <li>
             <a href="/news" class="text-text-700 hover:text-primary">News</a>
           </li>
           <li>
             <a href="/terms" class="text-text-700 hover:text-primary"
-              >Terms & Conditions</a>
+              >Terms & Conditions</a
+            >
           </li>
           <li>
             <a href="/privacy" class="text-text-700 hover:text-primary"
-              >Privacy Policy</a>
+              >Privacy Policy</a
+            >
           </li>
         </ul>
       </div>
@@ -102,29 +119,61 @@ const { blok } = Astro.props;
           <p>
             <a
               href="mailto:hello@symbe.co"
-              class="text-text-700 hover:text-primary">hello@symbe.co</a>
+              class="text-text-700 hover:text-primary">hello@symbe.co</a
+            >
           </p>
           <p>
             <a href="tel:+442038353898" class="text-text-700 hover:text-primary"
-              >+44 (0) 203 835 3898</a>
+              >+44 (0) 203 835 3898</a
+            >
           </p>
         </div>
 
         <!-- Certification badges -->
         <div class="mt-8 flex flex-wrap gap-4">
+          <!-- SOC 2 Badge -->
           <div class="flex items-center">
-            <img
-              src="/soc2-badge.png"
-              alt="SOC 2 Type II Certified"
-              class="h-12 w-auto"
-            />
+            <div
+              class="flex items-center gap-2 rounded-lg bg-white p-2 shadow-sm"
+            >
+              <Media
+                asset={blok.soc2Badge}
+                src={soc2Badge}
+                alt="SOC 2 Type II Certified"
+                width={80}
+                height={45}
+                class="h-auto w-auto object-contain"
+              />
+              <div class="text-sm font-medium">
+                <span class="block text-blue-800">SOC 2</span>
+                <span class="block text-blue-800">TYPE II</span>
+                <span class="block text-xs font-bold text-blue-800"
+                  >CERTIFIED</span
+                >
+              </div>
+            </div>
           </div>
+
+          <!-- GDPR Badge -->
           <div class="flex items-center">
-            <img
-              src="/gdpr-badge.png"
-              alt="GDPR Compliant"
-              class="h-12 w-auto"
-            />
+            <div
+              class="flex items-center gap-2 rounded-lg bg-white p-2 shadow-sm"
+            >
+              <Media
+                asset={blok.gdprBadge}
+                src={gdprBadge}
+                alt="GDPR Compliant"
+                width={45}
+                height={45}
+                class="h-auto w-auto object-contain"
+              />
+              <div class="text-sm font-medium">
+                <span class="block text-blue-800">GDPR</span>
+                <span class="block text-xs font-bold text-blue-800"
+                  >COMPLIANT</span
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -136,7 +185,14 @@ const { blok } = Astro.props;
         <!-- Logo -->
         <div class="mb-6 md:mb-0">
           <a href="/" aria-label="Symbe">
-            <span class="text-3xl font-semibold text-blue-900">Symbe</span>
+            <Media
+              asset={blok.logo}
+              src={logoSrc}
+              alt="Symbe"
+              width={132}
+              height={45}
+              class="h-auto w-auto"
+            />
           </a>
         </div>
 
