@@ -11,7 +11,7 @@
 			"node_modules",
 			"dist",
 			"build",
-			"src/components/main-hero/unicornstudio.js"
+			"public/js/unicorn-studio.umd.js"
 		]
 	},
 	"formatter": {
