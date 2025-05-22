@@ -29,11 +29,13 @@ export type LinkVariants = VariantProps<typeof linkVariants>;
 export type Props = {
   blok: Prettify<LinkStoryblok>;
   className?: string;
+  textClassName?: string;
 };
 
 const {
   blok: { link, linkText, linkStyle = "default" },
   className,
+  textClassName,
 } = Astro.props;
 ---
 
@@ -43,5 +45,7 @@ const {
   class={cn(linkVariants({ style: linkStyle }), className)}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
-  <Label as="span" size="m" weight="medium">{linkText}</Label>
+  <Label as="span" size="m" class={textClassName} weight="medium">
+    {linkText}
+  </Label>
 </a>

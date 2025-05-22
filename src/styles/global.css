@@ -12,6 +12,9 @@
   --color-surface-charcoal: rgb(4 8 21);
   --color-surface-snow: rgb(245 245 245);
   --color-surface-sky: rgb(245 248 255);
+  --color-surface-sky-dark: rgb(235 242 255);
+  --color-surface-sky-darker: rgb(210 218 255);
+  --color-surface-sky-darkest: rgb(195 206 255);
   --color-surface-accent-electric: rgb(0 175 245);
   --color-surface-accent-orange: rgb(254 92 46);
   --color-surface-accent-yellow: rgb(249 196 102);

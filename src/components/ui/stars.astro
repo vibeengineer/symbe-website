@@ -21,7 +21,7 @@ const hasHalfStar = numberOfStars % 1 !== 0;
 const starsArray = Array(5).fill(null); // Max 5 stars
 ---
 
-<div class="flex items-center">
+<div class="hidden items-center md:flex">
   {
     starsArray.map((_, index) => {
       if (index < fullStars) {
