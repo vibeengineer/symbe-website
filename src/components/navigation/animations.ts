@@ -1,5 +1,6 @@
 import { initDesktopNavigationAnimations } from "./desktop/animations";
 import { initMobileNavigationAnimations } from "./mobile/animations";
+import { initNavigationReveal } from "./shared/animations";
 
 const initAllNavigationAnimations = () => {
   // Ensure JS is enabled class is on HTML for CSS selectors
@@ -7,6 +8,7 @@ const initAllNavigationAnimations = () => {
     document.documentElement.classList.add("js-enabled");
   }
 
+  initNavigationReveal();
   initDesktopNavigationAnimations();
   initMobileNavigationAnimations();
 };
