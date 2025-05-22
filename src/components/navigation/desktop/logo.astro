@@ -1,0 +1,17 @@
+---
+import type { AssetStoryblok } from "@storyblok/types";
+import Media from "@/components/ui/media.astro";
+
+interface Props {
+  logo?: AssetStoryblok;
+}
+
+const { logo } = Astro.props;
+---
+
+<div class="flex-shrink-0">
+  <a href="/" aria-label="Homepage">
+    {logo?.filename && <Media asset={logo} width={132} height={45} />}
+  </a>
+</div>
+

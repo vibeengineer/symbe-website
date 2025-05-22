@@ -2,16 +2,16 @@
 import type { NavigationStoryblok } from "@storyblok/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import type { Prettify } from "@/types";
-import DesktopNav from "./desktop-nav.astro";
-import MobileNav from "./mobile-nav.astro";
+import DesktopNav from "./desktop/index.astro";
+import MobileNav from "./mobile/index.astro";
 
 interface Props {
   className?: string;
   blok: Prettify<NavigationStoryblok>;
-  theme?: "light" | "dark";
+  theme?: "transparent" | "white";
 }
 
-const { blok, className, theme = "light" } = Astro.props as Props;
+const { blok, className, theme = "transparent" } = Astro.props as Props;
 ---
 
 <header
@@ -22,5 +22,4 @@ const { blok, className, theme = "light" } = Astro.props as Props;
   <MobileNav blok={blok} className={className} theme={theme} />
 </header>
 
-<!-- Attach the animations script -->
-<script src="./nav-animations.ts"></script>
+<script src="./animations.ts"></script>

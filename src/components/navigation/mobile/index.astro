@@ -1,0 +1,17 @@
+---
+import type { NavigationStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import MobileToggle from "./mobile-toggle.astro";
+import MobileDrawer from "./mobile-drawer.astro";
+
+interface Props {
+  blok: Prettify<NavigationStoryblok>;
+  className?: string;
+  theme?: "transparent" | "white";
+}
+
+const { blok, className, theme = "transparent" } = Astro.props as Props;
+---
+
+<MobileToggle theme={theme} />
+<MobileDrawer blok={blok} className={className} theme={theme} />

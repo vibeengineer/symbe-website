@@ -1,0 +1,21 @@
+---
+import type { LinkStoryblok } from "@storyblok/types";
+import Link from "@/components/ui/link.astro";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  blok: LinkStoryblok;
+  theme: "transparent" | "white";
+}
+
+const { blok, theme } = Astro.props as Props;
+---
+
+<div
+  class={cn(
+    "rounded-lg p-2 transition-colors duration-150",
+    theme === "transparent" ? "hover:bg-gray-100" : "hover:bg-white/10",
+  )}
+>
+  <Link blok={blok} />
+</div>

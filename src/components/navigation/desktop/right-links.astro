@@ -1,0 +1,29 @@
+---
+import type { LinkStoryblok } from "@storyblok/types";
+import Link from "@/components/ui/link.astro";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  links?: LinkStoryblok[];
+  theme?: "transparent" | "white";
+}
+
+const { links, theme = "transparent" }: Props = Astro.props;
+---
+
+<div class="flex items-center gap-4">
+  {
+    links?.map((link: LinkStoryblok) => (
+      <div
+        class={cn(
+          "relative block w-full rounded-lg px-4 py-2",
+          theme === "transparent"
+            ? "transition-colors duration-200 hover:bg-gray-200/80"
+            : "transition-colors duration-200 hover:bg-white/10",
+        )}
+      >
+        <Link blok={link} />
+      </div>
+    ))
+  }
+</div>

@@ -1,0 +1,33 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  theme?: "transparent" | "white";
+}
+
+const { theme = "transparent" } = Astro.props as Props;
+---
+
+<button
+  data-mobile-toggle
+  class={cn(
+    "block md:hidden fixed top-4 right-4 z-[101] p-3 cursor-pointer bg-transparent border-none",
+  )}
+  aria-label="Toggle navigation"
+  aria-expanded="false"
+  data-theme={theme}
+>
+  <span
+    class={cn(
+      "relative block w-6 h-0.5 transition-transform duration-300",
+      theme === "transparent" ? "bg-gray-800" : "bg-white",
+      "[&::before]:content-[''] [&::before]:absolute [&::before]:left-0 [&::before]:w-6 [&::before]:h-0.5 [&::before]:-top-2 [&::before]:transition-transform [&::before]:duration-300",
+      "[&::after]:content-[''] [&::after]:absolute [&::after]:left-0 [&::after]:w-6 [&::after]:h-0.5 [&::after]:-bottom-2 [&::after]:transition-transform [&::after]:duration-300",
+      theme === "white"
+        ? "[&::before]:bg-gray-800 [&::after]:bg-gray-800"
+        : "[&::before]:bg-white [&::after]:bg-white",
+      "[aria-expanded='true']:bg-transparent",
+      "[aria-expanded='true']:[&::before]:translate-y-2 [aria-expanded='true']:[&::before]:rotate-45",
+      "[aria-expanded='true']:[&::after]:-translate-y-2 [aria-expanded='true']:[&::after]:-rotate-45",
+    )}></span>
+</button>

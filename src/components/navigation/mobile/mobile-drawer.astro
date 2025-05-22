@@ -1,0 +1,64 @@
+---
+import type {
+  LinkStoryblok,
+  LinkDropdownStoryblok,
+  NavigationStoryblok,
+} from "@storyblok/types";
+import type { Prettify } from "@/types";
+import { cn } from "@/utils/cn";
+import MobileLinkItem from "./mobile-link-item.astro";
+import MobileDropdownSection from "./mobile-dropdown-section.astro";
+
+interface Props {
+  blok: Prettify<NavigationStoryblok>;
+  className?: string;
+  theme: "transparent" | "white";
+}
+
+const {
+  blok: { centreLinks, rightLinks },
+  className,
+  theme,
+} = Astro.props as Props;
+---
+
+<aside
+  data-mobile-drawer
+  class={cn(
+    "fixed inset-0 w-full h-screen md:hidden",
+    theme === "transparent"
+      ? "bg-white/95 text-gray-900"
+      : "bg-black/95 text-white backdrop-blur-lg",
+    "z-[100] invisible opacity-0 translate-y-[-10px]",
+    "transition-all duration-300 ease-in-out",
+    "[&.open]:visible [&.open]:opacity-100 [&.open]:translate-y-0",
+    className,
+  )}
+  aria-hidden="true"
+>
+  <div class="flex max-h-screen flex-col gap-6 overflow-y-auto p-6 pt-20">
+    {
+      centreLinks?.map((item: LinkStoryblok | LinkDropdownStoryblok) => {
+        if (item.component === "link") {
+          return <MobileLinkItem blok={item as LinkStoryblok} theme={theme} />;
+        }
+        if (item.component === "linkDropdown") {
+          return (
+            <MobileDropdownSection
+              item={item as LinkDropdownStoryblok}
+              theme={theme}
+            />
+          );
+        }
+        return null;
+      })
+    }
+    <div class="mt-4 flex flex-col gap-2">
+      {
+        rightLinks?.map((link: LinkStoryblok) => (
+          <MobileLinkItem blok={link} theme={theme} />
+        ))
+      }
+    </div>
+  </div>
+</aside>

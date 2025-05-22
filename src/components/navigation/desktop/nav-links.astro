@@ -1,0 +1,44 @@
+---
+import type { LinkStoryblok, LinkDropdownStoryblok } from "@storyblok/types";
+import Link from "@/components/ui/link.astro";
+import { cn } from "@/utils/cn";
+import DropdownTrigger from "./dropdown-trigger.astro";
+import DropdownMenu from "./dropdown-menu.astro";
+
+interface Props {
+  links: (LinkStoryblok | LinkDropdownStoryblok)[];
+  theme?: "transparent" | "white";
+}
+
+const { links, theme = "transparent" }: Props = Astro.props;
+---
+
+<div class="absolute left-1/2 flex -translate-x-1/2 items-center gap-6">
+  {
+    links.map((item) => {
+      if (item.component === "link") {
+        return (
+          <div
+            class={cn(
+              "relative block w-full rounded-lg px-4 py-2",
+              theme === "transparent"
+                ? "transition-colors duration-200 hover:bg-gray-200/80"
+                : "transition-colors duration-200 hover:bg-white/10",
+            )}
+          >
+            <Link blok={item} />
+          </div>
+        );
+      }
+      if (item.component === "linkDropdown") {
+        return (
+          <div data-dropdown-wrapper class="relative">
+            <DropdownTrigger dropdownTitle={item.dropdownTitle} theme={theme} />
+            {item.links && <DropdownMenu links={item.links} theme={theme} />}
+          </div>
+        );
+      }
+      return null;
+    })
+  }
+</div>

@@ -1,0 +1,35 @@
+---
+import { cn } from "@/utils/cn";
+import { ChevronDown } from "@lucide/astro";
+
+interface Props {
+  dropdownTitle?: string;
+  theme?: "transparent" | "white";
+}
+
+const { dropdownTitle, theme = "transparent" }: Props = Astro.props;
+---
+
+<button
+  data-trigger
+  class={cn(
+    "relative rounded-lg px-4 py-2 text-[0.9375rem]",
+    "border-none bg-transparent",
+    theme === "transparent"
+      ? "text-gray-800 hover:text-black"
+      : "text-white/90 hover:text-white",
+    theme === "transparent"
+      ? "transition-colors duration-200 hover:bg-gray-200/80"
+      : "transition-colors duration-200 hover:bg-white/10",
+    "cursor-pointer",
+    "flex items-center gap-1",
+  )}
+  aria-expanded="false"
+  aria-haspopup="true"
+>
+  {dropdownTitle}
+  <ChevronDown
+    data-chevron
+    class="h-4 w-4 transition-transform duration-200 ease-in-out"
+  />
+</button>

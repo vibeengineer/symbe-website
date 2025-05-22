@@ -1,0 +1,29 @@
+---
+import type { LinkStoryblok, LinkDropdownStoryblok } from "@storyblok/types";
+import { cn } from "@/utils/cn";
+import MobileLinkItem from "./mobile-link-item.astro";
+
+interface Props {
+  item: LinkDropdownStoryblok;
+  theme: "transparent" | "white";
+}
+
+const { item, theme } = Astro.props as Props;
+
+const borderClass =
+  theme === "transparent" ? "border-gray-200" : "border-white/10";
+const titleClass = theme === "transparent" ? "text-gray-800" : "text-white";
+---
+
+<div class={cn("border-b pb-4", borderClass)}>
+  <div class={cn("mb-3 font-medium", titleClass)}>
+    {item.dropdownTitle}
+  </div>
+  <div class="flex flex-col gap-2 pl-4">
+    {
+      item.links?.map((dropdownLink: any) => (
+        <MobileLinkItem blok={dropdownLink} theme={theme} />
+      ))
+    }
+  </div>
+</div>
