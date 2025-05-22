@@ -78,6 +78,8 @@ export default defineConfig({
   experimental: {
     fonts: [
       {
+        name: "DM Sans",
+        cssVariable: "--font-dm-sans",
         provider: "local",
         variants: [
           {
@@ -86,8 +88,23 @@ export default defineConfig({
             style: "normal",
           },
         ],
-        name: "DM Sans",
-        cssVariable: "--font-dm-sans",
+      },
+      {
+        name: "Bagos Condensed",
+        cssVariable: "--font-bagos-condensed",
+        provider: "local",
+        variants: [
+          {
+            src: ["./src/assets/fonts/bagos-condensed-medium.woff2"],
+            weight: "500",
+            style: "normal",
+          },
+          {
+            src: ["./src/assets/fonts/bagos-condensed-semibold.woff2"],
+            weight: "600",
+            style: "normal",
+          },
+        ],
       },
     ],
   },

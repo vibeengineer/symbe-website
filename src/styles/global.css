@@ -83,4 +83,5 @@
   );
 
   --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-bagos-condensed);
 }
