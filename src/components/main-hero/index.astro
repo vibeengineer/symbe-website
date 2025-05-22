@@ -63,13 +63,13 @@ if (showBanner && bannerText && bannerStars) {
 >
   <div class="relative">
     <!-- Background embed layer -->
-    <div class="absolute inset-0 min-h-[60dvh] overflow-hidden">
+    <div class="absolute inset-0 min-h-[70dvh] overflow-hidden">
       <BgEmbed />
     </div>
 
     <!-- Content layer -->
     <div
-      class="relative z-10 flex min-h-[60dvh] flex-col items-center pt-52 pb-96 text-center md:pt-64"
+      class="relative z-10 flex min-h-[70dvh] flex-col items-center pt-32 pb-64 text-center md:pt-64"
     >
       {
         showBanner && bannerText && (
@@ -81,14 +81,16 @@ if (showBanner && bannerText && bannerStars) {
                 class="flex items-center gap-x-3 no-underline"
               >
                 <G2Logo />
-                <span>{bannerText}</span>
+                <Label size="m" weight="regular">
+                  {bannerText}
+                </Label>
                 <Stars numberOfStars={starsToDisplay} />
               </a>
             )}
             {!bannerLink && (
               <div>
                 <G2Logo />
-                <Label size="s" weight="regular">
+                <Label size="m" weight="regular">
                   {bannerText}
                 </Label>
                 <Stars numberOfStars={starsToDisplay} />
@@ -102,7 +104,7 @@ if (showBanner && bannerText && bannerStars) {
           {title}
         </Heading>
         <BodyText
-          size="l"
+          size="xl"
           class="mx-auto mb-8 max-w-2xl text-balance opacity-80 md:max-w-[40rem]"
         >
           {subtitle}
@@ -115,7 +117,7 @@ if (showBanner && bannerText && bannerStars) {
 
     <!-- Media layer -->
     <div
-      class="relative z-20 -mt-72 flex min-h-[700px] w-full items-center justify-center pb-12"
+      class="relative z-20 -mt-48 flex min-h-[700px] w-full items-center justify-center pb-12"
     >
       <Media asset={media} class="" width={1200} />
     </div>
