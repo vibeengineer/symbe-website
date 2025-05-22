@@ -74,7 +74,10 @@ if (showBanner && bannerText && bannerStars) {
     >
       {
         showBanner && bannerText && (
-          <Banner data-hero-banner class="absolute top-20 left-0 w-full">
+          <Banner
+            data-hero-banner
+            class="animate-fade-in absolute top-20 left-0 w-full opacity-0"
+          >
             {bannerLink && (
               <a
                 href={parseLink(bannerLink, "href")}
@@ -101,18 +104,18 @@ if (showBanner && bannerText && bannerStars) {
         )
       }
       <div class="max-w-4xl">
-        <Heading data-hero-title level="xxl" class="mb-6 text-pretty">
+        <Heading data-hero-title level="xxl" class="mb-6 text-pretty opacity-0">
           {title}
         </Heading>
         <BodyText
           data-hero-subtitle
           size="xl"
-          class="mx-auto mb-8 max-w-2xl text-balance opacity-80 md:max-w-[40rem]"
+          class="mx-auto mb-8 max-w-2xl text-balance opacity-0 md:max-w-[40rem]"
         >
           {subtitle}
         </BodyText>
       </div>
-      <div data-hero-ctas class="mt-2.5 flex gap-x-4">
+      <div data-hero-ctas class="mt-2.5 flex gap-x-4 opacity-0">
         {ctas?.map((cta) => <Link blok={cta} />)}
       </div>
     </div>
@@ -120,7 +123,7 @@ if (showBanner && bannerText && bannerStars) {
     <!-- Media layer -->
     <div
       data-hero-media
-      class="relative z-20 -mt-48 flex min-h-[700px] w-full items-center justify-center pb-12"
+      class="relative z-20 -mt-48 flex min-h-[700px] w-full items-center justify-center pb-12 opacity-0"
     >
       <Media asset={media} class="" width={1200} />
     </div>

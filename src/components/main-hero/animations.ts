@@ -9,8 +9,7 @@ declare global {
 import { gsap } from "@/components/navigation/shared/animations";
 
 export function initMainHeroAnimations() {
-  // Hide content initially
-  gsap.set("[data-hero-banner]", { autoAlpha: 0 });
+  // Banner is NOT set by GSAP initially, CSS handles it via opacity-0
   gsap.set("[data-hero-title]", { autoAlpha: 0, y: 20 });
   gsap.set("[data-hero-subtitle]", { autoAlpha: 0, y: 20 });
   gsap.set("[data-hero-ctas]", { autoAlpha: 0, y: 20 });
@@ -22,25 +21,23 @@ export function initMainHeroAnimations() {
       // Staggered animation sequence
       const timeline = gsap.timeline({
         defaults: { ease: "power2.out" },
+        onComplete: () => {
+          // When all GSAP animations are done, trigger Tailwind transition for banner
+          const banner = document.querySelector("[data-hero-banner]");
+          if (banner) {
+            banner.classList.remove("opacity-0");
+            banner.classList.add("opacity-100");
+          }
+        },
       });
 
-      // Banner fades in first (no y movement)
-      timeline.to("[data-hero-banner]", {
+      // Title appears first
+      timeline.to("[data-hero-title]", {
         autoAlpha: 1,
+        y: 0,
         duration: 0.8,
         delay: 0.1,
       });
-
-      // Title appears
-      timeline.to(
-        "[data-hero-title]",
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.8,
-        },
-        "-=0.7",
-      );
 
       // Subtitle follows
       timeline.to(
@@ -64,7 +61,7 @@ export function initMainHeroAnimations() {
         "-=0.7",
       );
 
-      // Media comes in last
+      // Media comes in
       timeline.to(
         "[data-hero-media]",
         {
@@ -74,6 +71,8 @@ export function initMainHeroAnimations() {
         },
         "-=0.6",
       );
+
+      // Banner animation is now handled by Tailwind and triggered by onComplete
     } else {
       // Check again in a short interval
       setTimeout(checkUnicornStudio, 100);

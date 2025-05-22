@@ -83,4 +83,13 @@
 
   --font-sans: var(--font-dm-sans);
   --font-display: var(--font-bagos-condensed);
+  --animate-fade-in: fade-in 0.7s ease-in-out 0.45s forwards;
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }

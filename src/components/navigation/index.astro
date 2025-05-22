@@ -16,7 +16,7 @@ const { blok, className, theme = "light" } = Astro.props as Props;
 ---
 
 <header
-  class="absolute top-0 left-0 z-50 w-full"
+  class="absolute top-0 left-0 z-50 w-full opacity-0"
   {...storyblokEditable(blok as SbBlokData)}
 >
   <DesktopNav blok={blok} className={className} theme={theme} />
