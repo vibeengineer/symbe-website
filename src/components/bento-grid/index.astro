@@ -3,18 +3,49 @@ import type { BentoGridStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import BentoGridItem from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Label from "@/components/ui/label.astro";
+
 type Props = {
   blok: Prettify<BentoGridStoryblok>;
 };
 
 const {
+  blok,
   blok: { title, items },
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <h2>{title}</h2>
-  <div>
-    {items.map((item) => <BentoGridItem blok={item} />)}
+<div
+  class="bg-surface-blue py-16 sm:py-24"
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    {
+      title && (
+        <div class="mb-12 text-center md:mb-16">
+          <Label
+            size="xl"
+            weight="semibold"
+            as="h2"
+            class="text-text-900 text-4xl !leading-snug font-semibold tracking-tight text-balance sm:text-5xl md:!leading-snug"
+          >
+            {title}
+          </Label>
+        </div>
+      )
+    }
+    <div
+      class="mt-10 grid auto-rows-fr gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2"
+    >
+      {
+        items.map((item, index) => (
+          <BentoGridItem
+            blok={item}
+            itemIndex={index}
+            totalItems={items.length}
+          />
+        ))
+      }
+    </div>
   </div>
 </div>
