@@ -10,9 +10,40 @@ let isMobileDrawerOpen = false; // State specific to mobile animations
 
 // Accordion functionality
 const initMobileAccordion = () => {
+  // Remove any existing accordion listeners first to prevent duplicates
+  const accordionListenersToRemove: ManagedEventListener[] = [];
+
+  for (const listener of mobileEventListeners) {
+    // Check if this listener is attached to an accordion trigger
+    if (
+      listener.target instanceof HTMLElement &&
+      listener.target.hasAttribute("data-accordion-trigger")
+    ) {
+      accordionListenersToRemove.push(listener);
+    }
+  }
+
+  // Remove the accordion listeners
+  for (const listener of accordionListenersToRemove) {
+    listener.target.removeEventListener(
+      listener.type,
+      listener.listener,
+      listener.options,
+    );
+    const index = mobileEventListeners.indexOf(listener);
+    if (index > -1) {
+      mobileEventListeners.splice(index, 1);
+    }
+  }
+
   const accordionSections = document.querySelectorAll<HTMLElement>(
     "[data-accordion-section]",
   );
+
+  if (accordionSections.length === 0) {
+    console.warn("No accordion sections found");
+    return;
+  }
 
   for (const section of accordionSections) {
     const trigger = section.querySelector<HTMLElement>(
@@ -23,7 +54,14 @@ const initMobileAccordion = () => {
     );
     const icon = section.querySelector<HTMLElement>("[data-accordion-icon]");
 
-    if (!trigger || !content || !icon) continue;
+    if (!trigger || !content || !icon) {
+      console.warn("Accordion section missing required elements:", {
+        trigger,
+        content,
+        icon,
+      });
+      continue;
+    }
 
     // Initial state - collapsed
     gsap.set(content, {
@@ -233,9 +271,6 @@ export const initMobileNavigationAnimations = () => {
   setColors(false);
   animateHamburgerIcon(false);
 
-  // Initialize accordion functionality
-  initMobileAccordion();
-
   addManagedEventListener(mobileEventListeners, mobileToggle, "click", () => {
     isMobileDrawerOpen = !isMobileDrawerOpen;
     if (isMobileDrawerOpen) {
@@ -255,8 +290,10 @@ export const initMobileNavigationAnimations = () => {
         duration: 0.3,
         ease: "power2.out",
         onComplete: () => {
-          // Reinitialize accordion after drawer is open
-          initMobileAccordion();
+          // Initialize accordion functionality after drawer is fully open
+          setTimeout(() => {
+            initMobileAccordion();
+          }, 50); // Small delay to ensure DOM is ready
 
           // Get all top-level navigation items (both direct links and accordion sections)
           const navigationContainer =
