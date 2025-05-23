@@ -139,26 +139,11 @@
     }
 
     const logoTimeline = animateLogo();
-    let hasAnimated = false;
 
-    // Observer to trigger animation when logo comes into view (only once)
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            logoTimeline.restart();
-            hasAnimated = true;
-            // Stop observing after first animation
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 },
-    );
-
+    // Trigger animation immediately on page load
     const logoElement = document.getElementById("symbe-logo");
     if (logoElement) {
-      observer.observe(logoElement);
+      logoTimeline.restart();
     }
   }
 
