@@ -34,20 +34,27 @@ const {
   aria-hidden="true"
 >
   <div
-    class="flex max-h-screen flex-col gap-3.5 overflow-y-auto px-6 py-3.5 pt-24"
+    class="flex max-h-screen flex-col gap-6 overflow-y-auto px-6 py-3.5 pt-24"
   >
     {
-      centreLinks?.map((item: LinkStoryblok | LinkDropdownStoryblok) => {
-        if (item.component === "link") {
-          return <MobileLinkItem blok={item as LinkStoryblok} />;
-        }
-        if (item.component === "linkDropdown") {
-          return <MobileDropdownSection item={item as LinkDropdownStoryblok} />;
-        }
-        return null;
-      })
+      centreLinks?.map(
+        (item: LinkStoryblok | LinkDropdownStoryblok, index: number) => {
+          if (item.component === "link") {
+            return <MobileLinkItem blok={item as LinkStoryblok} />;
+          }
+          if (item.component === "linkDropdown") {
+            return (
+              <MobileDropdownSection
+                item={item as LinkDropdownStoryblok}
+                index={index}
+              />
+            );
+          }
+          return null;
+        },
+      )
     }
-    <div class="flex flex-col gap-y-6">
+    <div class="flex flex-col gap-6">
       {rightLinks?.map((link: LinkStoryblok) => <MobileLinkItem blok={link} />)}
     </div>
   </div>

@@ -8,6 +8,85 @@ import {
 const mobileEventListeners: ManagedEventListener[] = [];
 let isMobileDrawerOpen = false; // State specific to mobile animations
 
+// Accordion functionality
+const initMobileAccordion = () => {
+  const accordionSections = document.querySelectorAll<HTMLElement>(
+    "[data-accordion-section]",
+  );
+
+  for (const section of accordionSections) {
+    const trigger = section.querySelector<HTMLElement>(
+      "[data-accordion-trigger]",
+    );
+    const content = section.querySelector<HTMLElement>(
+      "[data-accordion-content]",
+    );
+    const icon = section.querySelector<HTMLElement>("[data-accordion-icon]");
+
+    if (!trigger || !content || !icon) continue;
+
+    // Initial state - collapsed
+    gsap.set(content, {
+      maxHeight: 0,
+      opacity: 0,
+      autoAlpha: 0,
+    });
+    gsap.set(icon, { rotation: 0 });
+    trigger.setAttribute("aria-expanded", "false");
+    content.setAttribute("aria-hidden", "true");
+
+    addManagedEventListener(mobileEventListeners, trigger, "click", () => {
+      const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        // Collapse
+        trigger.setAttribute("aria-expanded", "false");
+        content.setAttribute("aria-hidden", "true");
+
+        gsap.to(content, {
+          maxHeight: 0,
+          opacity: 0,
+          autoAlpha: 0,
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+
+        gsap.to(icon, {
+          rotation: 0,
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+      } else {
+        // Expand
+        trigger.setAttribute("aria-expanded", "true");
+        content.setAttribute("aria-hidden", "false");
+
+        // Calculate natural height
+        gsap.set(content, { autoAlpha: 1, maxHeight: "auto" });
+        const naturalHeight = content.scrollHeight;
+        gsap.set(content, { maxHeight: 0 });
+
+        gsap.to(content, {
+          maxHeight: naturalHeight,
+          opacity: 1,
+          autoAlpha: 1,
+          duration: 0.3,
+          ease: "power2.inOut",
+          onComplete: () => {
+            gsap.set(content, { maxHeight: "auto" });
+          },
+        });
+
+        gsap.to(icon, {
+          rotation: 180,
+          duration: 0.3,
+          ease: "power2.inOut",
+        });
+      }
+    });
+  }
+};
+
 export const initMobileNavigationAnimations = () => {
   removeAllManagedEventListeners(mobileEventListeners);
   isMobileDrawerOpen = false; // Reset state
@@ -154,6 +233,9 @@ export const initMobileNavigationAnimations = () => {
   setColors(false);
   animateHamburgerIcon(false);
 
+  // Initialize accordion functionality
+  initMobileAccordion();
+
   addManagedEventListener(mobileEventListeners, mobileToggle, "click", () => {
     isMobileDrawerOpen = !isMobileDrawerOpen;
     if (isMobileDrawerOpen) {
@@ -173,19 +255,26 @@ export const initMobileNavigationAnimations = () => {
         duration: 0.3,
         ease: "power2.out",
         onComplete: () => {
-          const menuItems =
-            mobileDrawer.querySelectorAll<HTMLElement>(".flex > *"); // Assuming items are direct children of a flex container
-          gsap.fromTo(
-            menuItems,
-            { y: 20, autoAlpha: 0 },
-            {
-              y: 0,
-              autoAlpha: 1,
-              stagger: 0.04,
-              duration: 0.2,
-              ease: "power1.out",
-            },
-          );
+          // Reinitialize accordion after drawer is open
+          initMobileAccordion();
+
+          // Get all top-level navigation items (both direct links and accordion sections)
+          const navigationContainer =
+            mobileDrawer.querySelector<HTMLElement>(".flex.max-h-screen");
+          if (navigationContainer) {
+            const menuItems = navigationContainer.children;
+            gsap.fromTo(
+              menuItems,
+              { y: 20, autoAlpha: 0 },
+              {
+                y: 0,
+                autoAlpha: 1,
+                stagger: 0.04,
+                duration: 0.2,
+                ease: "power1.out",
+              },
+            );
+          }
         },
       });
     } else {

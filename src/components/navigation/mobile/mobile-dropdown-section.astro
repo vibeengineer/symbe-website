@@ -2,26 +2,66 @@
 import type { LinkDropdownStoryblok } from "@storyblok/types";
 import { cn } from "@/utils/cn";
 import MobileLinkItem from "./mobile-link-item.astro";
-import Label from "@/components/ui/label.astro";
 
 interface Props {
   item: LinkDropdownStoryblok;
+  index?: number;
 }
 
-const { item } = Astro.props as Props;
+const { item, index = 0 } = Astro.props as Props;
 ---
 
-<div>
-  <div class="pb-4">
-    <Label size="s" weight="semibold" class={cn("text-text-500")}>
+<div
+  class="mobile-accordion-section"
+  data-accordion-section={`mobile-${index}`}
+>
+  <button
+    type="button"
+    class={cn(
+      "flex w-full items-center justify-between text-left",
+      "font-display text-lg md:text-xl font-medium",
+      "hover:underline transition-colors duration-200 ease-in-out",
+      "focus:outline-none focus:underline",
+    )}
+    data-accordion-trigger={`mobile-${index}`}
+    aria-expanded="false"
+  >
+    <span class="text-gray-900">
       {item.dropdownTitle}
-    </Label>
-  </div>
-  <div class="flex flex-col gap-y-4.5">
-    {
-      item.links?.map((dropdownLink: any) => (
-        <MobileLinkItem blok={dropdownLink} />
-      ))
-    }
+    </span>
+    <svg
+      class={cn(
+        "h-4 w-4 transition-transform duration-200 text-gray-400 ml-2 flex-shrink-0",
+        "transform rotate-0",
+      )}
+      data-accordion-icon={`mobile-${index}`}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"></path>
+    </svg>
+  </button>
+
+  <div
+    class={cn(
+      "overflow-hidden transition-all duration-300 ease-in-out",
+      "max-h-0 opacity-0",
+    )}
+    data-accordion-content={`mobile-${index}`}
+    aria-hidden="true"
+  >
+    <div class="flex flex-col gap-6 pt-6">
+      {
+        item.links?.map((dropdownLink: any) => (
+          <MobileLinkItem blok={dropdownLink} />
+        ))
+      }
+    </div>
   </div>
 </div>
