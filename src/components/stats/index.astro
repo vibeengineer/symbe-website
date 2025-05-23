@@ -3,6 +3,9 @@ import type { StatsStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import Stat from "./stat.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+
 type Props = {
   blok: Prettify<StatsStoryblok>;
 };
@@ -12,10 +15,30 @@ const {
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <h2>{title}</h2>
-  <p>{subtitle}</p>
-  <div>
-    {stats.map((stat) => <Stat blok={stat} />)}
-  </div>
+<div class="p-4 md:p-6">
+  <section
+    class="bg-dark-right py-16 xl:py-32"
+    {...storyblokEditable(Astro.props.blok as SbBlokData)}
+  >
+    <div class="mx-auto flex max-w-7xl flex-col gap-5 px-10 lg:px-16 xl:gap-20">
+      <div class="flex flex-col gap-4 md:gap-8 lg:flex-row">
+        <div>
+          <Heading level="xl" class="text-text-000 max-w-xl text-balance">
+            {title}
+          </Heading>
+        </div>
+        <div>
+          <BodyText size="l" class="text-text-000 opacity-80 lg:max-w-md">
+            {subtitle}
+          </BodyText>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col justify-center divide-y divide-white/20 xl:flex-row xl:divide-x xl:divide-y-0"
+      >
+        {stats.map((stat, index) => <Stat blok={stat} />)}
+      </div>
+    </div>
+  </section>
 </div>

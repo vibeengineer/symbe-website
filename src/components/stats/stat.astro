@@ -2,6 +2,9 @@
 import type { StatStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+
 type Props = {
   blok: Prettify<StatStoryblok>;
 };
@@ -11,7 +14,17 @@ const {
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <p>{text}</p>
-  <p>{caption}</p>
+<div
+  class="flex flex-1 flex-col items-center py-10 text-center"
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+>
+  <Heading level="xxxl" class="text-text-000 font-bold tracking-tight">
+    {text}
+  </Heading>
+  <BodyText
+    size="s"
+    class="text-text-200 mt-4 font-semibold tracking-[0.05em] uppercase"
+  >
+    {caption}
+  </BodyText>
 </div>

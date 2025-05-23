@@ -15,26 +15,31 @@
 		"generate-sb-types": "storyblok generate-typescript-typedefs --sourceFilePaths ./storyblok/components.definition.json --destinationFilePath ./storyblok/types.d.ts --compilerOptions storyblok/compiler-options.json",
 		"storyblok": "pnpm run pull-sb-components && pnpm run generate-sb-types",
 		"sslproxy": "local-ssl-proxy --source 4322 --target 4321 --cert localhost.pem --key localhost-key.pem",
-		"generate-cert": "mkcert -install && mkcert localhost"
+		"generate-cert": "mkcert -install && mkcert localhost",
+		"start": "node ./dist/server/entry.mjs"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^12.5.1",
+		"@astrojs/node": "^9.2.1",
 		"@astrojs/react": "^4.2.5",
 		"@astrojs/sitemap": "^3.3.1",
+		"@lucide/astro": "^0.511.0",
 		"@storyblok/astro": "^6.1.1",
 		"@tailwindcss/vite": "^4.1.4",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
+		"@unpic/astro": "^1.0.0",
 		"astro": "^5.7.5",
 		"astro-seo": "^0.8.4",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
+		"gsap": "^3.13.0",
 		"prettier-plugin-astro": "^0.14.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"storyblok-js-client": "^6.10.11",
 		"tailwind-merge": "^3.3.0",
-		"tailwindcss": "^4.1.4"
+		"tailwindcss": "^4.1.4",
+		"vanilla-cookieconsent": "3.1.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",

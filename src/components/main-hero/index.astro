@@ -1,31 +1,133 @@
 ---
 import type { MainHeroStoryblok } from "@storyblok/types";
-import { parseAsset } from "@/services/storyblok/helpers";
+import { parseLink } from "@/services/storyblok/utils/parse-link";
 import type { Prettify } from "@/types";
-import Link from "../ui/link.astro";
+import Link from "@/components/ui/link.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Banner from "@/components/ui/banner.astro";
+import G2Logo from "@/components/ui/g2-logo.astro";
+import Stars from "@/components/ui/stars.astro";
+import { z } from "zod";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Media from "@/components/ui/media.astro";
+import Label from "../ui/label.astro";
+import BgEmbed from "./bg-embed.astro";
+
+const numberOfStarsSchema = z.union([
+  z.literal(1),
+  z.literal(1.5),
+  z.literal(2),
+  z.literal(2.5),
+  z.literal(3),
+  z.literal(3.5),
+  z.literal(4),
+  z.literal(4.5),
+  z.literal(5),
+]);
+type NumberOfStars = z.infer<typeof numberOfStarsSchema>;
+
 type Props = {
   blok: Prettify<MainHeroStoryblok>;
 };
 
 const {
-  blok: { title, subtitle, media, ctas, bannerStars, bannerText, showBanner },
+  blok: {
+    title,
+    subtitle,
+    media,
+    ctas,
+    bannerStars,
+    bannerText,
+    showBanner,
+    bannerLink,
+  },
 } = Astro.props;
+
+let starsToDisplay: NumberOfStars = 5; // Default to 5 stars
+
+if (showBanner && bannerText && bannerStars) {
+  const parsedBannerStars = Number.parseFloat(bannerStars);
+  const validationResult = numberOfStarsSchema.safeParse(parsedBannerStars);
+  if (validationResult.success) {
+    starsToDisplay = validationResult.data;
+  } else {
+    starsToDisplay = 5;
+  }
+}
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <h2>{title}</h2>
-  <p>{subtitle}</p>
-  <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
-  <div>
-    {ctas?.map((cta) => <Link blok={cta} />)}
-  </div>
-  {
-    showBanner && bannerStars && bannerText && (
-      <div>
-        <p>{bannerText}</p>
-        {parseInt(bannerStars) / 5}
+<div
+  class="text-text-000 relative"
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+>
+  <div class="relative">
+    <!-- Background embed layer -->
+    <div class="absolute inset-0 min-h-[70dvh] overflow-hidden">
+      <BgEmbed />
+    </div>
+
+    <!-- Content layer -->
+    <div
+      data-hero-content
+      class="relative z-10 flex min-h-[70dvh] flex-col items-center justify-center px-4 py-20 text-center md:justify-start md:pt-64 md:pb-64"
+    >
+      {
+        showBanner && bannerText && (
+          <Banner
+            data-hero-banner
+            class="absolute top-20 left-0 w-full opacity-0"
+          >
+            {bannerLink && (
+              <a
+                href={parseLink(bannerLink, "href")}
+                target={parseLink(bannerLink, "target")}
+                class="flex items-center gap-x-3 no-underline"
+              >
+                <G2Logo />
+                <Label size="m" weight="regular" data-banner-text>
+                  {bannerText}
+                </Label>
+                <Stars numberOfStars={starsToDisplay} />
+              </a>
+            )}
+            {!bannerLink && (
+              <div>
+                <G2Logo />
+                <Label size="m" weight="regular" data-banner-text>
+                  {bannerText}
+                </Label>
+                <Stars numberOfStars={starsToDisplay} />
+              </div>
+            )}
+          </Banner>
+        )
+      }
+      <div class="max-w-4xl">
+        <Heading data-hero-title level="xxl" class="mb-6 text-pretty opacity-0">
+          {title}
+        </Heading>
+        <BodyText
+          data-hero-subtitle
+          size="xl"
+          class="mx-auto mb-8 max-w-2xl text-balance opacity-0 md:max-w-[40rem]"
+        >
+          {subtitle}
+        </BodyText>
       </div>
-    )
-  }
+      <div data-hero-ctas class="mt-2.5 flex gap-x-4 opacity-0">
+        {ctas?.map((cta) => <Link blok={cta} size="lg" />)}
+      </div>
+    </div>
+
+    <!-- Media layer -->
+    <div
+      data-hero-media
+      class="relative z-20 -mt-56 flex min-h-[400px] w-full items-center justify-center pb-12 opacity-0 md:-mt-56 md:min-h-[900px]"
+    >
+      <Media asset={media} class="" width={1200} />
+    </div>
+  </div>
 </div>
+
+<script src="./animations.ts"></script>

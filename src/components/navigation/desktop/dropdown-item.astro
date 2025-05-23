@@ -1,0 +1,16 @@
+---
+import type { DropdownLinkStoryblok } from "@storyblok/types";
+import DropdownLink from "./dropdown-link.astro";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  blok: DropdownLinkStoryblok;
+  theme?: "transparent" | "white";
+}
+
+const { blok }: Props = Astro.props;
+---
+
+<div class={cn("dropdown-item rounded-md px-1.5 py-[0.45rem]")}>
+  <DropdownLink blok={blok} />
+</div>

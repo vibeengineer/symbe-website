@@ -1,13 +1,13 @@
 ---
 import { SEO } from "astro-seo";
 import { Font } from "astro:assets";
-import { getGlobals } from "../services/storyblok/globals";
-const {
-  env: { SITE_NAME, BASE_URL },
-} = Astro.locals.runtime;
+import { ClientRouter } from "astro:transitions";
+import { getGlobals } from "../services/storyblok/get-globals";
 import "@/styles/global.css";
-import Navigation from "@/components/navigation/navigation.astro";
+import Navigation from "@/components/navigation/index.astro";
 import Footer from "@/components/footer.astro";
+import Spacer from "@/components/ui/spacer.astro";
+import CookieConsent from "@/components/cookie-consent/index.astro";
 
 type Props = {
   title?: string;
@@ -20,7 +20,7 @@ type Props = {
 };
 
 const { navigationData, footerData, seoDefaults } = await getGlobals(
-  Astro.locals.runtime.env.CONTENT_VERSION as "draft" | "published",
+  import.meta.env.CONTENT_VERSION,
 );
 const {
   title,
@@ -39,6 +39,9 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <Font cssVariable="--font-dm-sans" preload />
+    <Font cssVariable="--font-bagos-condensed" preload />
+    <link rel="preload" href="/js/unicorn-studio.umd.js" as="script" />
+    <ClientRouter />
     <SEO
       title={title ? title : seoDefaults.title}
       description={description ? description : seoDefaults.description}
@@ -53,7 +56,7 @@ const {
           image:
             openGraphImage ??
             seoDefaults.openGraphImage?.filename ??
-            `${BASE_URL}/og.png`,
+            `${import.meta.env.SITE_URL}/og.png`,
           type: "website",
         },
       }}
@@ -80,8 +83,11 @@ const {
           { rel: "manifest", href: "/favicon/site.webmanifest" },
         ],
         meta: [
-          { name: "apple-mobile-web-app-title", content: SITE_NAME },
-          { property: "og:site_name", content: SITE_NAME },
+          {
+            name: "apple-mobile-web-app-title",
+            content: import.meta.env.SITE_NAME,
+          },
+          { property: "og:site_name", content: import.meta.env.SITE_NAME },
           { name: "theme-color", content: "#000000" },
         ],
       }}
@@ -91,6 +97,7 @@ const {
     {!noNav && <Navigation blok={navigationData} />}
     <slot />
     {!noFooter && <Footer blok={footerData} />}
+    <CookieConsent />
   </body>
 </html>
 

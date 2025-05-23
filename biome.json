@@ -10,7 +10,8 @@
 		"ignore": [
 			"node_modules",
 			"dist",
-			"build"
+			"build",
+			"public/js/unicorn-studio.umd.js"
 		]
 	},
 	"formatter": {

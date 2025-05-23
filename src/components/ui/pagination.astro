@@ -1,0 +1,122 @@
+---
+type Props = {
+  totalPages: number;
+  currentPage: number;
+};
+
+// will set the current page search param
+
+const { totalPages, currentPage } = Astro.props;
+
+// Create an array for page numbers to display
+const pageNumbers = [];
+const maxPagesShown = 7; // Total number of page links to show (including ellipsis)
+
+// Logic to determine which page numbers to show
+if (totalPages <= maxPagesShown) {
+  // If we have fewer pages than max, show all
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+} else {
+  // Always include first page
+  pageNumbers.push(1);
+
+  // Determine start and end of the shown page range
+  let startPage = Math.max(2, currentPage - 1);
+  let endPage = Math.min(totalPages - 1, currentPage + 1);
+
+  // Adjust if we're at the beginning
+  if (currentPage <= 3) {
+    startPage = 2;
+    endPage = Math.min(startPage + 2, totalPages - 1);
+  }
+
+  // Adjust if we're at the end
+  if (currentPage >= totalPages - 2) {
+    endPage = totalPages - 1;
+    startPage = Math.max(endPage - 2, 2);
+  }
+
+  // Add ellipsis before the range if needed
+  if (startPage > 2) {
+    pageNumbers.push("...");
+  }
+
+  // Add the range
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
+  // Add ellipsis after the range if needed
+  if (endPage < totalPages - 1) {
+    pageNumbers.push("...");
+  }
+
+  // Always include last page
+  pageNumbers.push(totalPages);
+}
+
+// Function to generate the URL for a page
+const getPageUrl = (page: number | string) => {
+  if (typeof page !== "number") return "#";
+
+  const url = new URL(Astro.url);
+  url.searchParams.set("page", page.toString());
+  return url.pathname + url.search;
+};
+
+// Previous and next page URLs
+const prevPageUrl = currentPage > 1 ? getPageUrl(currentPage - 1) : "#";
+const nextPageUrl =
+  currentPage < totalPages ? getPageUrl(currentPage + 1) : "#";
+---
+
+<nav class="my-8 flex items-center justify-center space-x-2">
+  <!-- Previous button -->
+  <a
+    href={prevPageUrl}
+    class={`flex items-center justify-center px-4 h-10 font-medium text-sm ${currentPage > 1 ? "text-gray-600 hover:bg-gray-100" : "text-gray-300 cursor-not-allowed"}`}
+    aria-disabled={currentPage <= 1}
+  >
+    PREV
+  </a>
+
+  <!-- Page numbers -->
+  <div class="inline-flex gap-1">
+    {
+      pageNumbers.map((page) => {
+        if (page === "...") {
+          return (
+            <span class="flex h-10 w-10 items-center justify-center text-gray-500">
+              ...
+            </span>
+          );
+        }
+
+        return (
+          <a
+            href={getPageUrl(page as number)}
+            class={`flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium ${
+              page === currentPage
+                ? "bg-[#eb6140] text-white"
+                : "text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+            }`}
+            aria-current={page === currentPage ? "page" : undefined}
+          >
+            {page}
+          </a>
+        );
+      })
+    }
+  </div>
+
+  <!-- Next button -->
+  <a
+    href={nextPageUrl}
+    class={`flex items-center justify-center px-4 h-10 font-medium text-sm ${currentPage < totalPages ? "text-gray-600 hover:bg-gray-100" : "text-gray-300 cursor-not-allowed"}`}
+    aria-disabled={currentPage >= totalPages}
+  >
+    NEXT
+  </a>
+</nav>

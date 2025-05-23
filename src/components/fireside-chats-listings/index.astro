@@ -3,22 +3,31 @@ import type {
   FiresideChatStoryblok,
   FiresideChatsListingsStoryblok,
 } from "@storyblok/types";
-import {
-  getStories,
-  parseAsset,
-  parseLink,
-} from "@/services/storyblok/helpers";
+import { getStories } from "@/services/storyblok/get-stories";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
+import { parseLink } from "@/services/storyblok/utils/parse-link";
 import type { Prettify } from "@/types";
 import FiresideChatListing from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Pagination from "@/components/ui/pagination.astro";
 type Props = {
   blok: Prettify<FiresideChatsListingsStoryblok>;
 };
 
-const firesideChats = await getStories<FiresideChatStoryblok>({
-  contentType: "firesideChat",
-  version: Astro.locals.runtime.env.CONTENT_VERSION as "draft" | "published",
-});
+const PER_PAGE = 1;
+const pageNumber = Astro.url.searchParams.get("page");
+const currentPage = pageNumber ? Number.parseInt(pageNumber) : 1;
+
+const { stories: firesideChats, total } =
+  await getStories<FiresideChatStoryblok>({
+    contentType: "firesideChat",
+    version: import.meta.env.CONTENT_VERSION,
+    per_page: PER_PAGE,
+    page: currentPage,
+  });
+
+// Calculate total pages
+const totalPages = Math.ceil(total / PER_PAGE);
 
 const {
   blok: { title, subtitle, subscribeLinks, subscribeLinksCaption },
@@ -47,4 +56,10 @@ const {
   <div>
     {firesideChats.map((chat) => <FiresideChatListing story={chat} />)}
   </div>
+
+  {
+    totalPages > 0 && (
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    )
+  }
 </div>

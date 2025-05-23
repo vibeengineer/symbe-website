@@ -1,0 +1,113 @@
+---
+import { z } from "zod";
+
+// Define schema for input validation
+const youtubeInputSchema = z.object({
+  youtubeInput: z.string().min(1, "YouTube URL or ID is required"),
+});
+
+// Define props with optional customization parameters
+type Props = {
+  youtubeInput: string; // Either a YouTube URL or video ID
+  width?: number;
+  height?: number;
+  title?: string;
+  autoplay?: boolean;
+  controls?: boolean;
+  showInfo?: boolean;
+  rel?: boolean;
+  loop?: boolean;
+  mute?: boolean;
+  startAt?: number;
+  className?: string;
+};
+
+const {
+  youtubeInput,
+  width = 560,
+  height = 315,
+  title = "YouTube video player",
+  autoplay = false,
+  controls = true,
+  showInfo = false,
+  rel = false,
+  loop = false,
+  mute = false,
+  startAt = 0,
+  className,
+} = Astro.props;
+
+// Validate input
+const result = youtubeInputSchema.safeParse({ youtubeInput });
+if (!result.success) {
+  throw new Error("Invalid YouTube input");
+}
+
+// Function to extract YouTube video ID from URL or use directly if it's an ID
+function getYoutubeId(input: string): string {
+  // Check if input is already a video ID (typically 11 characters)
+  if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+    return input;
+  }
+
+  // Try to extract from various YouTube URL formats
+  const regexPatterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/watch\?.*v=([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+  ];
+
+  for (const pattern of regexPatterns) {
+    const match = input.match(pattern);
+    if (match?.[1]) {
+      return match[1];
+    }
+  }
+
+  throw new Error("Could not extract YouTube video ID from input");
+}
+
+// Get the YouTube video ID
+const videoId = getYoutubeId(youtubeInput);
+
+// Construct the embed URL with parameters
+let embedUrl = `https://www.youtube.com/embed/${videoId}?`;
+const params = new URLSearchParams();
+
+if (autoplay) params.append("autoplay", "1");
+if (!controls) params.append("controls", "0");
+if (!showInfo) params.append("showinfo", "0");
+if (!rel) params.append("rel", "0");
+if (loop) params.append("loop", "1");
+if (mute) params.append("mute", "1");
+if (startAt > 0) params.append("start", startAt.toString());
+
+embedUrl += params.toString();
+---
+
+<div
+  class={`relative w-full max-w-full ${className ?? ""} ${width === 560 && height === 315 ? "aspect-[16/9]" : ""}`}
+  style={width !== 560 || height !== 315
+    ? `aspect-ratio: ${width} / ${height};`
+    : undefined}
+>
+  <div
+    id={`youtube-placeholder-${videoId}`}
+    class="absolute inset-0 z-10 flex h-full w-full items-center justify-center bg-neutral-900 text-2xl text-neutral-500 transition-opacity duration-300"
+  >
+  </div>
+
+  <iframe
+    id={`youtube-iframe-${videoId}`}
+    class="absolute inset-0 z-20 h-full w-full border-0 bg-transparent opacity-0 transition-opacity duration-500"
+    width={width}
+    height={height}
+    src={embedUrl}
+    title={title}
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+    onload={`document.getElementById('youtube-placeholder-${videoId}').classList.add('opacity-0','pointer-events-none');document.getElementById('youtube-iframe-${videoId}').classList.add('opacity-100');`}
+  ></iframe>
+</div>

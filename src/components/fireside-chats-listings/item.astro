@@ -1,7 +1,7 @@
 ---
 import type { FiresideChatStoryblok } from "@storyblok/types";
-import type { StoryblokStory } from "@/services/storyblok/helpers";
-import { parseAsset } from "@/services/storyblok/helpers";
+import type { StoryblokStory } from "@/services/storyblok/schemas";
+import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 
@@ -11,6 +11,7 @@ type Props = {
 
 const {
   story: {
+    full_slug,
     content: {
       blurb,
       dateLastModified,
@@ -24,9 +25,12 @@ const {
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.story.content as SbBlokData)}>
+<a
+  href={`/${full_slug}`}
+  {...storyblokEditable(Astro.props.story.content as SbBlokData)}
+>
   <img src={parseAsset(thumbnail, "src")} alt={parseAsset(thumbnail, "alt")} />
   <h2>{title}</h2>
   <p>{blurb}</p>
   <p>{watchTime}</p>
-</div>
+</a>

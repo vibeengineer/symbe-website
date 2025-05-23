@@ -1,9 +1,6 @@
 ---
 import { getLiveStory, useStoryblokApi } from "@storyblok/astro";
 import StoryblokComponent from "@storyblok/astro/StoryblokComponent.astro";
-const {
-  env: { CONTENT_VERSION },
-} = Astro.locals.runtime;
 
 // slug can be an array when using catch-all routes (e.g. [...slug])
 const { slug } = Astro.params;
@@ -20,7 +17,8 @@ if (liveStory) {
   const sbApi = useStoryblokApi();
   try {
     const { data } = await sbApi.get(`cdn/stories/${slugParam}`, {
-      version: CONTENT_VERSION as "draft" | "published",
+      version: import.meta.env.CONTENT_VERSION,
+      resolve_links: "url",
     });
     story = data?.story;
   } catch (error) {

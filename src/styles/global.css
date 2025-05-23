@@ -1,6 +1,89 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme inline {
+:root {
+}
+
+@theme {
+  --color-surface-white: rgb(255 255 255);
+  --color-surface-blue: rgb(244 249 253);
+  --color-surface-dark: rgb(35 53 101);
+  --color-surface-electric: rgb(0 175 245);
+  --color-surface-charcoal: rgb(4 8 21);
+  --color-surface-snow: rgb(245 245 245);
+  --color-surface-sky: rgb(245 248 255);
+  --color-surface-sky-dark: rgb(235 242 255);
+  --color-surface-sky-darker: rgb(210 218 255);
+  --color-surface-sky-darkest: rgb(195 206 255);
+  --color-surface-accent-electric: rgb(0 175 245);
+  --color-surface-accent-orange: rgb(254 92 46);
+  --color-surface-accent-yellow: rgb(249 196 102);
+  --color-accent-electric: rgb(0 175 245);
+  --color-accent-orange: rgb(254 92 46);
+  --color-accent-yellow: rgb(249 196 102);
+  --color-text-900: rgb(4 8 21);
+  --color-text-500: rgb(109 109 112);
+  --color-text-400: rgb(170 169 175);
+  --color-text-200: rgb(204 204 204);
+  --color-text-000: rgb(255 255 255);
+  --color-error-500: rgb(255 64 50);
+  --color-warning-500: rgb(252 189 17);
+  --color-success-500: rgb(19 180 94);
+  --background-image-dark-up: linear-gradient(
+    0deg,
+    #28496d 1.44%,
+    #153456 10.1%,
+    #0c2743 18.75%,
+    #0b1e36 52.4%,
+    #07182c 78.37%,
+    #071427 100%
+  );
+  --background-image-dark-left: linear-gradient(
+    44deg,
+    #28496d 3.53%,
+    #153456 12.83%,
+    #0c2743 31.88%,
+    #0b1e36 52.8%,
+    #07182c 77.9%,
+    #071427 98.82%
+  );
+  --background-image-dark-right: linear-gradient(
+    316deg,
+    #28496d 2.63%,
+    #153456 19.93%,
+    #0c2743 31.34%,
+    #0b1e36 52.53%,
+    #07182c 77.95%,
+    #071427 99.13%
+  );
+  --background-image-dark-down: linear-gradient(
+    181deg,
+    #28496d 2.58%,
+    #153456 14.89%,
+    #0c2743 27.2%,
+    #0b1e36 75.09%,
+    #07182c 112.03%,
+    #071427 142.81%
+  );
+  --background-image-electric:
+    radial-gradient(
+      163.62% 192.96% at -20.82% 146.68%,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(0, 15, 57, 0.05) 100%
+    ),
+    linear-gradient(237deg, #159de7 24.55%, #29aeef 38.06%, #56c1f3 60.72%);
+  --background-image-soft:
+    linear-gradient(77deg, #edf4fa 57.91%, #f6fbff 99.3%), #f0f9ff;
+  --background-image-purple: linear-gradient(77deg, rgba(243, 245, 255, 0.20) 57.91%, #D7E2FF 99.3%)
+  );
+  --background-image-rose: linear-gradient(
+    90deg,
+    #a44498 0%,
+    #ff9ff2 26.44%,
+    #eb90df 56.53%,
+    #ffb4f5 100%
+  );
+
   --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-bagos-condensed);
 }

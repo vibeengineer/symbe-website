@@ -1,0 +1,24 @@
+---
+import type { NavigationStoryblok, AssetStoryblok } from "@storyblok/types";
+import type { Prettify } from "@/types";
+import MobileToggle from "./mobile-toggle.astro";
+import MobileDrawer from "./mobile-drawer.astro";
+import Logo from "../desktop/logo.astro";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  blok: Prettify<NavigationStoryblok>;
+  className?: string;
+  theme?: "light" | "dark";
+}
+
+const { blok, className, theme = "light" } = Astro.props as Props;
+---
+
+<!-- Mobile Logo - Always visible -->
+<div class={cn("block lg:hidden fixed top-4 left-6 z-[102]")} data-mobile-logo>
+  <Logo logo={blok.logo} />
+</div>
+
+<MobileToggle theme={theme} />
+<MobileDrawer blok={blok} className={className} />

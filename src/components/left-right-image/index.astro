@@ -1,28 +1,84 @@
 ---
 import type { LeftRightImageStoryblok } from "@storyblok/types";
-import { parseAsset } from "@/services/storyblok/helpers";
 import type { Prettify } from "@/types";
 import LeftRightImageBenefit from "./benefit.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Media from "@/components/ui/media.astro";
 
 type Props = {
   blok: Prettify<LeftRightImageStoryblok>;
 };
 
 const {
-  blok: { title, description, benefits, media, reverse, style },
+  blok: {
+    title,
+    description,
+    benefits,
+    media,
+    reverse = false,
+    style = "dark",
+  },
+  blok,
 } = Astro.props;
+
+// Styling based on "style" prop
+const bgColors = {
+  dark: "bg-surface-charcoal",
+  light: "bg-surface-white",
+  blue: "bg-surface-blue",
+  electric: "bg-surface-electric",
+};
+
+const textColors = {
+  dark: "text-text-000",
+  light: "text-text-900",
+  blue: "text-text-900",
+  electric: "text-text-000",
+};
+
+const bgColor = bgColors[style] || bgColors.dark;
+const textColor = textColors[style] || textColors.dark;
+
+// Content order classes
+const contentOrder = reverse ? "order-1 lg:order-2" : "order-2 lg:order-1";
+const imageOrder = reverse ? "order-2 lg:order-1" : "order-1 lg:order-2";
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <div>
-    <img src={parseAsset(media, "src")} alt={parseAsset(media, "alt")} />
-  </div>
-  <div>
-    <h2>{title}</h2>
-    <p>{description}</p>
-    <div>
-      {benefits?.map((benefit) => <LeftRightImageBenefit blok={benefit} />)}
+<section
+  class={`py-24 md:py-32 ${bgColor}`}
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <div class="container mx-auto px-6 lg:px-8">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:gap-16 xl:gap-24">
+      <!-- Content Column -->
+      <div class={`${contentOrder} w-full lg:w-1/2 mb-12 lg:mb-0`}>
+        <Heading level="xl" class={`${textColor} mb-6`}>
+          {title}
+        </Heading>
+
+        <BodyText size="l" class={`${textColor} mb-12 max-w-xl opacity-90`}>
+          {description}
+        </BodyText>
+
+        {
+          benefits && benefits.length > 0 && (
+            <div class="mt-8">
+              {benefits.map((benefit) => (
+                <LeftRightImageBenefit blok={benefit} />
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <!-- Image Column -->
+      <div class={`${imageOrder} w-full lg:w-1/2 flex justify-center`}>
+        <div class="w-full max-w-lg overflow-hidden rounded-2xl">
+          <Media asset={media} width={600} height={600} class="h-auto w-full" />
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>

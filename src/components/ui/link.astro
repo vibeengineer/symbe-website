@@ -1,20 +1,60 @@
 ---
 import type { LinkStoryblok } from "@storyblok/types";
-import { parseLink } from "@/services/storyblok/helpers";
+import { parseLink } from "@/services/storyblok/utils/parse-link";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-type Props = {
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+import Label, { labelVariants } from "./label.astro";
+
+export const linkVariants = cva(
+  "font-sans font-medium rounded-full transition-colors duration-200 ease-in-out whitespace-nowrap",
+  {
+    variants: {
+      style: {
+        primary:
+          "bg-accent-electric/90 hover:bg-accent-electric text-text-000 px-4.5 py-2",
+        ghost: "hover:bg-gray-200/10 px-4 py-2",
+        default: "hover:underline",
+      },
+      size: {
+        sm: "text-xs md:text-sm",
+        md: "",
+        lg: "text-base md:text-lg",
+      },
+    },
+    defaultVariants: {
+      style: "default",
+    },
+  },
+);
+
+export type LinkVariants = VariantProps<typeof linkVariants>;
+
+export type Props = {
   blok: Prettify<LinkStoryblok>;
+  className?: string;
+  textClassName?: string;
+  size?: "sm" | "md" | "lg";
 };
 
 const {
-  blok: { link, linkText, linkStyle },
+  blok: { link, linkText, linkStyle = "default" },
+  className,
+  textClassName,
+  size = "md",
 } = Astro.props;
 ---
 
 <a
   href={parseLink(link, "href")}
   target={parseLink(link, "target")}
+  class={cn(
+    labelVariants({ size: "m" }),
+    linkVariants({ style: linkStyle, size }),
+    className,
+    textClassName,
+  )}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   {linkText}

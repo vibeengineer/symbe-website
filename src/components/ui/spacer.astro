@@ -1,0 +1,24 @@
+---
+// Spacer component for vertical spacing
+// Usage: <Spacer size="lg" />
+
+type Props = {
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+  className?: string;
+};
+
+const { size = "md", className = "" } = Astro.props;
+
+// Map size prop to larger Tailwind height classes
+const sizeClass =
+  {
+    xs: "h-4",
+    sm: "h-8",
+    md: "h-16",
+    lg: "h-24",
+    xl: "h-32",
+    "2xl": "h-48",
+  }[size] || "h-16";
+---
+
+<div class={`${sizeClass} w-full ${className}`.trim()} aria-hidden="true"></div>

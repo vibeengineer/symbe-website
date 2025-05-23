@@ -1,0 +1,59 @@
+---
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+
+export const labelVariants = cva("font-sans leading-[1.3] tracking-normal", {
+  variants: {
+    size: {
+      xl: "text-[18px] md:text-[22px]",
+      l: "text-[16px] md:text-[18px]",
+      m: "text-[14px] md:text-[16px]",
+      s: "text-[12px] md:text-[14px]",
+    },
+    weight: {
+      semibold: "font-semibold",
+      regular: "font-normal",
+      medium: "font-medium",
+      bold: "font-bold",
+    },
+  },
+  compoundVariants: [
+    {
+      size: "s",
+      weight: "semibold",
+      class: "uppercase tracking-[0.05em]",
+    },
+  ],
+  defaultVariants: {
+    size: "m",
+    weight: "regular",
+  },
+});
+
+export interface Props extends VariantProps<typeof labelVariants> {
+  as?: "p" | "span" | "label" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  size: NonNullable<VariantProps<typeof labelVariants>["size"]>;
+  weight: NonNullable<VariantProps<typeof labelVariants>["weight"]>;
+  class?: string;
+}
+
+const {
+  size: currentSize,
+  weight: currentWeight,
+  as: Tag,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const Element = Tag || "span";
+
+const variantClasses = labelVariants({
+  size: currentSize,
+  weight: currentWeight,
+});
+const finalClasses = cn(variantClasses, className);
+---
+
+<Element class={finalClasses} {...attrs}>
+  <slot />
+</Element>

@@ -3,18 +3,104 @@ import type { ScrollingFeaturesStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import ScrollingFeature from "./feature.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+
 type Props = {
   blok: Prettify<ScrollingFeaturesStoryblok>;
 };
 
 const {
   blok: { title, features },
+  blok,
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <h2>{title}</h2>
-  <div>
-    {features.map((feature) => <ScrollingFeature blok={feature} />)}
+<section
+  class="scrolling-features-container overflow-hidden py-16 md:py-24"
+  id="scrolling-features-section"
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <div class="container mx-auto px-6 md:px-8">
+    {
+      title && (
+        <div class="mb-16 text-center md:mb-24">
+          <Heading level="xl" class="mx-auto max-w-2xl text-pretty">
+            {title}
+          </Heading>
+        </div>
+      )
+    }
+
+    <div class="lg:grid lg:grid-cols-12 lg:gap-8 xl:gap-16">
+      <!-- Image container with sticky positioning -->
+      <div class="hidden lg:col-span-6 lg:block">
+        <div class="h-[calc(100vh-200px)]">
+          <!-- This creates space for the sticky element -->
+          <div
+            class="sticky top-[50vh] flex h-[500px] -translate-y-1/2 transform items-center justify-center"
+          >
+            {
+              features.map((feature, index) => (
+                <div
+                  class={`absolute inset-0 flex h-full w-full items-center justify-center transition-opacity duration-500 ${index === 0 ? "opacity-100" : "opacity-0"}`}
+                  data-attribute="scrolling-feature-image"
+                  data-feature-index={index}
+                >
+                  <img
+                    src={feature.media?.filename}
+                    alt={feature.title || "Feature image"}
+                    class="max-h-full max-w-full object-contain"
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrolling features content -->
+      <div class="lg:col-span-6 lg:col-start-7">
+        <div class="space-y-0">
+          {
+            features.map((feature, index) => (
+              <div
+                class="relative"
+                data-attribute="scrolling-feature-section"
+                data-feature-index={index}
+              >
+                {/* Only add divider if not first item */}
+                {index > 0 && (
+                  <div class="absolute top-0 right-0 left-0 h-px bg-gray-200" />
+                )}
+                <div class="flex min-h-[80vh] items-center py-16 md:py-24">
+                  <ScrollingFeature blok={feature} index={index} />
+                </div>
+                {/* Only add divider if not last item */}
+                {index < features.length - 1 && (
+                  <div class="absolute right-0 bottom-0 left-0 h-px bg-gray-200" />
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<script>
+  import { initScrollingFeatures } from "./animations";
+
+  // Initialize once the DOM is loaded
+  document.addEventListener("DOMContentLoaded", initScrollingFeatures);
+
+  // Re-initialize when page transitions happen (if using SPA)
+  document.addEventListener("astro:page-load", initScrollingFeatures);
+</script>
+
+<style>
+  /* Add any additional styles here if needed */
+  .scrolling-features-container {
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+  }
+</style>

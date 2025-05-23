@@ -1,0 +1,27 @@
+---
+import type { LinkStoryblok } from "@storyblok/types";
+import Link from "@/components/ui/link.astro";
+import { cn } from "@/utils/cn";
+
+interface Props {
+  blok: LinkStoryblok;
+}
+
+const { blok } = Astro.props as Props;
+---
+
+<div>
+  <Link
+    className={cn(
+      "block w-full",
+      blok.linkStyle === "primary" && "text-center",
+    )}
+    textClassName={blok.linkStyle !== "primary"
+      ? "font-display text-xl"
+      : "text-xl"}
+    blok={{
+      ...blok,
+      linkStyle: `${blok.linkStyle !== "primary" ? "default" : "primary"}`,
+    }}
+  />
+</div>

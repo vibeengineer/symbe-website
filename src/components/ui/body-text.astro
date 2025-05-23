@@ -1,0 +1,38 @@
+---
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+
+export const bodyTextVariants = cva(
+  "font-sans font-normal tracking-normal leading-[1.5]", // Base classes for all body text
+  {
+    variants: {
+      size: {
+        xl: "text-[20px] lg:text-[26px]",
+        l: "text-[22px]",
+        m: "text-[16px]",
+        s: "text-[14px]",
+      },
+    },
+    defaultVariants: {
+      size: "m",
+    },
+  },
+);
+
+export interface Props extends VariantProps<typeof bodyTextVariants> {
+  as?: "p" | "span" | "div" | "label"; // Added label for potential future use
+  size: NonNullable<VariantProps<typeof bodyTextVariants>["size"]>; // Make size required
+  class?: string; // For additional classes
+}
+
+const { size: currentSize, as: Tag, class: className, ...attrs } = Astro.props;
+
+const Element = Tag || "p";
+
+const variantClasses = bodyTextVariants({ size: currentSize });
+const finalClasses = cn(variantClasses, className);
+---
+
+<Element class={finalClasses} {...attrs}>
+  <slot />
+</Element>

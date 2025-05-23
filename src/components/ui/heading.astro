@@ -1,0 +1,59 @@
+---
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+
+export const headingVariants = cva(
+  "font-display tracking-normal leading-[1.2]!",
+  {
+    variants: {
+      level: {
+        xxxl: "text-[40px] font-semibold md:text-[94px]",
+        xxl: "text-[40px] font-medium md:text-[72px]",
+        xl: "text-[30px] font-medium md:text-[48px]",
+        l: "text-[28px] font-medium md:text-[32px]",
+        m: "text-[24px] font-medium md:text-[26px]",
+        s: "text-[20px] font-medium md:text-[22px]",
+        xs: "text-[16px] font-medium md:text-[18px]",
+        xxs: "text-[14px] font-medium md:text-[16px]",
+      },
+    },
+    defaultVariants: {
+      level: "xl",
+    },
+  },
+);
+
+export interface Props extends VariantProps<typeof headingVariants> {
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
+  level: NonNullable<VariantProps<typeof headingVariants>["level"]>; // Make level required
+  class?: string; // For additional classes
+}
+
+const {
+  level: currentLevel,
+  as: Tag,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const Element =
+  Tag ||
+  (currentLevel === "xxxl"
+    ? "h1"
+    : currentLevel === "xxl"
+      ? "h1"
+      : currentLevel === "xl"
+        ? "h2"
+        : currentLevel === "l"
+          ? "h3"
+          : currentLevel === "m"
+            ? "h4"
+            : "h2");
+
+const variantClasses = headingVariants({ level: currentLevel });
+const finalClasses = cn(variantClasses, className);
+---
+
+<Element class={finalClasses} {...attrs}>
+  <slot />
+</Element>

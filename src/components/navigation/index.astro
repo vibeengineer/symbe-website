@@ -1,0 +1,26 @@
+---
+import type { NavigationStoryblok } from "@storyblok/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { Prettify } from "@/types";
+import DesktopNav from "./desktop/index.astro";
+import MobileNav from "./mobile/index.astro";
+
+interface Props {
+  className?: string;
+  blok: Prettify<NavigationStoryblok>;
+  theme?: "light" | "dark";
+  initialTransparent?: boolean;
+}
+
+const { blok, className, theme = "light" } = Astro.props as Props;
+---
+
+<header
+  class="absolute top-0 left-0 z-50 w-full opacity-0"
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <DesktopNav blok={blok} className={className} theme={theme} />
+  <MobileNav blok={blok} className={className} theme={theme} />
+</header>
+
+<script src="./animations.ts"></script>

@@ -1,0 +1,33 @@
+---
+import type { NavigationStoryblok } from "@storyblok/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import type { Prettify } from "@/types";
+import { cn } from "@/utils/cn";
+import Logo from "./logo.astro";
+import NavLinks from "./nav-links.astro";
+import RightLinks from "./right-links.astro";
+
+interface Props {
+  className?: string;
+  blok: Prettify<NavigationStoryblok>;
+  theme?: "light" | "dark";
+}
+
+const { blok, className, theme = "transparent" } = Astro.props as Props;
+const { logo, centreLinks, rightLinks } = blok;
+---
+
+<nav
+  data-nav="desktop"
+  data-theme={theme}
+  class={cn(
+    "hidden lg:flex relative items-center justify-between p-2 lg:p-4 bg-transparent",
+    theme === "light" ? "text-text-000" : "text-text-900",
+    className,
+  )}
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <Logo logo={logo} />
+  {centreLinks && <NavLinks links={centreLinks} />}
+  {rightLinks && <RightLinks links={rightLinks} />}
+</nav>

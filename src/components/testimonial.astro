@@ -2,7 +2,10 @@
 import type { TestimonialStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
-import { parseAsset } from "@/services/storyblok/helpers";
+import Heading from "@/components/ui/heading.astro";
+import Label from "@/components/ui/label.astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Media from "@/components/ui/media.astro";
 
 type Props = {
   blok: Prettify<TestimonialStoryblok>;
@@ -10,19 +13,47 @@ type Props = {
 
 const {
   blok: { quote, author, authorRoleCompany, authorHeadshot },
+  blok,
 } = Astro.props;
 ---
 
-<div {...storyblokEditable(Astro.props.blok as SbBlokData)}>
-  <p>{quote}</p>
-  <p>{author}</p>
-  <p>{authorRoleCompany}</p>
-  {
-    authorHeadshot && (
-      <img
-        src={parseAsset(authorHeadshot, "src")}
-        alt={parseAsset(authorHeadshot, "alt")}
-      />
-    )
-  }
-</div>
+<section
+  class="bg-surface-sky py-24 md:py-32"
+  {...storyblokEditable(blok as SbBlokData)}
+>
+  <div class="container mx-auto max-w-5xl px-6 md:px-8">
+    <div class="flex flex-col items-center text-center">
+      <!-- Quote -->
+      <Heading level="xl" class="mx-auto mb-16 max-w-4xl">
+        "{quote}"
+      </Heading>
+
+      <!-- Author Information -->
+      <div class="flex flex-col items-center">
+        <!-- Author Headshot -->
+        {
+          authorHeadshot && (
+            <div class="mb-6 h-20 w-20 overflow-hidden rounded-full md:h-24 md:w-24">
+              <Media
+                asset={authorHeadshot}
+                width={96}
+                height={96}
+                class="h-full w-full object-cover"
+              />
+            </div>
+          )
+        }
+
+        <!-- Author Name -->
+        <Label size="l" weight="semibold" class="mb-1">
+          {author}
+        </Label>
+
+        <!-- Author Role & Company -->
+        <BodyText size="m" class="text-text-500">
+          {authorRoleCompany}
+        </BodyText>
+      </div>
+    </div>
+  </div>
+</section>

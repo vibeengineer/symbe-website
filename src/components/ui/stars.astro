@@ -1,0 +1,49 @@
+---
+import { Star, StarHalf } from "@lucide/astro";
+
+type NumberOfStars = 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
+
+type Props = {
+  numberOfStars: NumberOfStars;
+  starClassName?: string;
+  size?: number;
+};
+
+const {
+  numberOfStars,
+  starClassName = "text-accent-orange",
+  size = 16,
+} = Astro.props;
+
+const fullStars = Math.floor(numberOfStars);
+const hasHalfStar = numberOfStars % 1 !== 0;
+
+const starsArray = Array(5).fill(null); // Max 5 stars
+---
+
+<div class="hidden items-center md:flex">
+  {
+    starsArray.map((_, index) => {
+      if (index < fullStars) {
+        return (
+          <Star
+            class={`${starClassName} mr-1`}
+            fill="currentColor"
+            size={size}
+          />
+        );
+      } else if (index === fullStars && hasHalfStar) {
+        return (
+          <StarHalf
+            class={`${starClassName} mr-1`}
+            fill="currentColor"
+            size={size}
+          />
+        );
+      } else {
+        // Render an empty star outline for the remaining stars up to 5
+        return <Star class="mr-1 text-gray-300" size={size} />;
+      }
+    })
+  }
+</div>

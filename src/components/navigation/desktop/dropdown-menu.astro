@@ -1,0 +1,53 @@
+---
+import type { DropdownLinkStoryblok, LinkStoryblok } from "@storyblok/types";
+import { cn } from "@/utils/cn";
+import DropdownItem from "./dropdown-item.astro";
+
+interface Props {
+  links?: DropdownLinkStoryblok[];
+  theme?: "transparent" | "white";
+}
+
+const { links, theme = "transparent" }: Props = Astro.props;
+---
+
+<div
+  data-panel
+  class={cn(
+    "absolute top-full left-1/2 mt-3 -translate-x-1/2",
+    "min-w-[220px] p-3",
+    "rounded-lg border",
+    "border-gray-200 bg-white shadow-2xl shadow-accent-electric/50",
+    "invisible opacity-0",
+    "origin-top",
+    "z-10",
+  )}
+  role="menu"
+>
+  <div
+    class={cn(
+      "absolute top-[-7px] left-1/2 -translate-x-1/2",
+      "h-0 w-0",
+      "border-x-[7px] border-x-transparent",
+      "border-b-[7px]",
+      "border-b-gray-200",
+    )}
+  >
+  </div>
+  <div
+    class={cn(
+      "absolute top-[-6px] left-1/2 -translate-x-1/2",
+      "h-0 w-0",
+      "border-x-[6px] border-x-transparent",
+      "border-b-[6px]",
+    )}
+  >
+  </div>
+  <div class="flex flex-col gap-y-1.5">
+    {
+      links?.map((dropdownLink: DropdownLinkStoryblok) => (
+        <DropdownItem blok={dropdownLink} theme={theme} />
+      ))
+    }
+  </div>
+</div>

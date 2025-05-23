@@ -1,0 +1,61 @@
+---
+import type { DropdownLinkStoryblok } from "@storyblok/types";
+import { parseLink } from "@/services/storyblok/utils/parse-link";
+import type { Prettify } from "@/types";
+import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Label from "@/components/ui/label.astro";
+import { linkVariants, type LinkVariants } from "@/components/ui/link.astro";
+import { cn } from "@/utils/cn";
+import LucideIcon from "@/components/ui/lucide-icon.astro";
+import Heading from "@/components/ui/heading.astro";
+
+export type Props = LinkVariants & {
+  blok: Prettify<DropdownLinkStoryblok>;
+};
+
+const {
+  blok: { link, linkText, linkDescription, icon },
+  style: variantStyleProp,
+} = Astro.props;
+
+console.log(Astro.props);
+---
+
+<a
+  href={parseLink(link, "href")}
+  target={parseLink(link, "target")}
+  class={cn(
+    linkVariants({ style: variantStyleProp }),
+    "hover:no-underline",
+    "whitespace-nowrap",
+    "flex items-center gap-2.5",
+    "group",
+  )}
+  {...storyblokEditable(Astro.props.blok as SbBlokData)}
+>
+  {
+    icon && typeof icon === "string" ? (
+      <div class="group-hover:bg-surface-charcoal group-hover:border-surface-charcoal border-surface-sky-darker bg-surface-sky-dark flex h-10.5 w-10.5 items-center justify-center rounded-lg border transition-colors duration-300 ease-in-out">
+        <LucideIcon
+          icon={icon}
+          class="text-text-900 group-hover:text-text-000 transition-colors duration-150"
+          size={21}
+        />
+      </div>
+    ) : null
+  }
+  <div>
+    <Heading
+      as="span"
+      level="xxs"
+      class="text-text-900 group-hover:text-text-900 block">{linkText}</Heading
+    >
+    <BodyText
+      size="s"
+      as="span"
+      class="text-text-500 group-hover:text-text-900 block transition-colors duration-150"
+      >{linkDescription}</BodyText
+    >
+  </div>
+</a>

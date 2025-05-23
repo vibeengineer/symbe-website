@@ -1,0 +1,48 @@
+---
+import { cn } from "@/utils/cn";
+
+interface Props {
+  theme?: "light" | "dark";
+}
+
+const { theme = "light" } = Astro.props as Props;
+---
+
+<button
+  data-mobile-toggle
+  class={cn(
+    "block lg:hidden fixed top-4.5 right-4 z-[101] p-3 cursor-pointer bg-transparent border-none",
+  )}
+  aria-label="Toggle navigation"
+  aria-expanded="false"
+  data-theme={theme}
+>
+  <div
+    class="relative flex h-4 w-6 flex-col justify-between"
+    data-mobile-toggle-span
+  >
+    <!-- Top line -->
+    <span
+      class={cn(
+        "block w-6 h-0.5 transition-all duration-300 origin-center",
+        theme === "light" ? "bg-white" : "bg-gray-800",
+      )}
+      data-hamburger-line="top"></span>
+
+    <!-- Middle line -->
+    <span
+      class={cn(
+        "block w-6 h-0.5 transition-all duration-300 origin-center",
+        theme === "light" ? "bg-white" : "bg-gray-800",
+      )}
+      data-hamburger-line="middle"></span>
+
+    <!-- Bottom line -->
+    <span
+      class={cn(
+        "block w-6 h-0.5 transition-all duration-300 origin-center",
+        theme === "light" ? "bg-white" : "bg-gray-800",
+      )}
+      data-hamburger-line="bottom"></span>
+  </div>
+</button>

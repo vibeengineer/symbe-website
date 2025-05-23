@@ -1,14 +1,15 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
-import cloudflare from "@astrojs/cloudflare";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import { storyblok } from "@storyblok/astro";
-import { getRedirects } from "./src/services/storyblok/redirects";
+import { getRedirects } from "./src/services/storyblok/get-redirects";
 
 // Fetch redirects
 import { loadEnv } from "vite";
+
+import node from "@astrojs/node";
 
 const { STORYBLOK_TOKEN, SITE_URL, CONTENT_VERSION } = loadEnv(
   //@ts-ignore
@@ -22,12 +23,19 @@ const redirects = await getRedirects(STORYBLOK_TOKEN, CONTENT_VERSION);
 // https://astro.build/config
 export default defineConfig({
   redirects: redirects,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
   integrations: [
     react(),
     sitemap(),
     storyblok({
       accessToken: STORYBLOK_TOKEN,
       livePreview: true,
+      bridge: {
+        resolveLinks: "url",
+      },
       components: {
         // Content type blocks
         page: "layouts/page",
@@ -63,17 +71,15 @@ export default defineConfig({
     }),
   ],
   site: SITE_URL,
-  adapter: cloudflare({
-    imageService: "cloudflare",
-    platformProxy: {
-      enabled: true,
-      configPath: "wrangler.jsonc",
-    },
+  adapter: node({
+    mode: "standalone",
   }),
   output: "server",
   experimental: {
     fonts: [
       {
+        name: "DM Sans",
+        cssVariable: "--font-dm-sans",
         provider: "local",
         variants: [
           {
@@ -82,22 +88,32 @@ export default defineConfig({
             style: "normal",
           },
         ],
-        name: "DM Sans",
-        cssVariable: "--font-dm-sans",
+      },
+      {
+        name: "Bagos Condensed",
+        cssVariable: "--font-bagos-condensed",
+        provider: "local",
+        variants: [
+          {
+            src: ["./src/assets/fonts/bagos-condensed-medium.woff2"],
+            weight: "500",
+            style: "normal",
+          },
+          {
+            src: ["./src/assets/fonts/bagos-condensed-semibold.woff2"],
+            weight: "600",
+            style: "normal",
+          },
+        ],
       },
     ],
+  },
+  server: {
+    // to allow node to accept traffic, if not configured a 502 error is returned
+    host: "0.0.0.0",
   },
   vite: {
     //@ts-ignore
     plugins: [tailwindcss()],
-    resolve: {
-      // Use react-dom/server.edge instead of react-dom/server.browser for React 19.
-      // Without this, MessageChannel from node:worker_threads needs to be polyfilled.
-      alias: import.meta.env.PROD
-        ? {
-            "react-dom/server": "react-dom/server.edge",
-          }
-        : {},
-    },
   },
 });
