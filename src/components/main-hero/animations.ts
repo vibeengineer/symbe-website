@@ -19,8 +19,18 @@ export function initMainHeroAnimations() {
   const banner = document.querySelector("[data-hero-banner]");
   if (banner) {
     gsap.set(banner, { autoAlpha: 0, y: -10 });
-    // Set initial scale of stars to 0
-    gsap.set(banner.querySelectorAll("svg"), { scale: 0 });
+    // Set initial states for banner elements
+    gsap.set(banner.querySelector("svg[data-lucide='g2-logo']"), {
+      autoAlpha: 0,
+      scale: 0.8,
+    });
+    gsap.set(banner.querySelector("[data-banner-text]"), {
+      autoAlpha: 0,
+      y: 5,
+    });
+    gsap.set(banner.querySelectorAll("svg:not([data-lucide='g2-logo'])"), {
+      scale: 0,
+    });
   }
 
   // Listen for UnicornStudio initialization
@@ -75,7 +85,7 @@ export function initMainHeroAnimations() {
         "-=0.6",
       );
 
-      // Banner comes in last (only if it exists)
+      // Banner comes in (only if it exists)
       if (banner) {
         timeline.to(
           banner,
@@ -87,8 +97,40 @@ export function initMainHeroAnimations() {
           "-=0.5",
         );
 
-        // After banner is in, animate stars one by one
-        const stars = banner.querySelectorAll("svg");
+        // Animate banner text first
+        const bannerText = banner.querySelector("[data-banner-text]");
+        if (bannerText) {
+          timeline.to(
+            bannerText,
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.4,
+              ease: "power2.out",
+            },
+            "-=0.4",
+          );
+        }
+
+        // Then animate G2 logo (slight delay after text starts)
+        const g2Logo = banner.querySelector("svg[data-lucide='g2-logo']");
+        if (g2Logo) {
+          timeline.to(
+            g2Logo,
+            {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 0.4,
+              ease: "back.out(1.7)",
+            },
+            "-=0.3",
+          );
+        }
+
+        // Finally animate stars (slight delay after G2 logo starts)
+        const stars = banner.querySelectorAll(
+          "svg:not([data-lucide='g2-logo'])",
+        );
         if (stars.length > 0) {
           timeline.to(
             stars,
@@ -98,7 +140,7 @@ export function initMainHeroAnimations() {
               ease: "back.out(1.7)",
               stagger: 0.1,
             },
-            "-=0.2", // Start slightly before banner animation finishes
+            "-=0.2",
           );
         }
       }

@@ -85,7 +85,7 @@ if (showBanner && bannerText && bannerStars) {
                 class="flex items-center gap-x-3 no-underline"
               >
                 <G2Logo />
-                <Label size="m" weight="regular">
+                <Label size="m" weight="regular" data-banner-text>
                   {bannerText}
                 </Label>
                 <Stars numberOfStars={starsToDisplay} />
@@ -94,7 +94,7 @@ if (showBanner && bannerText && bannerStars) {
             {!bannerLink && (
               <div>
                 <G2Logo />
-                <Label size="m" weight="regular">
+                <Label size="m" weight="regular" data-banner-text>
                   {bannerText}
                 </Label>
                 <Stars numberOfStars={starsToDisplay} />
