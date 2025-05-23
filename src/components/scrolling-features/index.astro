@@ -42,8 +42,12 @@ const {
   <div
     class="bg-surface-sky sticky top-12 hidden h-[90dvh] w-1/2 items-center justify-center rounded-2xl md:flex"
   >
-    <div class="h-fit max-w-lg px-6 lg:px-10">
+    <div class="h-fit max-w-lg px-6 lg:px-10" data-sticky-media-container>
       <Media asset={features[0].media} />
     </div>
   </div>
 </section>
+
+<script>
+  import "./animations.ts";
+</script>
