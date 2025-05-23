@@ -43,7 +43,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
                       <a
                         href={parseLink(linkItem.link, "href")}
                         target={parseLink(linkItem.link, "target")}
-                        class="text-text-500 hover:text-primary"
+                        class="text-text-500 hover:text-primary hover:underline"
                       >
                         {linkItem.linkText}
                       </a>
@@ -105,7 +105,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
               <p>
                 <a
                   href={`mailto:${blok.email}`}
-                  class="text-text-500 hover:text-primary"
+                  class="text-text-500 hover:text-primary hover:underline"
                 >
                   {blok.email}
                 </a>
@@ -117,7 +117,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
               <p>
                 <a
                   href={`tel:${blok.phoneNumber.replace(/\s/g, "")}`}
-                  class="text-text-500 hover:text-primary"
+                  class="text-text-500 hover:text-primary hover:underline"
                 >
                   {blok.phoneNumber}
                 </a>
