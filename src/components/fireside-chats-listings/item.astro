@@ -4,6 +4,9 @@ import type { StoryblokStory } from "@/services/storyblok/schemas";
 import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
+import Heading from "@/components/ui/heading.astro";
+import BodyText from "@/components/ui/body-text.astro";
+import Label from "@/components/ui/label.astro";
 
 type Props = {
   story: Prettify<StoryblokStory<FiresideChatStoryblok>>;
@@ -11,26 +14,88 @@ type Props = {
 
 const {
   story: {
+    name,
     full_slug,
-    content: {
-      blurb,
-      dateLastModified,
-      datePublished,
-      embed,
-      thumbnail,
-      title,
-      watchTime,
-    },
+    content: { blurb, thumbnail, title, watchTime },
   },
 } = Astro.props;
+
+// Assuming watchTime is a string like "17" representing minutes
+const formattedWatchTime = watchTime ? `${watchTime} minutes` : "";
+const category = name.replace(/-/g, " ").toUpperCase();
+
+// Basic blurb text extraction (can be improved based on actual Richtext structure)
+let blurbText = "";
+if (
+  blurb &&
+  typeof blurb === "object" &&
+  blurb.content &&
+  Array.isArray(blurb.content)
+) {
+  try {
+    // @ts-ignore
+    blurbText = blurb.content[0]?.content[0]?.text || "";
+  } catch (e) {
+    console.error("Error parsing blurb:", e);
+  }
+} else if (typeof blurb === "string") {
+  // @ts-ignore
+  blurbText = blurb;
+}
 ---
 
 <a
   href={`/${full_slug}`}
+  class="group bg-dark-mid text-text-000 hover:bg-dark-high block rounded-lg p-6 no-underline transition-all"
   {...storyblokEditable(Astro.props.story.content as SbBlokData)}
 >
-  <img src={parseAsset(thumbnail, "src")} alt={parseAsset(thumbnail, "alt")} />
-  <h2>{title}</h2>
-  <p>{blurb}</p>
-  <p>{watchTime}</p>
+  <div class="bg-dark-low mb-4 aspect-video overflow-hidden rounded-md">
+    {
+      thumbnail && parseAsset(thumbnail, "src") ? (
+        <img
+          src={parseAsset(thumbnail, "src")}
+          alt={parseAsset(thumbnail, "alt") || title}
+          class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          width="400"
+          height="225"
+          loading="lazy"
+        />
+      ) : (
+        <div class="bg-primary-700 flex h-full w-full items-center justify-center">
+          <Label size="xl" weight="semibold" class="text-primary-200">
+            Symbe
+          </Label>
+        </div>
+      )
+    }
+  </div>
+  <Label size="s" weight="semibold" class="text-primary-400 mb-1 uppercase">
+    {category}
+  </Label>
+  <Heading
+    level="m"
+    as="h3"
+    class="text-text-000 group-hover:text-primary-300 mb-2"
+  >
+    {title}
+  </Heading>
+  <BodyText size="s" class="text-text-200 mb-3 line-clamp-3">
+    {blurbText}
+  </BodyText>
+  {
+    formattedWatchTime && (
+      <div class="text-text-300 flex items-center text-xs">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          class="mr-1.5 h-4 w-4 fill-current"
+        >
+          <path d="M12 3a9 9 0 00-9 9v6c0 1.1.9 2 2 2h2v-4h2v4h4v-4h2v4h2c1.1 0 2-.9 2-2v-6a9 9 0 00-9-9zm0 16c-1.66 0-3-1.34-3-3h6c0 1.66-1.34 3-3 3z" />
+        </svg>
+        <Label size="s" weight="regular">
+          {formattedWatchTime}
+        </Label>
+      </div>
+    )
+  }
 </a>

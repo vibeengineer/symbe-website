@@ -135,6 +135,13 @@
   function initLogoAnimation() {
     // Only run animation on the homepage
     if (window.location.pathname !== "/") {
+      // On non-homepage pages, show the filled logo immediately
+      gsap.set("#paintRect", {
+        width: 132, // Full width to show the entire filled logo
+      });
+      gsap.set("#symbe-logo path:not([id*='fill'])", {
+        opacity: 0, // Keep stroke paths hidden
+      });
       return;
     }
 
