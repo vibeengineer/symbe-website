@@ -6,7 +6,7 @@ type Props = {
   class?: string;
 };
 
-const { showCloseButton = false, class: className } = Astro.props;
+const { showCloseButton = false, class: className, ...rest } = Astro.props;
 ---
 
 <div
@@ -15,6 +15,7 @@ const { showCloseButton = false, class: className } = Astro.props;
     "bg-surface-blue",
     className,
   )}
+  {...rest}
 >
   <div class="flex items-center text-sm/6">
     <slot />

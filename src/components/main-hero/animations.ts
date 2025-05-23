@@ -9,26 +9,27 @@ declare global {
 import { gsap } from "@/components/navigation/shared/animations";
 
 export function initMainHeroAnimations() {
-  // Banner is NOT set by GSAP initially, CSS handles it via opacity-0
+  // Set initial states for all elements
   gsap.set("[data-hero-title]", { autoAlpha: 0, y: 20 });
   gsap.set("[data-hero-subtitle]", { autoAlpha: 0, y: 20 });
   gsap.set("[data-hero-ctas]", { autoAlpha: 0, y: 20 });
   gsap.set("[data-hero-media]", { autoAlpha: 0, y: 40 });
 
+  // Check if banner exists and set its initial state
+  const banner = document.querySelector("[data-hero-banner]");
+  if (banner) {
+    gsap.set(banner, { autoAlpha: 0, y: -10 });
+  }
+
   // Listen for UnicornStudio initialization
   const checkUnicornStudio = () => {
     if (window.UnicornStudio?.isInitialized) {
+      // Re-check if banner exists when animation starts
+      const banner = document.querySelector("[data-hero-banner]");
+
       // Staggered animation sequence
       const timeline = gsap.timeline({
         defaults: { ease: "power2.out" },
-        onComplete: () => {
-          // When all GSAP animations are done, trigger Tailwind transition for banner
-          const banner = document.querySelector("[data-hero-banner]");
-          if (banner) {
-            banner.classList.remove("opacity-0");
-            banner.classList.add("opacity-100");
-          }
-        },
       });
 
       // Title appears first
@@ -72,7 +73,18 @@ export function initMainHeroAnimations() {
         "-=0.6",
       );
 
-      // Banner animation is now handled by Tailwind and triggered by onComplete
+      // Banner comes in last (only if it exists)
+      if (banner) {
+        timeline.to(
+          banner,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.8,
+          },
+          "-=0.5",
+        );
+      }
     } else {
       // Check again in a short interval
       setTimeout(checkUnicornStudio, 100);
