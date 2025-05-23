@@ -7,25 +7,15 @@ import BodyText from "@/components/ui/body-text.astro";
 
 type Props = {
   blok: Prettify<StatStoryblok>;
-  isFirst?: boolean;
-  isLast?: boolean;
 };
 
 const {
   blok: { text, caption },
-  isFirst = false,
-  isLast = false,
 } = Astro.props;
-
-const paddingClasses = isFirst
-  ? "md:pl-0 md:pr-16"
-  : isLast
-    ? "md:pr-0 md:pl-16"
-    : "md:px-16";
 ---
 
 <div
-  class={`flex flex-col items-center text-center flex-1 py-10 ${paddingClasses}`}
+  class="flex flex-1 flex-col items-center py-10 text-center"
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   <Heading level="xxxl" class="text-text-000 font-bold tracking-tight">

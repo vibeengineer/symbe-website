@@ -4,6 +4,7 @@ import type { Prettify } from "@/types";
 import BentoGridItem from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import Label from "@/components/ui/label.astro";
+import Heading from "../ui/heading.astro";
 
 type Props = {
   blok: Prettify<BentoGridStoryblok>;
@@ -20,19 +21,14 @@ const {
     {
       title && (
         <div class="mb-12 text-center md:mb-16">
-          <Label
-            size="xl"
-            weight="semibold"
-            as="h2"
-            class="text-text-900 text-4xl !leading-snug font-semibold tracking-tight text-balance sm:text-5xl md:!leading-snug"
-          >
+          <Heading level="l" as="h2">
             {title}
-          </Label>
+          </Heading>
         </div>
       )
     }
     <div
-      class="mt-10 grid auto-rows-fr gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2"
+      class="mt-10 flex auto-rows-fr flex-col gap-4 sm:mt-16 lg:grid lg:grid-cols-3 lg:grid-rows-2"
     >
       {
         items.map((item, index) => (
