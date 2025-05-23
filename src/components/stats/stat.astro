@@ -12,22 +12,14 @@ type Props = {
 const {
   blok: { text, caption },
 } = Astro.props;
-
-// Generate unique ID for this stat element
-const statId = `stat-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div
   class="flex flex-1 flex-col items-center py-10 text-center"
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
-  id={statId}
-  data-stat-text={text}
 >
-  <Heading
-    level="xxxl"
-    class="text-text-000 stat-number font-bold tracking-tight"
-  >
-    0
+  <Heading level="xxxl" class="text-text-000 font-bold tracking-tight">
+    {text}
   </Heading>
   <BodyText
     size="s"
