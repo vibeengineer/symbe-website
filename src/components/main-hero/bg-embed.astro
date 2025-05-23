@@ -26,5 +26,12 @@
 
 <script>
   import { initUnicornStudio } from "./unicorn-studio.ts";
+
+  // Initialize on first load
   initUnicornStudio();
+
+  // Re-initialize on view transitions
+  document.addEventListener("astro:page-load", () => {
+    initUnicornStudio();
+  });
 </script>

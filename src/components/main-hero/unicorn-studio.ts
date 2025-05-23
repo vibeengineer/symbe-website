@@ -11,5 +11,9 @@ export function initUnicornStudio() {
       }
     };
     (document.head || document.body).appendChild(script);
+  } else if (typeof UnicornStudio !== "undefined") {
+    // Script is already loaded, just re-initialize
+    UnicornStudio.init();
+    window.UnicornStudio.isInitialized = true;
   }
 }
