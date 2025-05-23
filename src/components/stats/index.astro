@@ -13,12 +13,17 @@ type Props = {
 const {
   blok: { title, subtitle, stats },
 } = Astro.props;
+
+// Generate unique ID for this stats section
+const statsId = `stats-${Math.random().toString(36).substr(2, 9)}`;
 ---
 
 <div class="p-4 md:p-6">
   <section
     class="bg-dark-right py-16 xl:py-32"
     {...storyblokEditable(Astro.props.blok as SbBlokData)}
+    id={statsId}
+    data-stats-container
   >
     <div class="mx-auto flex max-w-7xl flex-col gap-5 px-10 lg:px-16 xl:gap-20">
       <div class="flex flex-col gap-4 md:gap-8 lg:flex-row">
@@ -36,9 +41,71 @@ const {
 
       <div
         class="flex flex-col justify-center divide-y divide-white/20 xl:flex-row xl:divide-x xl:divide-y-0"
+        data-stats-grid
       >
         {stats.map((stat, index) => <Stat blok={stat} />)}
       </div>
     </div>
   </section>
 </div>
+
+<script>
+  import { animateStatsStaggered } from "./animations.ts";
+
+  // Initialize staggered animations for all stats in a container
+  function initStatsAnimation() {
+    const statsContainers = document.querySelectorAll("[data-stats-container]");
+
+    for (const container of statsContainers) {
+      const statElements = container.querySelectorAll(".stat-number");
+      const statTexts: string[] = [];
+
+      // Collect target texts from data attributes
+      for (const element of statElements) {
+        const parentStat = element.closest("[data-stat-text]");
+        const targetText = parentStat?.getAttribute("data-stat-text");
+        if (targetText) {
+          statTexts.push(targetText);
+        }
+      }
+
+      // Set up intersection observer for this stats container
+      let hasAnimated = false;
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting && !hasAnimated) {
+              hasAnimated = true;
+
+              // Convert NodeList to Array for the animation function
+              const elementsArray = Array.from(statElements) as HTMLElement[];
+
+              animateStatsStaggered(elementsArray, statTexts, {
+                duration: 2.5,
+                ease: "power3.out",
+              });
+
+              observer.unobserve(container);
+            }
+          }
+        },
+        {
+          threshold: 0.1,
+          rootMargin: "-10% 0px",
+        },
+      );
+
+      observer.observe(container);
+    }
+  }
+
+  // Run on initial load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initStatsAnimation);
+  } else {
+    initStatsAnimation();
+  }
+
+  // Re-run when navigating in SPA mode (if applicable)
+  document.addEventListener("astro:page-load", initStatsAnimation);
+</script>
