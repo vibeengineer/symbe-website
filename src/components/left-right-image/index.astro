@@ -25,7 +25,7 @@ const {
 
 // Styling based on "style" prop
 const bgColors = {
-  dark: "bg-surface-charcoal",
+  dark: "bg-dark-right",
   light: "bg-surface-white",
   blue: "bg-surface-blue",
   electric: "bg-surface-electric",
@@ -46,39 +46,48 @@ const contentOrder = reverse ? "order-1 lg:order-2" : "order-2 lg:order-1";
 const imageOrder = reverse ? "order-2 lg:order-1" : "order-1 lg:order-2";
 ---
 
-<section
-  class={`py-24 md:py-32 ${bgColor}`}
-  {...storyblokEditable(blok as SbBlokData)}
->
-  <div class="container mx-auto px-6 lg:px-8">
-    <div class="flex flex-col lg:flex-row lg:items-center lg:gap-16 xl:gap-24">
-      <!-- Content Column -->
-      <div class={`${contentOrder} w-full lg:w-1/2 mb-12 lg:mb-0`}>
-        <Heading level="xl" class={`${textColor} mb-6`}>
-          {title}
-        </Heading>
+<div class="px-6 pb-6 md:px-8 lg:pb-12">
+  <section
+    class={`py-24 md:py-32 ${bgColor}`}
+    {...storyblokEditable(blok as SbBlokData)}
+  >
+    <div class="container mx-auto px-6 lg:px-8">
+      <div
+        class="flex flex-col lg:flex-row lg:items-center lg:gap-16 xl:gap-24"
+      >
+        <!-- Content Column -->
+        <div class={`${contentOrder} w-full lg:w-1/2 mb-12 lg:mb-0`}>
+          <Heading level="xl" class={`${textColor} mb-6`}>
+            {title}
+          </Heading>
 
-        <BodyText size="l" class={`${textColor} mb-12 max-w-xl opacity-90`}>
-          {description}
-        </BodyText>
+          <BodyText size="l" class={`${textColor} mb-12 max-w-xl opacity-90`}>
+            {description}
+          </BodyText>
 
-        {
-          benefits && benefits.length > 0 && (
-            <div class="mt-8">
-              {benefits.map((benefit) => (
-                <LeftRightImageBenefit blok={benefit} />
-              ))}
-            </div>
-          )
-        }
-      </div>
+          {
+            benefits && benefits.length > 0 && (
+              <div class="mt-8">
+                {benefits.map((benefit) => (
+                  <LeftRightImageBenefit blok={benefit} />
+                ))}
+              </div>
+            )
+          }
+        </div>
 
-      <!-- Image Column -->
-      <div class={`${imageOrder} w-full lg:w-1/2 flex justify-center`}>
-        <div class="w-full max-w-lg overflow-hidden rounded-2xl">
-          <Media asset={media} width={600} height={600} class="h-auto w-full" />
+        <!-- Image Column -->
+        <div class={`${imageOrder} w-full lg:w-1/2 flex justify-center`}>
+          <div class="w-full max-w-lg overflow-hidden rounded-2xl">
+            <Media
+              asset={media}
+              width={600}
+              height={600}
+              class="h-auto w-full"
+            />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

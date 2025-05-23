@@ -4,6 +4,7 @@ import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import BodyText from "@/components/ui/body-text.astro";
 import Media from "@/components/ui/media.astro";
+import LucideIcon from "../ui/lucide-icon.astro";
 
 type Props = {
   blok: Prettify<LeftRightImageBenefitStoryblok>;
@@ -16,21 +17,16 @@ const {
 ---
 
 <div
-  class="mb-6 flex items-start last:mb-0"
+  class="ju mb-6 flex items-center last:mb-0"
   {...storyblokEditable(blok as SbBlokData)}
 >
   <!-- Icon -->
-  <div class="mr-4 h-8 w-8 flex-shrink-0">
-    <Media
-      asset={icon}
-      width={32}
-      height={32}
-      class="h-full w-full object-contain"
-    />
+  <div class="mt-1.5 mr-4 h-8 w-8 flex-shrink-0 text-white">
+    <LucideIcon icon={icon} />
   </div>
 
   <!-- Text -->
-  <BodyText size="l" class="text-text-000 pt-0.5 font-semibold">
+  <BodyText size="l" class="text-text-000 font-semibold">
     {text}
   </BodyText>
 </div>

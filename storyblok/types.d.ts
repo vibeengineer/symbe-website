@@ -114,7 +114,6 @@ export interface ContactUsStoryblok {
 }
 
 export interface CtaSectionStoryblok {
-  image?: AssetStoryblok;
   title: string;
   description: string;
   cta?: LinkStoryblok[];
@@ -371,7 +370,7 @@ export interface LeftRightImageStoryblok {
 }
 
 export interface LeftRightImageBenefitStoryblok {
-  icon: AssetStoryblok;
+  icon: number | string;
   text: string;
   component: "leftRightImageBenefit";
   _uid: string;

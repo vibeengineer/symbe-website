@@ -9,6 +9,9 @@ import {
   PackageSearch,
   Newspaper,
   Mail,
+  KeyRound,
+  Lock,
+  Database,
 } from "@lucide/astro";
 
 const { icon, ...rest } = Astro.props;
@@ -23,6 +26,9 @@ const iconMap = {
   packageSearch: PackageSearch,
   newspaper: Newspaper,
   mail: Mail,
+  keyRound: KeyRound,
+  lock: Lock,
+  database: Database,
 };
 
 const SelectedIcon = iconMap[icon as keyof typeof iconMap];
