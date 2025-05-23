@@ -17,25 +17,25 @@ const {
 
 <div class="p-4 md:p-6">
   <section
-    class="bg-dark-right py-24 sm:py-32"
+    class="bg-dark-right py-16 xl:py-32"
     {...storyblokEditable(Astro.props.blok as SbBlokData)}
   >
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mb-16 grid grid-cols-1 gap-10 lg:grid-cols-2">
+    <div class="mx-auto flex max-w-7xl flex-col gap-5 px-10 lg:px-16 xl:gap-20">
+      <div class="flex flex-col gap-4 md:gap-8 lg:flex-row">
         <div>
-          <Heading level="xl" class="text-text-000 max-w-xl">
+          <Heading level="xl" class="text-text-000 max-w-xl text-balance">
             {title}
           </Heading>
         </div>
-        <div class="flex items-center">
-          <BodyText size="l" class="text-text-000 max-w-lg opacity-80">
+        <div>
+          <BodyText size="l" class="text-text-000 opacity-80 lg:max-w-md">
             {subtitle}
           </BodyText>
         </div>
       </div>
 
       <div
-        class="mt-16 flex flex-col justify-center divide-y divide-white/20 xl:flex-row xl:divide-x xl:divide-y-0"
+        class="flex flex-col justify-center divide-y divide-white/20 xl:flex-row xl:divide-x xl:divide-y-0"
       >
         {stats.map((stat, index) => <Stat blok={stat} />)}
       </div>
