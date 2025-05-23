@@ -10,11 +10,36 @@ interface MediaAsset {
   alt: string | null;
 }
 
+// Store references to created ScrollTriggers for cleanup
+let scrollTriggers: ScrollTrigger[] = [];
 // Store reference to current animation timeline
 let currentSwapTimeline: gsap.core.Timeline | null = null;
+// Store current media asset to track state
+let currentMediaAsset: MediaAsset | null = null;
+
+// Clean up function to remove all existing ScrollTriggers
+function cleanupScrollTriggers() {
+  // Kill all stored ScrollTriggers
+  for (const trigger of scrollTriggers) {
+    trigger.kill();
+  }
+  scrollTriggers = [];
+
+  // Kill any existing swap animation
+  if (currentSwapTimeline) {
+    currentSwapTimeline.kill();
+    currentSwapTimeline = null;
+  }
+
+  // Reset current media asset tracking
+  currentMediaAsset = null;
+}
 
 // Initialize the scrolling features animation
 function initScrollingFeaturesAnimation() {
+  // Clean up any existing ScrollTriggers first
+  cleanupScrollTriggers();
+
   // Get all the scrolling feature elements
   const features = document.querySelectorAll("[data-scrolling-feature]");
   const stickyMediaContainer = document.querySelector(
@@ -34,6 +59,20 @@ function initScrollingFeaturesAnimation() {
       "ScrollingFeatures: Media element not found in sticky container",
     );
     return;
+  }
+
+  // Set initial media asset (first feature)
+  const firstFeature = features[0];
+  const firstMediaData = firstFeature.getAttribute("data-media-asset");
+  if (firstMediaData) {
+    try {
+      currentMediaAsset = JSON.parse(firstMediaData) as MediaAsset;
+    } catch (error) {
+      console.error(
+        "ScrollingFeatures: Failed to parse first media asset:",
+        error,
+      );
+    }
   }
 
   // Create ScrollTrigger for each feature
@@ -65,29 +104,46 @@ function initScrollingFeaturesAnimation() {
     }
 
     // Create ScrollTrigger for this feature
-    ScrollTrigger.create({
+    const trigger = ScrollTrigger.create({
       trigger: feature,
       start: "top 60%",
       end: "bottom 40%",
-      onEnter: () => swapMedia(parsedMediaAsset, stickyMediaElement),
-      onEnterBack: () => swapMedia(parsedMediaAsset, stickyMediaElement),
+      onEnter: () => {
+        swapMedia(parsedMediaAsset, stickyMediaElement);
+      },
+      onEnterBack: () => {
+        swapMedia(parsedMediaAsset, stickyMediaElement);
+      },
+      // Optional: Add onLeave and onLeaveBack for more precise control
+      // onLeave: () => {
+      //   // Could implement logic to show next feature's media
+      // },
+      // onLeaveBack: () => {
+      //   // Could implement logic to show previous feature's media
+      // },
       // Remove markers for production
       // markers: true,
     });
+
+    // Store the trigger reference for cleanup
+    scrollTriggers.push(trigger);
   });
+
+  // Refresh ScrollTrigger after setup to ensure correct calculations
+  ScrollTrigger.refresh();
 }
 
 // Function to swap media with animation
 function swapMedia(newMediaAsset: MediaAsset, mediaElement: Element) {
   if (!newMediaAsset || !mediaElement || !newMediaAsset.src) return;
 
-  // Prevent swapping to the same image
-  const currentSrc =
-    mediaElement.tagName.toLowerCase() === "img"
-      ? (mediaElement as HTMLImageElement).src
-      : (mediaElement as HTMLVideoElement).src;
+  // Check if we're already showing this media asset
+  if (currentMediaAsset && currentMediaAsset.src === newMediaAsset.src) {
+    return;
+  }
 
-  if (currentSrc === newMediaAsset.src) return;
+  // Update current media asset tracking
+  currentMediaAsset = newMediaAsset;
 
   // Kill any existing animation to prevent overlaps
   if (currentSwapTimeline) {
@@ -146,6 +202,12 @@ function swapMedia(newMediaAsset: MediaAsset, mediaElement: Element) {
 document.addEventListener("DOMContentLoaded", () => {
   initScrollingFeaturesAnimation();
 });
+
+// Support Astro View Transitions
+document.addEventListener("astro:page-load", initScrollingFeaturesAnimation);
+
+// Clean up on page unload to prevent memory leaks
+document.addEventListener("astro:before-preparation", cleanupScrollTriggers);
 
 // Also handle cases where the script loads after DOMContentLoaded
 if (document.readyState === "loading") {
