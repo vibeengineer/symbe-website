@@ -10,6 +10,9 @@ interface MediaAsset {
   alt: string | null;
 }
 
+// Store reference to current animation timeline
+let currentSwapTimeline: gsap.core.Timeline | null = null;
+
 // Initialize the scrolling features animation
 function initScrollingFeaturesAnimation() {
   // Get all the scrolling feature elements
@@ -86,8 +89,28 @@ function swapMedia(newMediaAsset: MediaAsset, mediaElement: Element) {
 
   if (currentSrc === newMediaAsset.src) return;
 
+  // Kill any existing animation to prevent overlaps
+  if (currentSwapTimeline) {
+    currentSwapTimeline.kill();
+    currentSwapTimeline = null;
+  }
+
   // Create a timeline for the swap animation
-  const tl = gsap.timeline();
+  const tl = gsap.timeline({
+    // Use overwrite mode to automatically kill conflicting animations
+    overwrite: "auto",
+    onComplete: () => {
+      // Clear the reference when animation completes
+      currentSwapTimeline = null;
+    },
+    onInterrupt: () => {
+      // Clear the reference if animation gets interrupted
+      currentSwapTimeline = null;
+    },
+  });
+
+  // Store reference to current timeline
+  currentSwapTimeline = tl;
 
   // Scale down the current media (pop out effect)
   tl.to(mediaElement, {

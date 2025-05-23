@@ -21,12 +21,12 @@ const parsedMedia = parseAsset(media);
 ---
 
 <div
-  class="flex w-full flex-col gap-6"
+  class="flex w-full flex-col gap-8"
   data-media-asset={JSON.stringify(parsedMedia)}
   data-scrolling-feature={index}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
-  <div class="mb-8 md:hidden">
+  <div class="lg:hidden">
     <Media
       data-desktop-media-asset
       asset={media}
@@ -34,8 +34,8 @@ const parsedMedia = parseAsset(media);
     />
   </div>
 
-  <div class="max-w-xl">
-    <Heading level="l" class="text-text-900 mb-6">
+  <div class="mx-auto max-w-xl">
+    <Heading level="l" class="text-text-900 mb-3.5">
       {title}
     </Heading>
 
