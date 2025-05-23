@@ -5,7 +5,6 @@ import type { Prettify } from "@/types";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import Heading from "@/components/ui/heading.astro";
 import BodyText from "@/components/ui/body-text.astro";
-import Media from "@/components/ui/media.astro";
 
 type Props = {
   blok: Prettify<ScrollingFeatureStoryblok>;
@@ -21,17 +20,20 @@ const parsedMedia = parseAsset(media);
 ---
 
 <div
-  class="flex w-full flex-col gap-8"
+  class="flex w-full flex-col gap-12"
   data-media-asset={JSON.stringify(parsedMedia)}
   data-scrolling-feature={index}
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   <div class="lg:hidden">
-    <Media
-      data-desktop-media-asset
-      asset={media}
-      class="mx-auto h-auto max-h-[300px] w-full object-contain"
-    />
+    <div class="flex max-h-[180px] w-full items-center justify-center">
+      <img
+        data-desktop-media-asset
+        src={parsedMedia.src}
+        alt={parsedMedia.alt || ""}
+        class="h-72 w-auto"
+      />
+    </div>
   </div>
 
   <div class="mx-auto max-w-xl">

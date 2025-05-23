@@ -33,7 +33,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
         {
           blok.linkColumns?.map((column) => (
             <div>
-              <h3 class="text-text-900 mb-6 text-lg font-semibold">
+              <h3 class="text-text-900 mb-6 text-lg font-medium">
                 {column.title}
               </h3>
               <ul class="space-y-4">
@@ -93,7 +93,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
 
       <!-- Contact Us column - Take up 1 column -->
       <div class="order-2 sm:order-3 sm:col-span-1">
-        <h3 class="text-text-900 mb-6 text-lg font-semibold">
+        <h3 class="text-text-900 mb-6 text-lg font-medium">
           {blok.addressColumnTitle || "Contact Us"}
         </h3>
         <address class="text-text-500 space-y-1 not-italic">

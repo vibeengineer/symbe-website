@@ -63,14 +63,16 @@ if (showBanner && bannerText && bannerStars) {
 >
   <div class="relative">
     <!-- Background embed layer -->
-    <div class="absolute inset-0 min-h-[70dvh] overflow-hidden">
+    <div
+      class="absolute inset-0 h-[550px] min-h-[70dvh] overflow-hidden md:h-auto"
+    >
       <BgEmbed />
     </div>
 
     <!-- Content layer -->
     <div
       data-hero-content
-      class="relative z-10 flex min-h-[70dvh] flex-col items-center justify-center px-4 py-20 text-center md:justify-start md:pt-64 md:pb-64"
+      class="relative z-10 flex h-[70dvh] min-h-[550px] flex-col items-center justify-center px-4 py-20 text-center md:justify-start md:pt-64 md:pb-64"
     >
       {
         showBanner && bannerText && (
@@ -103,8 +105,12 @@ if (showBanner && bannerText && bannerStars) {
           </Banner>
         )
       }
-      <div class="max-w-4xl">
-        <Heading data-hero-title level="xxl" class="mb-6 text-pretty opacity-0">
+      <div class="max-w-4xl pt-12 md:pt-0">
+        <Heading
+          data-hero-title
+          level="xxl"
+          class="mb-6 text-pretty opacity-0 sm:max-w-2xl lg:max-w-none"
+        >
           {title}
         </Heading>
         <BodyText
@@ -123,7 +129,7 @@ if (showBanner && bannerText && bannerStars) {
     <!-- Media layer -->
     <div
       data-hero-media
-      class="relative z-20 -mt-56 flex min-h-[400px] w-full items-center justify-center pb-12 opacity-0 md:-mt-56 md:min-h-[900px]"
+      class="relative z-20 -mt-32 flex min-h-[400px] w-full items-center justify-center pb-12 opacity-0 sm:-mt-48 md:-mt-56 md:min-h-[900px]"
     >
       <Media asset={media} class="" width={1200} />
     </div>

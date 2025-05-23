@@ -15,12 +15,14 @@ const {
 } = Astro.props;
 ---
 
-<div class="p-4 md:p-6">
+<div class="p-2 md:p-4 lg:p-6">
   <section
-    class="bg-dark-right py-16 xl:py-32"
+    class="bg-dark-right py-8 md:py-12 lg:py-16 xl:py-32"
     {...storyblokEditable(Astro.props.blok as SbBlokData)}
   >
-    <div class="mx-auto flex max-w-7xl flex-col gap-5 px-10 lg:px-16 xl:gap-20">
+    <div
+      class="mx-auto flex max-w-7xl flex-col gap-5 px-4 md:px-6 lg:px-10 xl:gap-20 xl:px-16"
+    >
       <div class="flex flex-col gap-4 md:gap-8 lg:flex-row">
         <div>
           <Heading level="xl" class="text-text-000 max-w-xl text-balance">
