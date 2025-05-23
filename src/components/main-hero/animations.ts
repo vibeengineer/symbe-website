@@ -19,6 +19,8 @@ export function initMainHeroAnimations() {
   const banner = document.querySelector("[data-hero-banner]");
   if (banner) {
     gsap.set(banner, { autoAlpha: 0, y: -10 });
+    // Set initial scale of stars to 0
+    gsap.set(banner.querySelectorAll("svg"), { scale: 0 });
   }
 
   // Listen for UnicornStudio initialization
@@ -84,6 +86,21 @@ export function initMainHeroAnimations() {
           },
           "-=0.5",
         );
+
+        // After banner is in, animate stars one by one
+        const stars = banner.querySelectorAll("svg");
+        if (stars.length > 0) {
+          timeline.to(
+            stars,
+            {
+              scale: 1,
+              duration: 0.3,
+              ease: "back.out(1.7)",
+              stagger: 0.1,
+            },
+            "-=0.2", // Start slightly before banner animation finishes
+          );
+        }
       }
     } else {
       // Check again in a short interval
