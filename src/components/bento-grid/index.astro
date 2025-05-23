@@ -15,10 +15,7 @@ const {
 } = Astro.props;
 ---
 
-<div
-  class="bg-surface-blue py-16 sm:py-24"
-  {...storyblokEditable(blok as SbBlokData)}
->
+<div class="pt-6 pb-16 md:pb-20" {...storyblokEditable(blok as SbBlokData)}>
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     {
       title && (
