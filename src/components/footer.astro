@@ -43,7 +43,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
                       <a
                         href={parseLink(linkItem.link, "href")}
                         target={parseLink(linkItem.link, "target")}
-                        class="text-text-700 hover:text-primary"
+                        class="text-text-500 hover:text-primary"
                       >
                         {linkItem.linkText}
                       </a>
@@ -96,16 +96,16 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
         <h3 class="text-text-900 mb-6 text-lg font-semibold">
           {blok.addressColumnTitle || "Contact Us"}
         </h3>
-        <address class="text-text-700 space-y-1 not-italic">
+        <address class="text-text-500 space-y-1 not-italic">
           {addressLines.map((line) => <p>{line}</p>)}
         </address>
-        <div class="mt-4 space-y-1">
+        <div class="text-text-500 mt-4 space-y-1">
           {
             blok.email && (
               <p>
                 <a
                   href={`mailto:${blok.email}`}
-                  class="text-text-700 hover:text-primary"
+                  class="text-text-500 hover:text-primary"
                 >
                   {blok.email}
                 </a>
@@ -117,7 +117,7 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
               <p>
                 <a
                   href={`tel:${blok.phoneNumber.replace(/\s/g, "")}`}
-                  class="text-text-700 hover:text-primary"
+                  class="text-text-500 hover:text-primary"
                 >
                   {blok.phoneNumber}
                 </a>
@@ -127,58 +127,61 @@ const addressLines = blok.address ? blok.address.split("\n") : [];
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bottom footer section with logo, copyright, and social -->
-    <div class="mt-16 border-t border-gray-200 pt-8">
-      <div
-        class="flex flex-col space-y-6 sm:space-y-0 md:relative md:flex-row md:items-center md:justify-between"
-      >
-        <!-- Logo -->
-        <div>
-          <a href="/" aria-label="Symbe">
-            {
-              blok.logo && (
-                <Media
-                  asset={blok.logo}
-                  alt="Symbe"
-                  width={112}
-                  height={38}
-                  class="h-auto w-auto"
-                />
-              )
-            }
-          </a>
-        </div>
+  <!-- Full width divider -->
+  <div class="mt-16 border-t border-gray-200"></div>
 
-        <!-- Copyright - Left aligned on mobile/tablet, centered on desktop -->
-        <div
-          class="text-text-700 text-left md:absolute md:left-1/2 md:w-max md:-translate-x-1/2 md:transform md:text-center"
-        >
-          <p>{copyrightText}</p>
-        </div>
-
-        <!-- Social Links - Always left aligned on mobile/tablet -->
-        <div class="flex space-x-4">
+  <!-- Bottom footer section with logo, copyright, and social -->
+  <div class="container mx-auto px-6 pt-8 md:px-8">
+    <div
+      class="flex flex-col space-y-6 sm:space-y-0 md:relative md:flex-row md:items-center md:justify-between"
+    >
+      <!-- Logo -->
+      <div>
+        <a href="/" aria-label="Symbe">
           {
-            blok.socialLinks?.map((socialLink) => (
-              <a
-                href={parseLink(socialLink.link, "href")}
-                target={parseLink(socialLink.link, "target")}
-                aria-label={socialLink.link.linktype}
-                class="hover:text-primary text-gray-500"
-              >
-                {socialLink.icon && (
-                  <Media
-                    asset={socialLink.icon}
-                    width={24}
-                    height={24}
-                    class="h-6 w-6"
-                  />
-                )}
-              </a>
-            ))
+            blok.logo && (
+              <Media
+                asset={blok.logo}
+                alt="Symbe"
+                width={112}
+                height={38}
+                class="h-auto w-auto"
+              />
+            )
           }
-        </div>
+        </a>
+      </div>
+
+      <!-- Copyright - Left aligned on mobile/tablet, centered on desktop -->
+      <div
+        class="text-text-700 text-left md:absolute md:left-1/2 md:w-max md:-translate-x-1/2 md:transform md:text-center"
+      >
+        <p>{copyrightText}</p>
+      </div>
+
+      <!-- Social Links - Always left aligned on mobile/tablet -->
+      <div class="flex space-x-4">
+        {
+          blok.socialLinks?.map((socialLink) => (
+            <a
+              href={parseLink(socialLink.link, "href")}
+              target={parseLink(socialLink.link, "target")}
+              aria-label={socialLink.link.linktype}
+              class="hover:text-primary text-gray-500"
+            >
+              {socialLink.icon && (
+                <Media
+                  asset={socialLink.icon}
+                  width={24}
+                  height={24}
+                  class="h-6 w-6"
+                />
+              )}
+            </a>
+          ))
+        }
       </div>
     </div>
   </div>
