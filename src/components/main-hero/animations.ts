@@ -108,7 +108,7 @@ export function initMainHeroAnimations() {
               duration: 0.4,
               ease: "power2.out",
             },
-            "-=0.4",
+            "-=0.7",
           );
         }
 
@@ -123,7 +123,7 @@ export function initMainHeroAnimations() {
               duration: 0.4,
               ease: "back.out(1.7)",
             },
-            "-=0.3",
+            "-=0.6",
           );
         }
 
@@ -140,7 +140,7 @@ export function initMainHeroAnimations() {
               ease: "back.out(1.7)",
               stagger: 0.1,
             },
-            "-=0.2",
+            "-=0.5",
           );
         }
       }
