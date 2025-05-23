@@ -111,6 +111,7 @@ export default defineConfig({
   server: {
     // to allow node to accept traffic, if not configured a 502 error is returned
     host: "0.0.0.0",
+    allowedHosts: ["drop-unavailable-titled-sentence.trycloudflare.com"],
   },
   vite: {
     //@ts-ignore

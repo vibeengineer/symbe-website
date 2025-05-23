@@ -17,8 +17,8 @@ const { blok } = Astro.props as Props;
       blok.linkStyle === "primary" && "text-center",
     )}
     textClassName={blok.linkStyle !== "primary"
-      ? "font-display text-xl"
-      : "text-xl"}
+      ? "font-display text-lg md:text-xl"
+      : "text-lg md:text-xl"}
     blok={{
       ...blok,
       linkStyle: `${blok.linkStyle !== "primary" ? "default" : "primary"}`,

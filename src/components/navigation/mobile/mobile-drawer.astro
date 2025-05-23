@@ -33,7 +33,9 @@ const {
   )}
   aria-hidden="true"
 >
-  <div class="flex max-h-screen flex-col gap-6 overflow-y-auto p-6 pt-24">
+  <div
+    class="flex max-h-screen flex-col gap-3.5 overflow-y-auto px-6 py-3.5 pt-24"
+  >
     {
       centreLinks?.map((item: LinkStoryblok | LinkDropdownStoryblok) => {
         if (item.component === "link") {
