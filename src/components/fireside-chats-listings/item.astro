@@ -7,6 +7,7 @@ import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import Heading from "@/components/ui/heading.astro";
 import BodyText from "@/components/ui/body-text.astro";
 import Label from "@/components/ui/label.astro";
+import Icon from "@/components/ui/icon.astro";
 
 type Props = {
   story: Prettify<StoryblokStory<FiresideChatStoryblok>>;
@@ -16,12 +17,17 @@ const {
   story: {
     name,
     full_slug,
-    content: { blurb, thumbnail, title, watchTime },
+    content: { blurb, thumbnail, title, watchTimeMinutes, watchTimeSeconds },
   },
 } = Astro.props;
 
-// Assuming watchTime is a string like "17" representing minutes
-const formattedWatchTime = watchTime ? `${watchTime} minutes` : "";
+const watchTimeMinutesNumber = Number.parseInt(watchTimeMinutes);
+const watchTimeSecondsNumber = Number.parseInt(watchTimeSeconds);
+
+// Format watch time with just minutes
+const formattedWatchTime = watchTimeMinutesNumber
+  ? `${watchTimeMinutesNumber} minute${watchTimeMinutesNumber !== 1 ? "s" : ""}`
+  : "";
 const category = name.replace(/-/g, " ").toUpperCase();
 
 // Basic blurb text extraction (can be improved based on actual Richtext structure)
@@ -69,33 +75,27 @@ if (
       )
     }
   </div>
-  <Label size="s" weight="semibold" class="text-primary-400 mb-1 uppercase">
-    {category}
-  </Label>
-  <Heading
-    level="m"
-    as="h3"
-    class="text-text-000 group-hover:text-primary-300 mb-2"
-  >
-    {title}
-  </Heading>
-  <BodyText size="s" class="text-text-200 mb-3 line-clamp-3">
-    {blurbText}
-  </BodyText>
-  {
-    formattedWatchTime && (
-      <div class="text-text-300 flex items-center text-xs">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          class="mr-1.5 h-4 w-4 fill-current"
-        >
-          <path d="M12 3a9 9 0 00-9 9v6c0 1.1.9 2 2 2h2v-4h2v4h4v-4h2v4h2c1.1 0 2-.9 2-2v-6a9 9 0 00-9-9zm0 16c-1.66 0-3-1.34-3-3h6c0 1.66-1.34 3-3 3z" />
-        </svg>
-        <Label size="s" weight="regular">
-          {formattedWatchTime}
-        </Label>
-      </div>
-    )
-  }
+
+  <div class="flex flex-col gap-1.5 py-3">
+    <Heading
+      level="s"
+      as="h3"
+      class="text-text-000 group-hover:text-primary-300 mb-2"
+    >
+      {title}
+    </Heading>
+    <BodyText size="s" class="text-text-200 mb-3 line-clamp-3">
+      {blurbText}
+    </BodyText>
+    {
+      formattedWatchTime && (
+        <div class="text-text-300 flex items-center text-xs">
+          <Icon icon="headphones" class="mr-1.5 h-4 w-4" />
+          <Label size="s" weight="regular">
+            {formattedWatchTime}
+          </Label>
+        </div>
+      )
+    }
+  </div>
 </a>
