@@ -62,6 +62,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      simple-icons:
+        specifier: ^14.14.0
+        version: 14.14.0
       storyblok-js-client:
         specifier: ^6.10.11
         version: 6.10.11
@@ -2992,6 +2995,10 @@ packages:
 
   signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
+
+  simple-icons@14.14.0:
+    resolution: {integrity: sha512-HqWjAA2Zl7ZPIycMvg71ojT7ZTtFNjJL6mLNv1oqtSAcd94EjcOvjDAW9P/MgTaKcutmZgQal84LlCmJb6WBPQ==}
+    engines: {node: '>=0.12.18'}
 
   simple-swizzle@0.2.2:
     resolution: {integrity: sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==}
@@ -7005,6 +7012,8 @@ snapshots:
   siginfo@2.0.0: {}
 
   signal-exit@3.0.7: {}
+
+  simple-icons@14.14.0: {}
 
   simple-swizzle@0.2.2:
     dependencies:

@@ -2,9 +2,6 @@
 import type {
   FiresideChatStoryblok,
   FiresideChatsListingsStoryblok,
-  IconLinkStoryblok,
-  AssetStoryblok,
-  MultilinkStoryblok,
 } from "@storyblok/types";
 import { getStories } from "@/services/storyblok/get-stories";
 import { parseAsset } from "@/services/storyblok/utils/parse-asset";
@@ -13,16 +10,16 @@ import type { Prettify } from "@/types";
 import FiresideChatListing from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import Pagination from "@/components/ui/pagination.astro";
-import Soundwave from "./soundwave.astro";
 import Heading from "@/components/ui/heading.astro";
 import BodyText from "@/components/ui/body-text.astro";
 import Label from "@/components/ui/label.astro";
+import IconLink from "@/components/ui/icon-link.astro";
 
 type Props = {
   blok: Prettify<FiresideChatsListingsStoryblok>;
 };
 
-const PER_PAGE = 9;
+const PER_PAGE = 1;
 const pageNumber = Astro.url.searchParams.get("page");
 const currentPage = pageNumber ? Number.parseInt(pageNumber) : 1;
 
@@ -40,111 +37,81 @@ const totalPages = Math.ceil(total / PER_PAGE);
 const {
   blok: { title, subtitle, subscribeLinks, subscribeLinksCaption },
 } = Astro.props;
-
-// SVG paths for social icons - add more as needed
-const svgIconPaths: Record<string, string> = {
-  spotify:
-    "M12 3C7.03 3 3 7.03 3 12s4.03 9 9 9 9-4.03 9-9S17.01 3 12 3zm4.32 12.78c-.18.29-.57.37-.86.19-.29-.18-.37-.57-.19-.86 2.13-3.52.66-6.04-2.35-6.89-2.9-.82-5.56.34-6.38 3.24-.09.32-.42.5-.73.41-.32-.09-.5-.42-.41-.73C6.34 6.72 9.92 4.9 13.65 5.9c3.72 1.02 5.63 4.24 3.86 8.46l-.19.42zM7.02 13.2c-.14.23-.45.3-.68.15-.23-.14-.3-.45-.15-.68 1.5-2.52 3.74-3.63 5.93-2.93 2.2.71 3.38 2.76 2.66 5.02-.07.24-.34.39-.59.32s-.39-.34-.32-.59c.6-1.86-.39-3.52-2.17-4.07-1.78-.56-3.53.34-4.79 2.36zm.07 2.46c-.1.16-.32.21-.49.11-.16-.1-.21-.32-.11-.49 1.05-1.65 2.79-2.33 4.27-1.83 1.47.5 2.28 1.83 1.82 3.24-.05.16-.24.26-.4.21-.17-.05-.26-.24-.21-.4C10.18 15.2 9 14.65 8.25 15.5l-1.16.16z",
-  youtube:
-    "M16.345 7.64c-.269-1.02-.993-1.741-2.011-2.011C13.552 5.361 12 5.361 12 5.361s-1.552 0-2.333.267c-1.019.27-1.742.991-2.011 2.011C7.389 8.421 7.389 10 7.389 10s0 1.579.267 2.36c.269 1.02.992 1.741 2.011 2.011C10.448 14.639 12 14.639 12 14.639s1.552 0 2.333-.268c1.018-.27 1.742-.991 2.011-2.011.267-.781.267-2.36.267-2.36s0-1.579-.267-2.36zm-5.807 4.168V8.192l3.461 1.904-3.461 1.904z",
-  apple:
-    "M18.32,5.34a3.37,3.37,0,0,0-2.32.95A3.41,3.41,0,0,0,14,9.32v0a2,2,0,0,1-1.7,1.16A1.94,1.94,0,0,1,10.61,9.3c0-.12,0-.24,0-.36a3.34,3.34,0,0,0-3.27-3.27A3.33,3.33,0,0,0,4,9V15a3,3,0,0,0,3,3H7A3,3,0,0,0,7,15V12.8a1.51,1.51,0,0,1,1.48-1.48A1.52,1.52,0,0,1,10,12.8V15a3,3,0,0,0,3,3h0a3,3,0,0,0,3-3V9.32a3.42,3.42,0,0,0-.68-2.07A3.38,3.38,0,0,0,18.32,5.34Zm-4.62,10A1,1,0,0,1,12.21,16H12a1,1,0,0,1-.21-2V12.8a3.53,3.53,0,0,0,2-3.28,1.37,1.37,0,0,0-1.24-1.37A1.28,1.28,0,0,0,11.1,9.39a1.33,1.33,0,0,0,0,.26V15A1,1,0,0,1,13.7,16Z",
-  podcast:
-    "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z",
-  // Fallback icon
-  link: "M10.59,13.41C11.37,14.19 11.37,15.47 10.59,16.24L8.36,18.46C7.58,19.24 6.31,19.24 5.53,18.46C4.75,17.68 4.75,16.41 5.53,15.63L7.76,13.41C7.5,13.18 7.26,12.92 7.04,12.65L4.62,15.07C3.44,16.25 3.44,18.13 4.62,19.31C5.8,20.49 7.68,20.49 8.86,19.31L11.28,16.89C12.46,15.71 12.46,13.83 11.28,12.65C11.02,12.4 10.77,12.17 10.52,11.96L12.95,9.53C14.13,8.35 14.13,6.47 12.95,5.29C11.77,4.11 9.89,4.11 8.71,5.29L6.28,7.72C6.53,7.95 6.79,8.22 7.01,8.48L9.44,6.05C9.83,5.66 10.46,5.66 10.85,6.05C11.24,6.44 11.24,7.07 10.85,7.46L8.42,9.89C8.17,9.63 7.92,9.37 7.66,9.13L10.59,13.41Z",
-};
-
-function isValidAsset(asset?: AssetStoryblok | null): asset is AssetStoryblok {
-  return !!asset && (!!asset.filename || !!asset.src);
-}
 ---
 
 <div
-  class="bg-dark-down text-text-000 py-16 sm:py-24"
+  class="bg-dark-down text-text-000 relative overflow-hidden rounded-br-2xl rounded-bl-2xl py-16 pb-18 sm:pt-24"
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
-  <div class="container mx-auto px-4">
-    <div class="mb-12 flex flex-col items-center text-center">
-      <div class="flex items-center justify-center gap-x-4 sm:gap-x-4">
-        <Soundwave class="hidden sm:-mr-32 sm:block" />
-        <Heading level="xxl" class="">{title}</Heading>
-        <Soundwave class="hidden scale-x-[-1] sm:-ml-32 sm:block" />
+  <div>
+    <div class="py-32">
+      <div class="flex items-center justify-center">
+        <div
+          class="h-24 w-full bg-[url('/svg/soundwave.svg')] bg-contain bg-right bg-repeat-x"
+        >
+        </div>
+        <div class="w-full flex-1 px-12">
+          <Heading level="xxl" class="whitespace-nowrap">{title}</Heading>
+        </div>
+        <div
+          class="h-24 w-full bg-[url('/svg/soundwave-2.svg')] bg-contain bg-left bg-repeat-x"
+        >
+        </div>
       </div>
-      <BodyText size="l" class="mx-auto mt-6 mb-8 max-w-2xl text-balance">
-        {subtitle}
-      </BodyText>
-      {
-        subscribeLinks && subscribeLinks.length > 0 && (
-          <div class="mb-2 flex items-center space-x-3 sm:space-x-4">
-            {subscribeLinks.map((linkBlok) => {
-              const label = linkBlok.link?.title || "Social media link";
-              const serviceName = label.toLowerCase().split(" ")[0] || "link";
-              const iconPath = svgIconPaths[serviceName] || svgIconPaths.link;
-              const parsedLink = parseLink(linkBlok.link);
-              const iconAsset = linkBlok.icon as
-                | AssetStoryblok
-                | undefined
-                | null;
 
-              return (
-                <a
-                  href={parsedLink.href}
-                  target={parsedLink.target}
-                  aria-label={label}
-                  class="bg-primary-600 text-text-000 hover:bg-primary-500 flex h-12 w-12 items-center justify-center rounded-full p-2.5 transition-colors sm:h-14 sm:w-14 sm:p-3"
-                >
-                  {isValidAsset(iconAsset) ? (
-                    <img
-                      src={parseAsset(iconAsset, "src")}
-                      alt={parseAsset(iconAsset, "alt") || label}
-                      class="h-full w-full object-contain"
-                    />
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      class="h-full w-full fill-current"
-                      aria-hidden="true"
-                    >
-                      <path d={iconPath} />
-                    </svg>
-                  )}
-                </a>
-              );
-            })}
+      <!-- Subscribe links and subtitle -->
+      <div class="flex flex-col items-center">
+        <BodyText
+          size="l"
+          class="mx-auto mt-6 mb-8 max-w-2xl text-center text-balance"
+        >
+          {subtitle}
+        </BodyText>
+        {
+          subscribeLinks && subscribeLinks.length > 0 && (
+            <div class="flex w-full flex-col items-center">
+              <ul class="border-accent-electric mb-6 flex items-center gap-4 rounded-2xl border p-3">
+                {subscribeLinks.map((link) => (
+                  <li>
+                    <IconLink iconClassName="h-12 w-12" blok={link} />
+                  </li>
+                ))}
+              </ul>
+              <Label
+                size="s"
+                weight="semibold"
+                class="text-text-000 mx-auto w-full text-center"
+              >
+                {subscribeLinksCaption}
+              </Label>
+            </div>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="container mx-auto">
+      {
+        firesideChats.length > 0 ? (
+          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+            {firesideChats.map((chat) => (
+              <FiresideChatListing story={chat} />
+            ))}
+          </div>
+        ) : (
+          <BodyText size="m" class="text-text-200 text-center">
+            No fireside chats available at the moment.
+          </BodyText>
+        )
+      }
+
+      {
+        totalPages > 1 && (
+          <div class="mt-12 sm:mt-16">
+            <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         )
       }
-      {
-        subscribeLinksCaption && (
-          <Label size="s" weight="regular" class="text-text-200 mt-2">
-            {subscribeLinksCaption}
-          </Label>
-        )
-      }
     </div>
-
-    {
-      firesideChats.length > 0 ? (
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-          {firesideChats.map((chat) => (
-            <FiresideChatListing story={chat} />
-          ))}
-        </div>
-      ) : (
-        <BodyText size="m" class="text-text-200 text-center">
-          No fireside chats available at the moment.
-        </BodyText>
-      )
-    }
-
-    {
-      totalPages > 1 && (
-        <div class="mt-12 sm:mt-16">
-          <Pagination currentPage={currentPage} totalPages={totalPages} />
-        </div>
-      )
-    }
   </div>
 </div>

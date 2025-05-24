@@ -319,8 +319,9 @@ export interface FullWidthBentoGridStoryblok {
 }
 
 export interface IconLinkStoryblok {
-  icon: AssetStoryblok;
+  icon?: AssetStoryblok;
   link: Exclude<MultilinkStoryblok, {linktype?: "email"} | {linktype?: "asset"}>;
+  iconName?: number | string;
   component: "iconLink";
   _uid: string;
   [k: string]: unknown;
@@ -451,6 +452,7 @@ export interface PageStoryblok {
     | ValuesStoryblok
   )[];
   seo: SeoStoryblok[];
+  navigationTheme?: "" | "light" | "dark";
   component: "page";
   _uid: string;
   [k: string]: unknown;

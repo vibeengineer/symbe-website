@@ -4,13 +4,18 @@ import type { IconLinkStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
 import { parseAsset } from "@/services/storyblok/utils/parse-asset";
 import { parseLink } from "@/services/storyblok/utils/parse-link";
+import Icon from "@/components/ui/icon.astro";
 
 type Props = {
   blok: Prettify<IconLinkStoryblok>;
+  className?: string;
+  iconClassName?: string;
 };
 
 const {
-  blok: { link, icon },
+  blok: { link, icon, iconName },
+  className,
+  iconClassName,
 } = Astro.props;
 ---
 
@@ -19,6 +24,20 @@ const {
   href={parseLink(link, "href")}
   target={parseLink(link, "target")}
   rel="noopener noreferrer"
+  class={className}
 >
-  <img src={parseAsset(icon, "src")} alt={parseAsset(icon, "alt")} />
+  {
+    iconName && typeof iconName === "string" && (
+      <Icon icon={iconName} class={iconClassName} />
+    )
+  }
+  {
+    icon && (icon.filename || icon.src) && (
+      <img
+        src={parseAsset(icon, "src")}
+        class={iconClassName}
+        alt={parseAsset(icon, "alt")}
+      />
+    )
+  }
 </a>

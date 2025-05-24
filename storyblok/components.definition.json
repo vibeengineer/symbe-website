@@ -1161,20 +1161,28 @@
       "display_name": null,
       "description": "",
       "created_at": "2025-05-20T15:15:24.933Z",
-      "updated_at": "2025-05-20T16:02:31.381Z",
+      "updated_at": "2025-05-24T17:31:54.246Z",
       "id": 7363053,
       "schema": {
         "icon": {
           "type": "asset",
           "pos": 0,
           "id": "-n-U0ks2SVaURM4XxWzwYg",
-          "required": true
+          "required": false
         },
         "link": {
           "type": "multilink",
           "pos": 1,
           "id": "8WG1-I7aT6yrIpVXyihU4g",
           "required": true
+        },
+        "iconName": {
+          "type": "option",
+          "pos": 2,
+          "use_uuid": true,
+          "id": "u_9iOpZYTaKzrGTPZbWpNQ",
+          "source": "internal",
+          "datasource_slug": "icons"
         }
       },
       "image": null,
@@ -1787,7 +1795,7 @@
       "display_name": null,
       "description": null,
       "created_at": "2025-04-23T16:14:46.281Z",
-      "updated_at": "2025-05-20T19:52:47.821Z",
+      "updated_at": "2025-05-23T15:00:19.614Z",
       "id": 7259899,
       "schema": {
         "body": {
@@ -1832,6 +1840,25 @@
           ],
           "id": "JB5SsNCLS-SxBSYz_y672w",
           "required": true
+        },
+        "navigationTheme": {
+          "type": "option",
+          "pos": 2,
+          "use_uuid": true,
+          "options": [
+            {
+              "_uid": "0142c887-d152-45f3-98b3-b5c8973e46e2",
+              "name": "Light",
+              "value": "light"
+            },
+            {
+              "_uid": "f6067552-48af-46f9-a96b-59c5f12769b8",
+              "value": "dark",
+              "name": "Dark"
+            }
+          ],
+          "id": "dChWJoLeQtCiJw3pkQHJfA",
+          "default_value": "Light"
         }
       },
       "image": null,

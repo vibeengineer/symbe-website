@@ -2,7 +2,7 @@
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
 import type { PartnersStoryblok } from "@storyblok/types";
 import type { Prettify } from "@/types";
-import Logo from "./item.astro";
+import IconLink from "@/components/ui/icon-link.astro";
 type Props = {
   blok: Prettify<PartnersStoryblok>;
 };
@@ -16,6 +16,6 @@ const {
   <h2>{title}</h2>
   {subtitle && <p>{subtitle}</p>}
   <ul>
-    {logos.map((logo) => <Logo blok={logo} />)}
+    {logos.map((logo) => <IconLink blok={logo} />)}
   </ul>
 </div>

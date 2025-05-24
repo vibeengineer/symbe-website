@@ -1,0 +1,72 @@
+---
+import {
+  Building2,
+  Flame,
+  ChartLine,
+  Handshake,
+  SlidersHorizontal,
+  ThumbsUp,
+  PackageSearch,
+  Newspaper,
+  Mail,
+  KeyRound,
+  Lock,
+  Database,
+} from "@lucide/astro";
+import { siSpotify, siYoutube, siApplepodcasts } from "simple-icons";
+
+const { icon, class: className, ...rest } = Astro.props;
+
+const iconMap = {
+  building2: Building2,
+  flame: Flame,
+  lineChart: ChartLine,
+  handshake: Handshake,
+  slidersHorizontal: SlidersHorizontal,
+  thumbsUp: ThumbsUp,
+  packageSearch: PackageSearch,
+  newspaper: Newspaper,
+  mail: Mail,
+  keyRound: KeyRound,
+  lock: Lock,
+  database: Database,
+  spotify: siSpotify.svg,
+  youtube: siYoutube.svg,
+  applePodcasts: siApplepodcasts.svg,
+};
+
+const simpleIconsMap = {
+  spotify: siSpotify,
+  youtube: siYoutube,
+  applePodcasts: siApplepodcasts,
+};
+
+const SelectedIcon = iconMap[icon as keyof typeof iconMap];
+
+const isSimpleIconSvg = typeof SelectedIcon === "string";
+
+let processedSvg = SelectedIcon;
+if (isSimpleIconSvg && typeof SelectedIcon === "string") {
+  const simpleIcon = simpleIconsMap[icon as keyof typeof simpleIconsMap];
+  const hexColor = simpleIcon?.hex ? `#${simpleIcon.hex}` : "";
+
+  let attributes = "";
+  if (className) attributes += `class="${className}"`;
+  if (hexColor) {
+    if (attributes) attributes += " ";
+    attributes += `style="fill: ${hexColor}"`;
+  }
+
+  if (attributes) {
+    processedSvg = SelectedIcon.replace("<svg", `<svg ${attributes}`);
+  }
+}
+---
+
+{
+  isSimpleIconSvg ? (
+    <Fragment set:html={processedSvg} />
+  ) : SelectedIcon ? (
+    <SelectedIcon class={className} {...rest} />
+  ) : null
+}
