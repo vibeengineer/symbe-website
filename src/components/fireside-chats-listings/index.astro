@@ -4,8 +4,6 @@ import type {
   FiresideChatsListingsStoryblok,
 } from "@storyblok/types";
 import { getStories } from "@/services/storyblok/get-stories";
-import { parseAsset } from "@/services/storyblok/utils/parse-asset";
-import { parseLink } from "@/services/storyblok/utils/parse-link";
 import type { Prettify } from "@/types";
 import FiresideChatListing from "./item.astro";
 import { storyblokEditable, type SbBlokData } from "@storyblok/astro";
@@ -40,47 +38,59 @@ const {
 ---
 
 <div
-  class="bg-dark-down text-text-000 relative overflow-hidden rounded-br-2xl rounded-bl-2xl py-16 pb-18 sm:pt-24"
+  class="bg-dark-down text-text-000 relative overflow-hidden rounded-br-2xl rounded-bl-2xl py-12 pb-8 sm:py-16 sm:pb-12 md:pt-20 lg:pt-24"
   {...storyblokEditable(Astro.props.blok as SbBlokData)}
 >
   <div>
-    <div class="py-32">
+    <div class="pt-20 pb-8 sm:py-24 md:py-28 lg:py-32">
+      <!-- Title section with soundwaves - responsive layout -->
       <div class="flex items-center justify-center">
+        <!-- Left soundwave - visible on all screen sizes -->
         <div
-          class="h-24 w-full bg-[url('/svg/soundwave.svg')] bg-contain bg-right bg-repeat-x"
+          class="h-8 w-full bg-[url('/svg/soundwave.svg')] bg-contain bg-right bg-repeat-x sm:h-16 md:h-20 lg:h-24"
         >
         </div>
-        <div class="w-full flex-1 px-12">
-          <Heading level="xxl" class="whitespace-nowrap">{title}</Heading>
+        
+        <!-- Title - responsive sizing and text wrapping -->
+        <div class="w-full flex-1 px-2 sm:px-8 md:px-12">
+          <Heading 
+            level="xxl" 
+            class="text-center whitespace-nowrap text-balance"
+          >
+            {title}
+          </Heading>
         </div>
+        
+        <!-- Right soundwave - visible on all screen sizes -->
         <div
-          class="h-24 w-full bg-[url('/svg/soundwave-2.svg')] bg-contain bg-left bg-repeat-x"
+          class="h-8 w-full bg-[url('/svg/soundwave-2.svg')] bg-contain bg-left bg-repeat-x sm:h-16 md:h-20 lg:h-24"
         >
         </div>
       </div>
 
       <!-- Subscribe links and subtitle -->
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center px-4 sm:px-6">
         <BodyText
           size="l"
-          class="mx-auto mt-6 mb-8 max-w-2xl text-center text-balance"
+          class="mx-auto mt-4 mb-6 max-w-2xl text-center text-balance sm:mt-6 sm:mb-8"
         >
           {subtitle}
         </BodyText>
         {
           subscribeLinks && subscribeLinks.length > 0 && (
             <div class="flex w-full flex-col items-center">
-              <ul class="border-accent-electric mb-6 flex items-center gap-4 rounded-2xl border p-3">
+              <!-- Subscribe links - responsive layout -->
+              <ul class="border-accent-electric mb-4 flex flex-wrap items-center justify-center gap-2 rounded-xl border p-2 sm:mb-6 sm:gap-4 sm:rounded-2xl sm:p-3">
                 {subscribeLinks.map((link) => (
                   <li>
-                    <IconLink iconClassName="h-12 w-12" blok={link} />
+                    <IconLink iconClassName="h-10 w-10 sm:h-12 sm:w-12" blok={link} />
                   </li>
                 ))}
               </ul>
               <Label
                 size="s"
                 weight="semibold"
-                class="text-text-000 mx-auto w-full text-center"
+                class="text-text-000 mx-auto w-full text-center px-4"
               >
                 {subscribeLinksCaption}
               </Label>
@@ -90,16 +100,17 @@ const {
       </div>
     </div>
 
-    <div class="container mx-auto">
+    <!-- Content container with responsive padding -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       {
         firesideChats.length > 0 ? (
-          <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:gap-8 lg:grid-cols-3">
             {firesideChats.map((chat) => (
               <FiresideChatListing story={chat} />
             ))}
           </div>
         ) : (
-          <BodyText size="m" class="text-text-200 text-center">
+          <BodyText size="m" class="text-text-200 text-center px-4">
             No fireside chats available at the moment.
           </BodyText>
         )
@@ -107,7 +118,7 @@ const {
 
       {
         totalPages > 1 && (
-          <div class="mt-12 sm:mt-16">
+          <div class="mt-8 sm:mt-12 lg:mt-16 px-4 sm:px-0">
             <Pagination currentPage={currentPage} totalPages={totalPages} />
           </div>
         )
